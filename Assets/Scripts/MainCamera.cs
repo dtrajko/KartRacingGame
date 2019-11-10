@@ -6,6 +6,7 @@ public class MainCamera : MonoBehaviour
 {
     private float speed = 0.1f;
     private float sensitivity = 5.0f;
+    private float cameraZoomSpeed = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -54,5 +55,7 @@ public class MainCamera : MonoBehaviour
         float rotateVertical = Input.GetAxis("Mouse Y");
         transform.RotateAround(transform.position, -Vector3.up, -rotateHorizontal * sensitivity);
         transform.RotateAround(Vector3.zero, transform.right, -rotateVertical * sensitivity);
+
+        Camera.main.fieldOfView += Input.GetAxis("Mouse ScrollWheel") * cameraZoomSpeed;
     }
 }
