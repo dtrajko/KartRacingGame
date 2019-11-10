@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainCamera : MonoBehaviour
 {
     private float speed = 0.1f;
-    private float speedRotation = 5.0f;
+    private float sensitivity = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -13,10 +13,14 @@ public class MainCamera : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        ProcessInput();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
     }
 
     void ProcessInput()
@@ -46,9 +50,9 @@ public class MainCamera : MonoBehaviour
             transform.position -= transform.up * speed;
         }
 
-        float angleRotationY = Input.GetAxis("Mouse X") * speedRotation;
-        transform.Rotate(new Vector3(0, 1, 0), angleRotationY);
-        // float angleRotationX = -Input.GetAxis("Mouse Y") * speedRotation;
-        // transform.Rotate(new Vector3(1, 0, 0), angleRotationX);
+        float rotateHorizontal = Input.GetAxis("Mouse X");
+        float rotateVertical = Input.GetAxis("Mouse Y");
+        transform.RotateAround(transform.position, -Vector3.up, -rotateHorizontal * sensitivity);
+        transform.RotateAround(Vector3.zero, transform.right, -rotateVertical * sensitivity);
     }
 }
