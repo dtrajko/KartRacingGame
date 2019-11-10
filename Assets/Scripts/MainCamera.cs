@@ -16,7 +16,7 @@ public class MainCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        ProcessInput();
+        // ProcessInput();
     }
 
     // Update is called once per frame
