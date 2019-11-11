@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Drive : MonoBehaviour
 {
-    public WheelCollider WC;
-    public float torque = 200.0f;
-    public float maxSteerAngle = 30.0f;
-    public GameObject Wheel;
+    public WheelCollider[] WheelColliders;
+    public GameObject[] Wheels;
+    public float torque = 300.0f;
+    public float maxSteerAngle = 40.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        WC = this.GetComponent<WheelCollider>();
     }
 
     void Go(float accel, float steer)
@@ -20,14 +19,21 @@ public class Drive : MonoBehaviour
         accel = Mathf.Clamp(accel, -1, 1);
         steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
         float thrustTorque = accel * torque;
-        WC.motorTorque = thrustTorque;
-        WC.steerAngle = steer;
 
         Quaternion quat;
         Vector3 position;
-        WC.GetWorldPose(out position, out quat);
-        Wheel.transform.position = position;
-        Wheel.transform.rotation = quat;
+
+        for (int i = 0; i < 4; i++)
+        {
+            WheelColliders[i].motorTorque = thrustTorque;
+
+            float wheelSteer = i < 2 ? steer : 0.0f;
+            WheelColliders[i].steerAngle = wheelSteer;
+
+            WheelColliders[i].GetWorldPose(out position, out quat);
+            Wheels[i].transform.position = position;
+            Wheels[i].transform.rotation = quat;        
+        }
     }
 
     // Update is called once per frame
