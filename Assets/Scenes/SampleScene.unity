@@ -372,12 +372,17 @@ PrefabInstance:
     - target: {fileID: 8831671238117816699, guid: b283f592aefa09d4b95adcf30039bbcf,
         type: 3}
       propertyPath: torque
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8831671238117816699, guid: b283f592aefa09d4b95adcf30039bbcf,
         type: 3}
       propertyPath: maxSteerAngle
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831671238117816699, guid: b283f592aefa09d4b95adcf30039bbcf,
+        type: 3}
+      propertyPath: maxBrakeTorque
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 8831671237057938760, guid: b283f592aefa09d4b95adcf30039bbcf,
         type: 3}
@@ -550,7 +555,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 8.73e-43, y: -0.00000021808683, z: 4.5904e-41, w: 0}
+  m_BoundingSphereOverride: {x: -0.0390625, y: 0, z: 7, w: 7}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

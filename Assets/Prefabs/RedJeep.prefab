@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 4745436176780789857}
   - component: {fileID: 4745436176780789862}
   m_Layer: 0
-  m_Name: Jeep
+  m_Name: RedJeep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,6 +725,7 @@ MonoBehaviour:
   - {fileID: 3673459661463095827}
   torque: 300
   maxSteerAngle: 40
+  maxBrakeTorque: 2000
 --- !u!1 &6139952310411171387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,6 +1020,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 13738598, guid: 40371e10ee4c17747bba3febc73f9630, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c3e87c198f0be334b89f419e18f1b832, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40371e10ee4c17747bba3febc73f9630, type: 3}
 --- !u!4 &3253945773503748823 stripped
