@@ -22,16 +22,16 @@ public class Drive : MonoBehaviour
     public GameObject brakeLight;
 
     public Rigidbody rb;
-    public float gearLength = 3;
+    public float gearLength = 8;
     public float currentSpeed { get { return rb.velocity.magnitude * gearLength; } }
     public float lowPitch = 1.0f;
-    public float highPitch = 6.0f;
+    public float highPitch = 5.0f;
     public int numGears = 5;
     public float maxSpeed = 200;
 
-    private float rpm;
-    private int currentGear = 1;
-    private float currentGearPerc;
+    public float rpm;
+    public int currentGear = 1;
+    public float currentGearPerc;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class Drive : MonoBehaviour
         float upperGearMax = (1 / (float)numGears) * (currentGear + 1);
         float downGearMax = (1 / (float)numGears) * currentGear;
 
-        if (currentGear > 0 && speedPercentage < downGearMax)
+        if (currentGear > 1 && speedPercentage < downGearMax)
         {
             currentGear--;
         }
@@ -131,7 +131,11 @@ public class Drive : MonoBehaviour
                 case 2:
                 case 3:
                     wheelSteer = 0.0f;
-                    thrustTorque = accel * torque;
+                    thrustTorque = 0.0f;
+                    if (currentSpeed < maxSpeed)
+                    {
+                        thrustTorque = accel * torque;
+                    }
                     break;
                 default:
                     wheelSteer = 0.0f;
