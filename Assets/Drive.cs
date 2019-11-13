@@ -11,6 +11,7 @@ public class Drive : MonoBehaviour
     public float maxBrakeTorque = 2000.0f;
 
     public AudioSource skidSound;
+    public AudioSource highAccel;
 
     public Transform SkidTrailPrefab;
     Transform[] skidTrails = new Transform[4];
@@ -19,6 +20,18 @@ public class Drive : MonoBehaviour
     ParticleSystem[] skidSmoke = new ParticleSystem[4];
 
     public GameObject brakeLight;
+
+    public Rigidbody rb;
+    public float gearLength = 3;
+    public float currentSpeed { get { return rb.velocity.magnitude * gearLength; } }
+    public float lowPitch = 1.0f;
+    public float highPitch = 6.0f;
+    public int numGears = 5;
+    public float maxSpeed = 200;
+
+    private float rpm;
+    private int currentGear = 1;
+    private float currentGearPerc;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +42,33 @@ public class Drive : MonoBehaviour
             skidSmoke[i].Stop();
         }
         brakeLight.SetActive(false);
+    }
+
+    void CalculateEngineSound()
+    {
+        float gearPercentage = (1 / (float)numGears);
+        float targetGearFactor = Mathf.InverseLerp(gearPercentage * currentGear, gearPercentage * (currentGear + 1),
+            Mathf.Abs(currentSpeed / maxSpeed));
+        currentGearPerc = Mathf.Lerp(currentGearPerc, targetGearFactor, Time.deltaTime * 5.0f);
+
+        var gearNumFactor = currentGear / (float)numGears;
+        rpm = Mathf.Lerp(gearNumFactor, 1, currentGearPerc);
+
+        float speedPercentage = Mathf.Abs(currentSpeed / maxSpeed);
+        float upperGearMax = (1 / (float)numGears) * (currentGear + 1);
+        float downGearMax = (1 / (float)numGears) * currentGear;
+
+        if (currentGear > 0 && speedPercentage < downGearMax)
+        {
+            currentGear--;
+        }
+        if (speedPercentage > upperGearMax && (currentGear < (numGears - 1)))
+        {
+            currentGear++;
+        }
+
+        float pitch = Mathf.Lerp(lowPitch, highPitch, rpm);
+        highAccel.pitch = Mathf.Min(highPitch, pitch) * 0.25f;
     }
 
     public void StartSkidTrail(int i)
@@ -152,5 +192,7 @@ public class Drive : MonoBehaviour
         Go(a, s, b);
 
         CheckForSkid();
+
+        CalculateEngineSound();
     }
 }
