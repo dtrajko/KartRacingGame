@@ -21,13 +21,14 @@ public class Drive : MonoBehaviour
 
     public GameObject brakeLight;
 
-    public Rigidbody rb;
+    public Rigidbody rigidBody;
     public float gearLength = 8;
-    public float currentSpeed { get { return rb.velocity.magnitude * gearLength; } }
+    public float currentSpeed { get { return rigidBody.velocity.magnitude * gearLength; } }
     public float lowPitch = 1.5f;
     public float highPitch = 5.0f;
     public int numGears = 5;
     public float maxSpeed = 200;
+    public float speedPercentage;
 
     public float rpm;
     public int currentGear = 1;
@@ -54,7 +55,7 @@ public class Drive : MonoBehaviour
         var gearNumFactor = currentGear / (float)numGears;
         rpm = Mathf.Lerp(gearNumFactor, 1, currentGearPerc);
 
-        float speedPercentage = Mathf.Abs(currentSpeed / maxSpeed);
+        speedPercentage = Mathf.Abs(currentSpeed / maxSpeed);
         float upperGearMax = (1 / (float)numGears) * (currentGear + 1);
         float downGearMax = (1 / (float)numGears) * currentGear;
 
@@ -97,13 +98,13 @@ public class Drive : MonoBehaviour
         Destroy(holder.gameObject, 30);
     }
 
-    public void Go(float accel, float steer, float brake)
+    public void Go(float acceleration, float steering, float braking)
     {
-        accel = Mathf.Clamp(accel, -1, 1);
-        steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
-        brake = Mathf.Clamp(brake, 0, 1) * maxBrakeTorque;
+        acceleration = Mathf.Clamp(acceleration, -1, 1);
+        steering = Mathf.Clamp(steering, -1, 1) * maxSteerAngle;
+        braking = Mathf.Clamp(braking, 0, 1) * maxBrakeTorque;
 
-        if (brake > 0)
+        if (braking > 0)
         {
             brakeLight.SetActive(true);
         }
@@ -124,7 +125,7 @@ public class Drive : MonoBehaviour
                 // front wheels
                 case 0:
                 case 1:
-                    wheelSteer = steer;
+                    wheelSteer = steering;
                     thrustTorque = 0.0f;
                     break;
                 // back wheels
@@ -134,7 +135,7 @@ public class Drive : MonoBehaviour
                     thrustTorque = 0.0f;
                     if (currentSpeed < maxSpeed)
                     {
-                        thrustTorque = accel * torque;
+                        thrustTorque = acceleration * torque;
                     }
                     break;
                 default:
@@ -144,7 +145,7 @@ public class Drive : MonoBehaviour
             }
 
             WheelColliders[i].motorTorque = thrustTorque;
-            WheelColliders[i].brakeTorque = brake;
+            WheelColliders[i].brakeTorque = braking;
 
             WheelColliders[i].steerAngle = wheelSteer;
 

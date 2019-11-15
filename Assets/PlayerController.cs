@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KPlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Drive ds;
 
@@ -19,9 +19,7 @@ public class KPlayerController : MonoBehaviour
         float b = Input.GetAxis("Jump");
 
         ds.Go(a, s, b);
-
         ds.CheckForSkid();
-
         ds.CalculateEngineSound();
     }
 }
