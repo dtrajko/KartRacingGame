@@ -26,11 +26,11 @@ public class AIController : MonoBehaviour
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
         float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
-        float acceleration = 0.9f;
+        float acceleration = 0.8f;
         float braking = 0.0f;
 
-        if (distanceToTarget < 12.0 && drive.speedPercentage > 0.6f) {
-            acceleration = 0.5f;
+        if (distanceToTarget < 12.0 && drive.speedPercentage > 0.4f) {
+            acceleration = 0.4f;
             braking = 0.8f;
         }
 
