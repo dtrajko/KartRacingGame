@@ -6,15 +6,21 @@ public class AIController : MonoBehaviour
 {
     public Circuit circuit;
     Drive drive;
-    public float steeringSensitivity = 0.01f;
+    public float steeringSensitivity = 0.02f;
     Vector3 target;
     int currentWaypoint = 0;
+
+    // NPCs can have different max acceleration or breaking values
+    float accelRandOffset = 0.0f;
+    float brakingRandOffset = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         drive = this.GetComponent<Drive>();
         target = circuit.waypoints[currentWaypoint].transform.position;
+        accelRandOffset = Random.Range(-0.2f, 0.2f);
+        brakingRandOffset = Random.Range(-0.0f, 0.0f);
     }
 
     // Update is called once per frame
@@ -26,21 +32,17 @@ public class AIController : MonoBehaviour
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
         float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
-        float acceleration = 0.8f;
+        float acceleration = 1.0f;
         float braking = 0.0f;
 
-        if (distanceToTarget < 12.0 && drive.speedPercentage > 0.4f) {
+        if (distanceToTarget < 12.0f && drive.speedPercentage > 0.4f) {
             acceleration = 0.2f;
             braking = 0.8f;
         }
 
-        drive.Go(acceleration, steering, braking);
-        drive.CheckForSkid();
-        drive.CalculateEngineSound();
-
         if (distanceToTarget < 4.0f) // threshold, make larger if car starts to circle waypoint
         {
-            acceleration = 0.8f;
+            acceleration = 1.0f;
             braking = 0.0f;
 
             currentWaypoint++;
@@ -52,5 +54,8 @@ public class AIController : MonoBehaviour
             Debug.Log("Current waypoint:" + currentWaypoint);
         }
 
+        drive.Go(acceleration + accelRandOffset, steering, braking + brakingRandOffset);
+        drive.CheckForSkid();
+        drive.CalculateEngineSound();
     }
 }

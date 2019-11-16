@@ -22,6 +22,7 @@ public class Circuit : MonoBehaviour
         if (waypoints.Length > 1)
         {
             Vector3 prev = waypoints[0].transform.position;
+                ;
             for (int i = 1; i < waypoints.Length; i++)
             {
                 Vector3 next = waypoints[i].transform.position;
