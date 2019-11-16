@@ -962,6 +962,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7746082791354626737, guid: 46e885f74af1dc84e95fda321c8a7b74,
+        type: 3}
+      propertyPath: torque
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 890117218, guid: 46e885f74af1dc84e95fda321c8a7b74, type: 3}
       propertyPath: circuit
       value: 
