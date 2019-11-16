@@ -733,6 +733,7 @@ MonoBehaviour:
   highPitch: 5
   numGears: 5
   maxSpeed: 200
+  speedPercentage: 0
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
@@ -830,6 +831,7 @@ GameObject:
   - component: {fileID: 7746082792431226498}
   - component: {fileID: 7148831428074792787}
   - component: {fileID: 7914731094198927599}
+  - component: {fileID: 7611625631546372734}
   m_Layer: 0
   m_Name: CarBody
   m_TagString: Untagged
@@ -1090,6 +1092,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7611625631546372734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746082792431226503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebb5fdca0159684fb480144ae2d5944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8003429965494622217
 GameObject:
   m_ObjectHideFlags: 0

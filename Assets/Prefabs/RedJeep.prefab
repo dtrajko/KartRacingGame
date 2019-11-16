@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 1908644993622466959}
   - component: {fileID: 6787511695426806646}
   - component: {fileID: 5568883756917121594}
+  - component: {fileID: 8923946661280801320}
   m_Layer: 0
   m_Name: CarBody
   m_TagString: Untagged
@@ -865,6 +866,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8923946661280801320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459683815661740433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebb5fdca0159684fb480144ae2d5944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4875562879516564832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,6 +1168,7 @@ MonoBehaviour:
   highPitch: 5
   numGears: 5
   maxSpeed: 200
+  speedPercentage: 0
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
@@ -1317,15 +1331,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92264428634c2804685bf0d5e09e5984, type: 3}
---- !u!198 &4082331032029394423 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6474225346079960802, guid: 92264428634c2804685bf0d5e09e5984,
-    type: 3}
-  m_PrefabInstance: {fileID: 7025135858609511189}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4082331032029394425 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6474225346079960812, guid: 92264428634c2804685bf0d5e09e5984,
+    type: 3}
+  m_PrefabInstance: {fileID: 7025135858609511189}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4082331032029394423 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6474225346079960802, guid: 92264428634c2804685bf0d5e09e5984,
     type: 3}
   m_PrefabInstance: {fileID: 7025135858609511189}
   m_PrefabAsset: {fileID: 0}

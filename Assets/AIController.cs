@@ -30,7 +30,7 @@ public class AIController : MonoBehaviour
         float braking = 0.0f;
 
         if (distanceToTarget < 12.0 && drive.speedPercentage > 0.4f) {
-            acceleration = 0.4f;
+            acceleration = 0.2f;
             braking = 0.8f;
         }
 
@@ -38,9 +38,9 @@ public class AIController : MonoBehaviour
         drive.CheckForSkid();
         drive.CalculateEngineSound();
 
-        if (distanceToTarget < 8.0f) // threshold, make larger if car starts to circle waypoint
+        if (distanceToTarget < 4.0f) // threshold, make larger if car starts to circle waypoint
         {
-            acceleration = 0.9f;
+            acceleration = 0.8f;
             braking = 0.0f;
 
             currentWaypoint++;
