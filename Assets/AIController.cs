@@ -6,6 +6,7 @@ public class AIController : MonoBehaviour
 {
     public Circuit circuit;
     Drive drive;
+    public float accelSensitivity = 0.3f;
     public float steeringSensitivity = 0.02f;
     public float brakingSensitivity = 1.19f;
     Vector3 target;
@@ -13,6 +14,7 @@ public class AIController : MonoBehaviour
     int currentWaypoint = 0;
     int nextWaypoint = 0;
     float totalDistanceToTarget;
+    bool isJump = false;
 
     // NPCs can have different max acceleration or breaking values
     float accelRandOffset = 0.0f;
@@ -46,18 +48,18 @@ public class AIController : MonoBehaviour
         float speedFactor = drive.currentSpeed / drive.maxSpeed;
         float speedFactorWeight = 0.85f;
 
-        float acceleration = 1.0f;
+        float acceleration = Mathf.Lerp(accelSensitivity, 1.0f, distanceFactor);
         float nextWaypointFactor = Mathf.Abs(nextTargetAngle) / 180.0f;
         float brakingValue = (speedFactor * speedFactorWeight - distanceFactor + nextWaypointFactor) * brakingSensitivity;
         float braking = Mathf.Lerp(-1.0f, 0.95f, brakingValue);
 
         if (distanceToTarget < 12.0f && drive.speedPercentage > 0.4f) {
-            acceleration = Mathf.Lerp(0.0f, 0.8f, 0.8f - braking);
+            acceleration = Mathf.Lerp(accelSensitivity, 0.8f, 0.8f - braking);
         }
 
         if (distanceToTarget < 8.0f) // threshold, make larger if car starts to circle waypoint
         {
-            acceleration = Mathf.Lerp(0.0f, 1.0f, 1.0f - braking);
+            acceleration = Mathf.Lerp(accelSensitivity, 1.0f, 1.0f - braking);
 
             currentWaypoint++;
             if (currentWaypoint >= circuit.waypoints.Length)
@@ -70,12 +72,32 @@ public class AIController : MonoBehaviour
                 nextWaypoint = 0;
             }
 
-            Debug.Log("Waypoints: " + circuit.waypoints.Length + " CurrentWaypoint: " + currentWaypoint + " nextWaypoint: " + nextWaypoint);
-
             target = circuit.waypoints[currentWaypoint].transform.position;
             nextTarget = circuit.waypoints[nextWaypoint].transform.position;
 
             totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
+
+            if (nextTarget.y > 10.0f)
+            {
+                isJump = true;
+            }
+            else
+            {
+                isJump = false;
+            }
+        }
+
+        if (Mathf.Abs(nextTargetAngle) > 20.0f)
+        {
+            // braking += 0.8f;
+            // acceleration -= 0.8f;
+        }
+
+        if (isJump)
+        {
+            acceleration = 1.0f;
+            braking = 0.0f;
+            // Debug.Log("J U M P !!!");
         }
 
         drive.Go(acceleration + accelRandOffset, steering, braking);
