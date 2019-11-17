@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour
     public float steeringSensitivity = 0.02f;
     Vector3 target;
     int currentWaypoint = 0;
+    float totalDistanceToTarget;
 
     // NPCs can have different max acceleration or breaking values
     float accelRandOffset = 0.0f;
@@ -19,8 +20,10 @@ public class AIController : MonoBehaviour
     {
         drive = this.GetComponent<Drive>();
         target = circuit.waypoints[currentWaypoint].transform.position;
+        totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
+
+        // NPCs can have different max acceleration or breaking values
         accelRandOffset = Random.Range(-0.2f, 0.2f);
-        brakingRandOffset = Random.Range(-0.0f, 0.0f);
     }
 
     // Update is called once per frame
@@ -32,8 +35,11 @@ public class AIController : MonoBehaviour
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
         float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
+
+        float distanceFactor = distanceToTarget / totalDistanceToTarget;
+
         float acceleration = 1.0f;
-        float braking = 0.0f;
+        float braking = Mathf.Lerp(-1.0f, 1.0f, 0.4f - distanceFactor);
 
         if (distanceToTarget < 12.0f && drive.speedPercentage > 0.4f) {
             acceleration = 0.2f;
@@ -51,10 +57,13 @@ public class AIController : MonoBehaviour
                 currentWaypoint = 0;
             }
             target = circuit.waypoints[currentWaypoint].transform.position;
-            Debug.Log("Current waypoint:" + currentWaypoint);
+            totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
+
         }
 
-        drive.Go(acceleration + accelRandOffset, steering, braking + brakingRandOffset);
+        Debug.Log("AIControler.braking:" + braking);
+
+        drive.Go(acceleration + accelRandOffset, steering, braking);
         drive.CheckForSkid();
         drive.CalculateEngineSound();
     }

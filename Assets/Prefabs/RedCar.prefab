@@ -57,11 +57,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964410920347976}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9000002, y: -0.65, z: 1.0999987}
-  m_LocalScale: {x: 1, y: 0.5, z: 2.5000029}
+  m_LocalPosition: {x: -0.90000045, y: -1.3, z: 0.43999916}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7746082792431226499}
-  m_RootOrder: 3
+  m_Father: {fileID: 7746082792201533675}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &7746082792658563138
 WheelCollider:
@@ -71,7 +71,7 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964410920347976}
   m_Center: {x: 0, y: 1, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.72
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -85,7 +85,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1.2
+    m_Stiffness: 1.4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -133,11 +133,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964411091683817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9000002, y: -0.65, z: -1.1999972}
-  m_LocalScale: {x: 1, y: 0.5, z: 2.5000029}
+  m_LocalPosition: {x: 0.90000045, y: -1.3, z: -0.47999853}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7746082792431226499}
-  m_RootOrder: 6
+  m_Father: {fileID: 7746082792201533675}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &7746082793030307997
 WheelCollider:
@@ -147,7 +147,7 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964411091683817}
   m_Center: {x: 0, y: 1, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.72
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -161,7 +161,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1.2
+    m_Stiffness: 1.4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -209,11 +209,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964412168232719}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9000002, y: -0.65, z: 1.0999985}
-  m_LocalScale: {x: 1, y: 0.5, z: 2.5000029}
+  m_LocalPosition: {x: 0.90000045, y: -1.3, z: 0.43999907}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7746082792431226499}
-  m_RootOrder: 4
+  m_Father: {fileID: 7746082792201533675}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &7746082792104317048
 WheelCollider:
@@ -223,7 +223,7 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964412168232719}
   m_Center: {x: 0, y: 1, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.72
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -237,7 +237,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1.2
+    m_Stiffness: 1.4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -378,11 +378,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964412835791911}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9000001, y: -0.65, z: -1.2000047}
-  m_LocalScale: {x: 1, y: 0.5, z: 2.5000029}
+  m_LocalPosition: {x: -0.90000033, y: -1.3, z: -0.48000142}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7746082792431226499}
-  m_RootOrder: 5
+  m_Father: {fileID: 7746082792201533675}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &7746082791284104491
 WheelCollider:
@@ -392,7 +392,7 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755964412835791911}
   m_Center: {x: 0, y: 1, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.72
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -406,7 +406,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1.2
+    m_Stiffness: 1.4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -810,7 +810,11 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 2.500002}
-  m_Children: []
+  m_Children:
+  - {fileID: 3316102385804532571}
+  - {fileID: 3316102385089457436}
+  - {fileID: 3316102384431199796}
+  - {fileID: 3316102386175441914}
   m_Father: {fileID: 7746082792431226499}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -851,10 +855,6 @@ Transform:
   - {fileID: 7956039742243758646}
   - {fileID: 5880521160694276925}
   - {fileID: 7746082792201533675}
-  - {fileID: 3316102385804532571}
-  - {fileID: 3316102385089457436}
-  - {fileID: 3316102384431199796}
-  - {fileID: 3316102386175441914}
   - {fileID: 3942546039260128693}
   - {fileID: 6869548966122634505}
   m_Father: {fileID: 7746082791354626742}
@@ -871,8 +871,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1, z: 4.17}
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Size: {x: 1.9, y: 0.9501045, z: 4.075842}
+  m_Center: {x: -2.4394602e-17, y: -0.20512609, z: 0.017341614}
 --- !u!65 &4685519833481897121
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -884,8 +884,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.456, y: 0.7, z: 1.66}
-  m_Center: {x: 0, y: 0.52, z: 0}
+  m_Size: {x: 1.456, y: 0.72580147, z: 1.5460275}
+  m_Center: {x: 6.5323223e-16, y: 0.44267905, z: -0.1709671}
 --- !u!54 &7746082792431226498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 7746082792431226499}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3547975869904707852
 MeshFilter:
@@ -1422,7 +1422,7 @@ PrefabInstance:
     - target: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
         type: 3}
