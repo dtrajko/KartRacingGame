@@ -7,7 +7,7 @@ public class AIController : MonoBehaviour
     public Circuit circuit;
     Drive drive;
     public float steeringSensitivity = 0.02f;
-    public float brakingSensitivity = 1.18f;
+    public float brakingSensitivity = 1.19f;
     Vector3 target;
     Vector3 nextTarget;
     int currentWaypoint = 0;
@@ -44,11 +44,11 @@ public class AIController : MonoBehaviour
 
         float distanceFactor = distanceToTarget / totalDistanceToTarget;
         float speedFactor = drive.currentSpeed / drive.maxSpeed;
-        float speedFactorWeight = 0.75f;
+        float speedFactorWeight = 0.85f;
 
         float acceleration = 1.0f;
-        float nextTargetAngleFactor = Mathf.Abs(nextTargetAngle / 90.0f);
-        float brakingValue = (speedFactor * speedFactorWeight - distanceFactor + nextTargetAngleFactor) * brakingSensitivity;
+        float nextWaypointFactor = Mathf.Abs(nextTargetAngle) / 180.0f;
+        float brakingValue = (speedFactor * speedFactorWeight - distanceFactor + nextWaypointFactor) * brakingSensitivity;
         float braking = Mathf.Lerp(-1.0f, 0.95f, brakingValue);
 
         if (distanceToTarget < 12.0f && drive.speedPercentage > 0.4f) {
@@ -70,11 +70,12 @@ public class AIController : MonoBehaviour
                 nextWaypoint = 0;
             }
 
+            Debug.Log("Waypoints: " + circuit.waypoints.Length + " CurrentWaypoint: " + currentWaypoint + " nextWaypoint: " + nextWaypoint);
+
             target = circuit.waypoints[currentWaypoint].transform.position;
             nextTarget = circuit.waypoints[nextWaypoint].transform.position;
 
             totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
-
         }
 
         drive.Go(acceleration + accelRandOffset, steering, braking);
