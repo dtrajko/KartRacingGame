@@ -190,5 +190,17 @@ public class Drive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    public bool IsClimbing
+    {
+        get
+        {
+            float axleFront = (WheelColliders[0].transform.position.y + WheelColliders[1].transform.position.y) / 2;
+            float axleRead = (WheelColliders[2].transform.position.y + WheelColliders[3].transform.position.y) / 2;
+            // Debug.Log("(axleFront - axleRead): " + (axleFront - axleRead));
+            return (axleFront - axleRead) > 0.1f;
+        }
     }
 }

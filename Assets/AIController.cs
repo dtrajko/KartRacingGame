@@ -22,7 +22,8 @@ public class AIController : MonoBehaviour
 
     GameObject tracker;
     int currentTrackerWP = 0;
-    float lookAhead = 16.0f;
+    float lookAhead = 20.0f;
+    float trackerPrevHeight = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,7 @@ public class AIController : MonoBehaviour
 
         tracker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         DestroyImmediate(tracker.GetComponent<Collider>());
+        tracker.gameObject.GetComponent<MeshRenderer>().enabled = false;
         tracker.transform.position = drive.rigidBody.transform.position;
         tracker.transform.rotation = drive.rigidBody.transform.rotation;
     }
@@ -68,72 +70,29 @@ public class AIController : MonoBehaviour
     {
         ProgressTracker();
 
-        // Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(target);
         Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(tracker.transform.position);
-        Vector3 nextLocalTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(nextTarget);
-        float distanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
-
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-        float nextTargetAngle = Mathf.Atan2(nextLocalTarget.x, nextLocalTarget.z) * Mathf.Rad2Deg;
-
         float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
 
-        float distanceFactor = distanceToTarget / totalDistanceToTarget;
-        float speedFactor = drive.currentSpeed / drive.maxSpeed;
-        float speedFactorWeight = 0.85f;
+        float speedFactorWeight = 2.8f;
+        float targetAngleWeight = 3.6f;
+        float speedFactor = (drive.currentSpeed / drive.maxSpeed) * speedFactorWeight;
+        float targetAngleFactor = (Mathf.Abs(targetAngle) / 90.0f) * targetAngleWeight;
 
-        float acceleration = Mathf.Lerp(accelSensitivity, 1.0f, distanceFactor);
-        float nextWaypointFactor = Mathf.Abs(nextTargetAngle) / 180.0f;
-        float brakingValue = (speedFactor * speedFactorWeight - distanceFactor + nextWaypointFactor) * brakingSensitivity;
-        float braking = Mathf.Lerp(-1.0f, 0.95f, brakingValue);
+        // Debug.Log("BRAKING - SPEED: "+ (int)(Mathf.Lerp(0, 1, speedFactor) * 100) +
+        //     "%, ANGLE: " + (int)(Mathf.Lerp(0, 1, targetAngleFactor) * 100) + 
+        //     "% TOTAL: " + (int)(Mathf.Lerp(0, 1, speedFactor * targetAngleFactor) * 100) + "%");
 
-        if (distanceToTarget < 12.0f && drive.speedPercentage > 0.4f) {
-            acceleration = Mathf.Lerp(accelSensitivity, 0.8f, 0.8f - braking);
-        }
+        float braking = Mathf.Lerp(-1.0f, 1.0f, speedFactor * targetAngleFactor);
+        float acceleration = Mathf.Lerp(accelSensitivity, 1.0f, 1.0f + accelSensitivity - braking);
 
-        if (distanceToTarget < 8.0f) // threshold, make larger if car starts to circle waypoint
+        if (drive.currentSpeed < 4.0f || drive.IsClimbing)
         {
-            acceleration = Mathf.Lerp(accelSensitivity, 1.0f, 1.0f - braking);
-
-            currentWaypoint++;
-            if (currentWaypoint >= circuit.waypoints.Length)
-            {
-                currentWaypoint = 0;
-            }
-            nextWaypoint = currentWaypoint + 1;
-            if (nextWaypoint >= circuit.waypoints.Length)
-            {
-                nextWaypoint = 0;
-            }
-
-            target = circuit.waypoints[currentWaypoint].transform.position;
-            nextTarget = circuit.waypoints[nextWaypoint].transform.position;
-
-            totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
-
-            if (nextTarget.y > 10.0f)
-            {
-                isJump = true;
-            }
-            else
-            {
-                isJump = false;
-            }
-        }
-
-        if (Mathf.Abs(nextTargetAngle) > 20.0f)
-        {
-            // braking += 0.8f;
-            // acceleration -= 0.8f;
-        }
-
-        if (isJump)
-        {
-            acceleration = 1.0f;
             braking = 0.0f;
+            acceleration = 1.0f;
         }
 
-        drive.Go(acceleration + accelRandOffset, steering, braking);
+        drive.Go(acceleration, steering, braking);
         drive.CheckForSkid();
         drive.CalculateEngineSound();
     }
