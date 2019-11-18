@@ -92,6 +92,9 @@ public class AIController : MonoBehaviour
             acceleration = 1.0f;
         }
 
+        // Debug.Log("DRIVE.GO - ACCEL: " + (int)(acceleration * 100) +
+        //     "%, BRAKE: " + (int)(Mathf.Clamp(braking, 0, 1) * 100) + "%");
+
         drive.Go(acceleration, steering, braking);
         drive.CheckForSkid();
         drive.CalculateEngineSound();
