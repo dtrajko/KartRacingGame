@@ -20,6 +20,10 @@ public class AIController : MonoBehaviour
     float accelRandOffset = 0.0f;
     float brakingRandOffset = 0.0f;
 
+    GameObject tracker;
+    int currentTrackerWP = 0;
+    float lookAhead = 16.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +34,42 @@ public class AIController : MonoBehaviour
 
         // NPCs can have different max acceleration or breaking values
         accelRandOffset = Random.Range(-0.2f, 0.2f);
+
+        tracker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        DestroyImmediate(tracker.GetComponent<Collider>());
+        tracker.transform.position = drive.rigidBody.transform.position;
+        tracker.transform.rotation = drive.rigidBody.transform.rotation;
+    }
+
+    void ProgressTracker()
+    {
+        Debug.DrawLine(drive.rigidBody.transform.position, tracker.transform.position);
+
+        if (Vector3.Distance(drive.rigidBody.gameObject.transform.position, tracker.transform.position) > lookAhead)
+        {
+            return;
+        }
+
+        tracker.transform.LookAt(circuit.waypoints[currentTrackerWP].transform.position);
+        tracker.transform.Translate(0, 0, 1.0f); // speed of tracker
+
+        if (Vector3.Distance(tracker.transform.position, circuit.waypoints[currentTrackerWP].transform.position) < 1.0f)
+        {
+            currentTrackerWP++;
+            if (currentTrackerWP >= circuit.waypoints.Length)
+            {
+                currentTrackerWP = 0;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(target);
+        ProgressTracker();
+
+        // Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(target);
+        Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(tracker.transform.position);
         Vector3 nextLocalTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(nextTarget);
         float distanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
 
@@ -97,7 +131,6 @@ public class AIController : MonoBehaviour
         {
             acceleration = 1.0f;
             braking = 0.0f;
-            // Debug.Log("J U M P !!!");
         }
 
         drive.Go(acceleration + accelRandOffset, steering, braking);
