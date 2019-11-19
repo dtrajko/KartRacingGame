@@ -8,13 +8,12 @@ public class Ghost : MonoBehaviour
     float alpha = 1;
     float flashSpeed = 2;
 
-    private void Awake()
+    void Awake()
     {
         rends = this.gameObject.GetComponentsInChildren<Renderer>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         foreach (Renderer r in rends)
         {
@@ -46,7 +45,6 @@ public class Ghost : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         alpha = 0.3f + Mathf.PingPong(Time.time * flashSpeed, 0.7f);
