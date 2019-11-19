@@ -20,8 +20,19 @@ public class AIController2 : AIController
     {
         ProgressTracker();
 
-        Vector3 localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(tracker.transform.position);
-        float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+        Vector3 localTarget;
+        float targetAngle;
+
+        if (Time.time < drive.rigidBody.GetComponent<AvoidDetector>().avoidTime)
+        {
+            localTarget = tracker.transform.right * drive.rigidBody.GetComponent<AvoidDetector>().avoidPath;
+        }
+        else
+        {
+            localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(tracker.transform.position);
+        }
+        targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+
         float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
 
         float speedFactor = drive.currentSpeed / drive.maxSpeed;
