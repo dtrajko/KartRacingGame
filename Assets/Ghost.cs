@@ -8,10 +8,14 @@ public class Ghost : MonoBehaviour
     float alpha = 1;
     float flashSpeed = 2;
 
+    private void Awake()
+    {
+        rends = this.gameObject.GetComponentsInChildren<Renderer>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        rends = this.gameObject.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in rends)
         {
             r.material.SetFloat("_Mode", 3.0f);

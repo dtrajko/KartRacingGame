@@ -18,6 +18,7 @@ public class AIController : MonoBehaviour
     protected GameObject tracker;
     protected int currentTrackerWP = 0;
     protected float trackerPrevHeight = 0.0f;
+    protected float lastTimeMoving = 0.0f;
 
     private float totalDistanceToTarget;
 
@@ -35,6 +36,8 @@ public class AIController : MonoBehaviour
         tracker.gameObject.GetComponent<MeshRenderer>().enabled = false;
         tracker.transform.position = drive.rigidBody.transform.position;
         tracker.transform.rotation = drive.rigidBody.transform.rotation;
+
+        this.GetComponent<Ghost>().enabled = false;
     }
 
     protected void ProgressTracker()
@@ -59,6 +62,12 @@ public class AIController : MonoBehaviour
         }
     }
 
+    void ResetLayer()
+    {
+        drive.rigidBody.gameObject.layer = 0;
+        this.GetComponent<Ghost>().enabled = false;
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -66,6 +75,23 @@ public class AIController : MonoBehaviour
 
         Vector3 localTarget;
         float targetAngle;
+
+        if (drive.rigidBody.velocity.magnitude > 1.0f)
+        {
+            lastTimeMoving = Time.time;
+        }
+
+        if (Time.time > lastTimeMoving + 4.0f)
+        {
+            drive.rigidBody.gameObject.transform.position =
+                circuit.waypoints[currentTrackerWP].transform.position +
+                Vector3.up + // place the car 1m above the road
+                new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)); // randomize the position aroind the waypoint
+            tracker.transform.position = drive.rigidBody.gameObject.transform.position;
+            drive.rigidBody.gameObject.layer = 8;
+            this.GetComponent<Ghost>().enabled = true;
+            Invoke("ResetLayer", 3);
+        }
 
         if (Time.time < drive.rigidBody.GetComponent<AvoidDetector>().avoidTime)
         {

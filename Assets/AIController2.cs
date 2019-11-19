@@ -23,6 +23,23 @@ public class AIController2 : AIController
         Vector3 localTarget;
         float targetAngle;
 
+        if (drive.rigidBody.velocity.magnitude > 1.0f)
+        {
+            lastTimeMoving = Time.time;
+        }
+
+        if (Time.time > lastTimeMoving + 4.0f)
+        {
+            drive.rigidBody.gameObject.transform.position =
+                circuit.waypoints[currentTrackerWP].transform.position +
+                Vector3.up + // place the car 1m above the road
+                new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)); // randomize the position aroind the waypoint
+            tracker.transform.position = drive.rigidBody.gameObject.transform.position;
+            drive.rigidBody.gameObject.layer = 8;
+            this.GetComponent<Ghost>().enabled = true;
+            Invoke("ResetLayer", 3);
+        }
+
         if (Time.time < drive.rigidBody.GetComponent<AvoidDetector>().avoidTime)
         {
             localTarget = tracker.transform.right * drive.rigidBody.GetComponent<AvoidDetector>().avoidPath;

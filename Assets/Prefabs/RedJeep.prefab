@@ -1143,6 +1143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7746082791354626742}
   - component: {fileID: 7746082791354626737}
+  - component: {fileID: 4913220062208228798}
   - component: {fileID: 890117218}
   m_Layer: 0
   m_Name: RedJeep
@@ -1209,6 +1210,18 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
+--- !u!114 &4913220062208228798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746082791354626743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e130bafbb4b1c145861599e98522244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &890117218
 MonoBehaviour:
   m_ObjectHideFlags: 0

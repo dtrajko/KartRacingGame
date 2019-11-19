@@ -14,6 +14,12 @@ public class FlipCar : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
+    private void RightCar()
+    {
+        this.transform.position += Vector3.up;
+        this.transform.rotation = Quaternion.LookRotation(this.transform.forward);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -26,11 +32,5 @@ public class FlipCar : MonoBehaviour
         {
             RightCar();
         }
-    }
-
-    private void RightCar()
-    {
-        this.transform.position += Vector3.up;
-        this.transform.rotation = Quaternion.LookRotation(this.transform.forward);
     }
 }
