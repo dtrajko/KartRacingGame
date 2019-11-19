@@ -424,9 +424,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circuit: {fileID: 2144707190}
-  accelSensitivity: 0.3
+  brakingSensitivity: 1
   steeringSensitivity: 0.02
-  brakingSensitivity: 1.1
+  accelSensitivity: 0.3
+  lookAhead: 20
 --- !u!64 &34283394
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5046,7 +5047,7 @@ PrefabInstance:
     - target: {fileID: 7746082791354626743, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -5128,45 +5129,60 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6613ca451bfae3c4b9fb17761bc1314f, type: 2}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: torque
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: maxSteerAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: maxBrakeTorque
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 7746082792658563138, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1.2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7746082792658563138, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746082793030307997, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1.2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7746082793030307997, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746082792104317048, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1.2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7746082792104317048, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791284104491, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1.2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791284104491, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7956039742246789934, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -5191,13 +5207,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1513643449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5af4afaacd08d804ea1956f7ee99cc55, type: 3}
+  m_Script: {fileID: 11500000, guid: af7594df0d07c1345a6484b586c7944e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   circuit: {fileID: 2144707190}
-  accelSensitivity: 0.3
-  steeringSensitivity: 0.02
-  brakingSensitivity: 1.1
+  brakingSensitivity: 1
+  steeringSensitivity: 0.01
+  accelSensitivity: 1
+  lookAhead: 24
 --- !u!64 &1548285743
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5935,6 +5952,7 @@ GameObject:
   - component: {fileID: 1812878669}
   - component: {fileID: 1812878671}
   - component: {fileID: 1812878670}
+  - component: {fileID: 1812878672}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: Untagged
@@ -5950,11 +5968,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812878668}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -9}
+  m_LocalPosition: {x: 202, y: 4, z: -90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1959524721}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1812878670
 AudioListener:
@@ -6007,6 +6025,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1812878672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812878668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b50a4a341d953b46aaed935ba37d8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1959524721}
+  distance: 4
+  height: 2
+  heightOffset: 0
+  heightDamping: 4
+  rotationDamping: 2
 --- !u!64 &1814624005
 MeshCollider:
   m_ObjectHideFlags: 0

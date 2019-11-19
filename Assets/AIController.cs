@@ -5,36 +5,30 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     public Circuit circuit;
-    Drive drive;
-    public float accelSensitivity = 0.3f;
-    public float steeringSensitivity = 0.02f;
-    public float brakingSensitivity = 1.19f;
-    Vector3 target;
-    Vector3 nextTarget;
-    int currentWaypoint = 0;
-    int nextWaypoint = 0;
-    float totalDistanceToTarget;
-    bool isJump = false;
+    public float brakingSensitivity = 1.0f;
+    public float steeringSensitivity = 0.01f;
+    public float accelSensitivity = 1.0f;
+    public float lookAhead = 24.0f;
 
-    // NPCs can have different max acceleration or breaking values
-    float accelRandOffset = 0.0f;
-    float brakingRandOffset = 0.0f;
+    protected Drive drive;
+    protected Vector3 target;
+    protected Vector3 nextTarget;
+    protected int currentWaypoint = 0;
+    protected int nextWaypoint = 0;
+    protected GameObject tracker;
+    protected int currentTrackerWP = 0;
+    protected float trackerPrevHeight = 0.0f;
 
-    GameObject tracker;
-    int currentTrackerWP = 0;
-    float lookAhead = 20.0f;
-    float trackerPrevHeight = 0.0f;
+    private float totalDistanceToTarget;
+
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         drive = this.GetComponent<Drive>();
         target = circuit.waypoints[currentWaypoint].transform.position;
         nextTarget = circuit.waypoints[currentWaypoint + 1].transform.position;
         totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
-
-        // NPCs can have different max acceleration or breaking values
-        accelRandOffset = Random.Range(-0.2f, 0.2f);
 
         tracker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         DestroyImmediate(tracker.GetComponent<Collider>());
@@ -43,7 +37,7 @@ public class AIController : MonoBehaviour
         tracker.transform.rotation = drive.rigidBody.transform.rotation;
     }
 
-    void ProgressTracker()
+    protected void ProgressTracker()
     {
         Debug.DrawLine(drive.rigidBody.transform.position, tracker.transform.position);
 
@@ -66,7 +60,7 @@ public class AIController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         ProgressTracker();
 
