@@ -18,6 +18,12 @@ public class AIController2 : AIController
     // Update is called once per frame
     protected override void Update()
     {
+        if (!RaceMonitor.racing)
+        {
+            lastTimeMoving = Time.time;
+            return;
+        }
+
         ProgressTracker();
 
         Vector3 localTarget;

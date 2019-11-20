@@ -71,6 +71,12 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (!RaceMonitor.racing)
+        {
+            lastTimeMoving = Time.time;
+            return;
+        }
+
         ProgressTracker();
 
         Vector3 localTarget;

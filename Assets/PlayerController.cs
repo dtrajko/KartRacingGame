@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Drive ds;
+    Drive drive;
 
     // Start is called before the first frame update
     void Start()
     {
-        ds = this.GetComponent<Drive>();
+        drive = this.GetComponent<Drive>();
+        this.GetComponent<Ghost>().enabled = false;
     }
 
     void Update()
     {
+        if (!RaceMonitor.racing)
+        {
+            return;
+        }
+
         float a = Input.GetAxis("Vertical");
         float s = Input.GetAxis("Horizontal");
         float b = Input.GetAxis("Jump");
 
-        ds.Go(a, s, b);
-        ds.CheckForSkid();
-        ds.CalculateEngineSound();
+        drive.Go(a, s, b);
+        drive.CheckForSkid();
+        drive.CalculateEngineSound();
     }
 }
