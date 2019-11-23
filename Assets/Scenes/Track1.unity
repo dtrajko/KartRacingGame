@@ -1233,7 +1233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &218295600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5945,6 +5945,21 @@ PrefabInstance:
       propertyPath: skidmarksController
       value: 
       objectReference: {fileID: 547928178}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: torque
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: maxSteerAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: maxBrakeTorque
+      value: 4000
+      objectReference: {fileID: 0}
     - target: {fileID: 7956039742243758646, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_RootOrder
@@ -5990,21 +6005,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 29f5f6da16948764f9c0b4419f1c41c1, type: 2}
-    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: torque
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: maxSteerAngle
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: maxBrakeTorque
-      value: 4000
-      objectReference: {fileID: 0}
     - target: {fileID: 7746082792658563138, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
@@ -6301,11 +6301,6 @@ PrefabInstance:
       propertyPath: skidmarksController
       value: 
       objectReference: {fileID: 547928178}
-    - target: {fileID: 1134802225430467596, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6613ca451bfae3c4b9fb17761bc1314f, type: 2}
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: torque
@@ -6321,6 +6316,11 @@ PrefabInstance:
       propertyPath: maxBrakeTorque
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 1134802225430467596, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6613ca451bfae3c4b9fb17761bc1314f, type: 2}
     - target: {fileID: 1513643450, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
       propertyPath: circuit
       value: 
