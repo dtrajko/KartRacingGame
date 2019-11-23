@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Drive : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class Drive : MonoBehaviour
     public int currentGear = 1;
     public float currentGearPerc;
 
+    public GameObject playerNamePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,10 @@ public class Drive : MonoBehaviour
             skidSmoke[i].Stop();
         }
         brakeLight.SetActive(false);
+
+        GameObject playerName = Instantiate(playerNamePrefab);
+        playerName.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
+        playerName.GetComponent<Text>().text = "Player Name";
     }
 
     public void CalculateEngineSound()

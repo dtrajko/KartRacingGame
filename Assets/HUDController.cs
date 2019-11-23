@@ -16,6 +16,7 @@ public class HUDController : MonoBehaviour
         if (PlayerPrefs.HasKey("HUDSetting"))
         {
             HUDSetting = PlayerPrefs.GetFloat("HUDSetting");
+            canvasGroupHUD.alpha = HUDSetting;
         }
     }
 
@@ -27,6 +28,8 @@ public class HUDController : MonoBehaviour
             canvasGroupHUD.alpha = 0.0f;
             return;
         }
+
+        canvasGroupHUD.alpha = HUDSetting;
 
         if (Input.GetKeyDown(KeyCode.H))
         {

@@ -739,6 +739,8 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
+  playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
+    type: 3}
 --- !u!114 &1513643451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1431,11 +1433,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7746082792431226499}
     m_Modifications:
-    - target: {fileID: 7032567944433412349, guid: 2cb3e4b7209f64e428bcf4201aab8906,
-        type: 3}
-      propertyPath: m_Name
-      value: BrakeLight
-      objectReference: {fileID: 0}
     - target: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1500,6 +1497,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2.500002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032567944433412349, guid: 2cb3e4b7209f64e428bcf4201aab8906,
+        type: 3}
+      propertyPath: m_Name
+      value: BrakeLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cb3e4b7209f64e428bcf4201aab8906, type: 3}
