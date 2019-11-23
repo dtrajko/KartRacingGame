@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 7746082791354626737}
   - component: {fileID: 1513643451}
   - component: {fileID: 4077695343718989656}
+  - component: {fileID: 1719116056492877026}
   m_Layer: 0
   m_Name: RedCar
   m_TagString: Untagged
@@ -739,8 +740,10 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
+  playerName: 
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
+  vehicleMesh: {fileID: 0}
 --- !u!114 &1513643451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,6 +773,18 @@ MonoBehaviour:
   steeringSensitivity: 0.01
   accelSensitivity: 1
   lookAhead: 24
+--- !u!114 &1719116056492877026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746082791354626743}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e65ece9724ca10479e344d43960a72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7746082791834989323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,15 +1520,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cb3e4b7209f64e428bcf4201aab8906, type: 3}
---- !u!4 &3942546039260128693 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
-    type: 3}
-  m_PrefabInstance: {fileID: 6281976066554301783}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3942546039260128682 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7032567944433412349, guid: 2cb3e4b7209f64e428bcf4201aab8906,
+    type: 3}
+  m_PrefabInstance: {fileID: 6281976066554301783}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3942546039260128693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
     type: 3}
   m_PrefabInstance: {fileID: 6281976066554301783}
   m_PrefabAsset: {fileID: 0}

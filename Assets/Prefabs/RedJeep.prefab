@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 7746082791354626737}
   - component: {fileID: 4913220062208228798}
   - component: {fileID: 890117218}
+  - component: {fileID: 6086011893133193078}
   m_Layer: 0
   m_Name: RedJeep
   m_TagString: Untagged
@@ -1210,8 +1211,10 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
+  playerName: 
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
+  vehicleMesh: {fileID: 0}
 --- !u!114 &4913220062208228798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,6 +1244,18 @@ MonoBehaviour:
   steeringSensitivity: 0.02
   accelSensitivity: 0.3
   lookAhead: 10
+--- !u!114 &6086011893133193078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746082791354626743}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e65ece9724ca10479e344d43960a72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8788098568077760281
 GameObject:
   m_ObjectHideFlags: 0

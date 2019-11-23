@@ -35,7 +35,9 @@ public class Drive : MonoBehaviour
     public int currentGear = 1;
     public float currentGearPerc;
 
+    public string playerName;
     public GameObject playerNamePrefab;
+    public Renderer vehicleMesh;
 
     // Start is called before the first frame update
     void Start()
@@ -45,11 +47,13 @@ public class Drive : MonoBehaviour
             skidSmoke[i] = Instantiate(smokePrefab);
             skidSmoke[i].Stop();
         }
+
         brakeLight.SetActive(false);
 
-        GameObject playerName = Instantiate(playerNamePrefab);
-        playerName.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
-        playerName.GetComponent<Text>().text = "Player Name";
+        GameObject playerNameGO = Instantiate(playerNamePrefab);
+        playerNameGO.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
+        playerNameGO.GetComponent<Text>().text = playerName;
+        playerNameGO.GetComponent<NameUIController>().carRend = vehicleMesh;
     }
 
     public void CalculateEngineSound()
