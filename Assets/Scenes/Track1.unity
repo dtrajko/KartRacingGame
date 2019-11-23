@@ -1945,7 +1945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20, y: -80}
+  m_AnchoredPosition: {x: 20, y: -60}
   m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &378335420
@@ -6529,7 +6529,7 @@ PrefabInstance:
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: playerName
-      value: Brzina braleee
+      value: DTRAJKO
       objectReference: {fileID: 0}
     - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}

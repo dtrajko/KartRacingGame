@@ -11,9 +11,9 @@ public class NameUIController : MonoBehaviour
     CanvasGroup canvasGroup;
     public Renderer carRend;
 
-    int minFontSize = 16;
+    int minFontSize = 20;
     int maxFontSize = 30;
-    float maxDistanceToCamera = 200.0f;
+    float maxDistanceToCamera = 120.0f;
 
     // Start is called before the first frame update
     void Awake()
@@ -49,31 +49,18 @@ public class NameUIController : MonoBehaviour
             float distanceToCamera = Mathf.Abs(Vector3.Distance(Camera.main.transform.position, worldPosition));
             if (distanceToCamera < maxDistanceToCamera)
             {
-                float distanceFactor = Mathf.Clamp(maxDistanceToCamera / (distanceToCamera * 2.0f), 0, 1);
+                canvasGroup.alpha = 1.0f;
+                float distanceFactor = Mathf.Clamp(maxDistanceToCamera / (distanceToCamera * 3.0f), 0, 1);
                 int fontSizeNew = (int)(distanceFactor * maxFontSize);
-                // Debug.Log("maxDistanceToCamera: " + maxDistanceToCamera + " distanceToCamera: " + distanceToCamera);
-                // Debug.Log("DistanceFactor: " + distanceFactor + " fontSizeNew: " + fontSizeNew);
                 GetComponent<Text>().fontSize = Mathf.Clamp(fontSizeNew, minFontSize, maxFontSize);
-                canvasGroup.alpha = Mathf.Clamp(distanceFactor, 0, 1);
+
+                // Debug.Log("playerName: " + playerName.text + " maxDistanceToCamera: " + maxDistanceToCamera + " distanceToCamera: " + distanceToCamera);
+                // Debug.Log("playerName: " + playerName.text + " distanceFactor: " + distanceFactor + " fontSize: " + GetComponent<Text>().fontSize);
             }
             else
             {
-                GetComponent<Text>().fontSize = minFontSize;
                 canvasGroup.alpha = 0.0f;
             }
-
-            /*
-            if (distanceToCamera < 120.0f)
-            {
-                canvasGroup.alpha = 1.0f;
-                GetComponent<Text>().fontSize = 32;
-            }
-            else
-            {
-                canvasGroup.alpha = 0.5f;
-                GetComponent<Text>().fontSize = 18;
-            }
-            */
         }
     }
 }
