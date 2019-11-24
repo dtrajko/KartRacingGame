@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 8923946661280801320}
   - component: {fileID: 1932451715706988630}
   - component: {fileID: 5618787981279400707}
+  - component: {fileID: 1227336350126130140}
   m_Layer: 0
   m_Name: CarBody
   m_TagString: car
@@ -914,6 +915,21 @@ MonoBehaviour:
   avoidTime: 0
   wanderDistance: 4
   avoidLength: 1
+--- !u!114 &1227336350126130140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459683815661740433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a52224d2ed93e42b662035cba0f9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lap: 0
+  checkPoint: -1
+  checkPointCount: 0
 --- !u!1 &4875562879516564832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,7 +1162,6 @@ GameObject:
   - component: {fileID: 4913220062208228798}
   - component: {fileID: 890117218}
   - component: {fileID: 6086011893133193078}
-  - component: {fileID: 798769015990872499}
   m_Layer: 0
   m_Name: RedJeep
   m_TagString: Untagged
@@ -1257,20 +1272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e65ece9724ca10479e344d43960a72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &798769015990872499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7746082791354626743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a52224d2ed93e42b662035cba0f9d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lap: 0
-  checkPoint: -1
 --- !u!1 &8788098568077760281
 GameObject:
   m_ObjectHideFlags: 0

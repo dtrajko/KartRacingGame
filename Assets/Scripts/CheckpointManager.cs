@@ -6,7 +6,7 @@ public class CheckpointManager : MonoBehaviour
 {
     public int lap = 0;
     public int checkPoint = -1;
-    int checkPointCount;
+    public int checkPointCount;
     int nextCheckPoint;
 
     // Start is called before the first frame update
