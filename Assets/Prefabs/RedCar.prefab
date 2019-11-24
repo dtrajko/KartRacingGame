@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 1513643451}
   - component: {fileID: 4077695343718989656}
   - component: {fileID: 1719116056492877026}
+  - component: {fileID: 6130841057816570113}
   m_Layer: 0
   m_Name: RedCar
   m_TagString: Untagged
@@ -785,6 +786,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e65ece9724ca10479e344d43960a72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6130841057816570113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746082791354626743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a52224d2ed93e42b662035cba0f9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lap: 0
+  checkPoint: -1
 --- !u!1 &7746082791834989323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,6 +1463,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7746082792431226499}
     m_Modifications:
+    - target: {fileID: 7032567944433412349, guid: 2cb3e4b7209f64e428bcf4201aab8906,
+        type: 3}
+      propertyPath: m_Name
+      value: BrakeLight
+      objectReference: {fileID: 0}
     - target: {fileID: 7032567944433412322, guid: 2cb3e4b7209f64e428bcf4201aab8906,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1512,11 +1532,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2.500002
-      objectReference: {fileID: 0}
-    - target: {fileID: 7032567944433412349, guid: 2cb3e4b7209f64e428bcf4201aab8906,
-        type: 3}
-      propertyPath: m_Name
-      value: BrakeLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cb3e4b7209f64e428bcf4201aab8906, type: 3}
