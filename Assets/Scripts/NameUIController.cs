@@ -14,8 +14,8 @@ public class NameUIController : MonoBehaviour
     CheckpointManager cpManager;
 
     int minFontSize = 20;
-    int maxFontSize = 30;
-    float maxDistanceToCamera = 120.0f;
+    int maxFontSize = 28;
+    float maxDistanceToCamera = 150.0f;
 
     // Start is called before the first frame update
     void Awake()

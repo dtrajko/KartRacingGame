@@ -96,8 +96,9 @@ public class AIController : MonoBehaviour
             }
 
             Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
-                Vector3.up * 2 + // place the car 2m above the road
-                new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2)); // randomize the position aroind the waypoint
+                Vector3.up * 3 + // place the car 2m above the road
+                Vector3.forward * 6 + // 6m forward
+                new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)); // randomize the position around the waypoint
 
             drive.rigidBody.gameObject.transform.position = reSpawnPosition;
             drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
