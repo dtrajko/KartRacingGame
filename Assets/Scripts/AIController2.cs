@@ -36,11 +36,17 @@ public class AIController2 : AIController
 
         if (Time.time > lastTimeMoving + 4.0f)
         {
-            Vector3 reSpawnPosition = circuit.waypoints[currentTrackerWP].transform.position +
-                Vector3.up + // place the car 1m above the road
+            if (checkpointManager == null)
+            {
+                checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+            }
+
+            Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
+                Vector3.up * 2 + // place the car 2m above the road
                 new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2)); // randomize the position aroind the waypoint
 
             drive.rigidBody.gameObject.transform.position = reSpawnPosition;
+            drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
             tracker.transform.position = reSpawnPosition;
 
             lastTimeMoving = Time.time;

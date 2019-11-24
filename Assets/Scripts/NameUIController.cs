@@ -20,6 +20,11 @@ public class NameUIController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (GameObject.Find("Canvas") == null)
+        {
+            Debug.Log("The 'Canvas' object is disabled?");
+        }
+
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         playerName = this.GetComponent<Text>();
         canvasGroup = this.GetComponent<CanvasGroup>();
