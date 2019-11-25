@@ -37,14 +37,14 @@ public class CameraFollow : MonoBehaviour
         {
             // First person
             cameraObject.transform.localPosition =
-                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(-0.4f, 1.0f, 0.5f), 
+                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(-0.4f, 1.0f, 0.6f), 
                 cameraSwitchSpeed * Time.deltaTime);
         }
         else
         {
             // Third person
             cameraObject.transform.localPosition =
-                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(0.0f, 3.0f, -9.0f),
+                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(0.0f, 3.0f, -10.0f),
                 cameraSwitchSpeed * Time.deltaTime);
         }
     }

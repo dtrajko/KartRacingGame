@@ -10,11 +10,16 @@ public class PlayerController : MonoBehaviour
     Vector3 lastPosition;
     Quaternion lastRotation;
 
+    CheckpointManager checkpointManager;
+
     // Start is called before the first frame update
     void Start()
     {
         drive = this.GetComponent<Drive>();
         this.GetComponent<Ghost>().enabled = false;
+
+        lastPosition = drive.rigidBody.gameObject.transform.position;
+        lastRotation = drive.rigidBody.gameObject.transform.rotation;
     }
 
     void ResetLayer()
@@ -46,8 +51,18 @@ public class PlayerController : MonoBehaviour
 
         if (Time.time > lastTimeMoving + 4.0f)
         {
-            drive.rigidBody.gameObject.transform.position = lastPosition;
-            drive.rigidBody.gameObject.transform.rotation = lastRotation;
+            if (checkpointManager == null)
+            {
+                checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+            }
+
+            Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
+                Vector3.up * 3 + // place the car 2m above the road
+                Vector3.forward * 6 + // 6m forward
+                new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)); // randomize the position around the waypoint
+
+            drive.rigidBody.gameObject.transform.position = reSpawnPosition;
+            drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
             drive.rigidBody.gameObject.layer = LayerMask.NameToLayer("ReSpawn");
             this.GetComponent<Ghost>().enabled = true;
             Invoke("ResetLayer", 3);

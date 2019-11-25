@@ -930,6 +930,7 @@ MonoBehaviour:
   lap: 0
   checkPoint: -1
   checkPointCount: 0
+  lastCP: {fileID: 0}
 --- !u!1 &4875562879516564832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1209,7 @@ MonoBehaviour:
   - {fileID: 2084389090984743081}
   - {fileID: 870328716019267301}
   torque: 400
-  maxSteerAngle: 40
+  maxSteerAngle: 30
   maxBrakeTorque: 4000
   skidSound: {fileID: 6787511695426806646}
   highAccel: {fileID: 5568883756917121594}
@@ -1227,10 +1228,10 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
-  playerName: 
+  playerName: PLAYER 1
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
-  vehicleMesh: {fileID: 0}
+  vehicleMesh: {fileID: 9077087774037722869}
 --- !u!114 &4913220062208228798
 MonoBehaviour:
   m_ObjectHideFlags: 0
