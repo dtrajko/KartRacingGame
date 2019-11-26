@@ -13,6 +13,8 @@ public class NameUIController : MonoBehaviour
     public Renderer carRend;
     CheckpointManager cpManager;
 
+    int carRego;
+
     int minFontSize = 20;
     int maxFontSize = 28;
     float maxDistanceToCamera = 150.0f;
@@ -28,6 +30,7 @@ public class NameUIController : MonoBehaviour
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         playerName = this.GetComponent<Text>();
         canvasGroup = this.GetComponent<CanvasGroup>();
+        carRego = Leaderboard.RegisterCar(playerName.name);
     }
 
     // Update is called once per frame
@@ -82,13 +85,15 @@ public class NameUIController : MonoBehaviour
                 cpManager = target.GetComponentInParent<CheckpointManager>();
             }
 
+            Leaderboard.SetPosition(carRego, cpManager.lap, cpManager.checkPoint, Time.time);
+            string position = Leaderboard.GetPosition(carRego);
+
             int progressPercentage = 0;
             if (cpManager.checkPointCount > 0)
             {
                 progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
             }
-            string lapProgress = progressPercentage + "%";
-            lapDisplay.text = "Lap: " + cpManager.lap + " [ " + lapProgress + " ]";   
+            lapDisplay.text = position + " Lap: " + cpManager.lap + " [" + progressPercentage + "%]";
         }
     }
 }
