@@ -733,21 +733,6 @@ PrefabInstance:
       propertyPath: circuit
       value: 
       objectReference: {fileID: 2144707190}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: brakingSensitivity
-      value: 1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: steeringSensitivity
-      value: 0.015
-      objectReference: {fileID: 0}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: accelSensitivity
-      value: 0.95
-      objectReference: {fileID: 0}
     - target: {fileID: 1719116056492877026, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_Enabled
@@ -773,19 +758,8 @@ PrefabInstance:
       propertyPath: m_ForwardFriction.m_Stiffness
       value: 1.6
       objectReference: {fileID: 0}
-    - target: {fileID: 1268670592573160881, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: wanderDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1268670592573160881, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: avoidLength
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6130841057816570113, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
-    - {fileID: 3239134809752199392, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
 --- !u!1 &26247469
 GameObject:
@@ -3690,11 +3664,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jeep_AI_1
       objectReference: {fileID: 0}
-    - target: {fileID: 7746082791354626743, guid: 46e885f74af1dc84e95fda321c8a7b74,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: 46e885f74af1dc84e95fda321c8a7b74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4659,11 +4628,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Jeep
       objectReference: {fileID: 0}
-    - target: {fileID: 7746082791354626743, guid: 46e885f74af1dc84e95fda321c8a7b74,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: 46e885f74af1dc84e95fda321c8a7b74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4734,11 +4698,6 @@ PrefabInstance:
       propertyPath: vehicleMesh
       value: 
       objectReference: {fileID: 233553250}
-    - target: {fileID: 7746082791354626737, guid: 46e885f74af1dc84e95fda321c8a7b74,
-        type: 3}
-      propertyPath: torque
-      value: 500
-      objectReference: {fileID: 0}
     - target: {fileID: 890117218, guid: 46e885f74af1dc84e95fda321c8a7b74, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -7058,7 +7017,7 @@ Transform:
   m_LocalScale: {x: 24, y: 24, z: 1}
   m_Children: []
   m_Father: {fileID: 1959524721}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1818360608 &423500467
 PositionConstraint:
@@ -13597,7 +13556,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959524721}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &852338361
 Camera:
@@ -18469,7 +18428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959524721}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1203401051
 MonoBehaviour:
@@ -21893,12 +21852,12 @@ PrefabInstance:
     - target: {fileID: 7746082791354626743, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 199.428
+      value: 206.37
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -21908,7 +21867,7 @@ PrefabInstance:
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -80.46
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -21973,7 +21932,7 @@ PrefabInstance:
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: torque
-      value: 500
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -22018,7 +21977,7 @@ PrefabInstance:
     - target: {fileID: 7746082792201533675, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5880521160694276925, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -22028,7 +21987,7 @@ PrefabInstance:
     - target: {fileID: 3942546039260128693, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3316102385804532571, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -23034,11 +22993,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car_AI_2
       objectReference: {fileID: 0}
-    - target: {fileID: 7746082791354626743, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23122,12 +23076,12 @@ PrefabInstance:
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: maxSteerAngle
-      value: 35
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
       propertyPath: maxBrakeTorque
-      value: 5000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626737, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -23138,26 +23092,6 @@ PrefabInstance:
         type: 3}
       propertyPath: playerName
       value: Car AI 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: circuit
-      value: 
-      objectReference: {fileID: 2144707190}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: brakingSensitivity
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: steeringSensitivity
-      value: 0.015
-      objectReference: {fileID: 0}
-    - target: {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: accelSensitivity
-      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 1719116056492877026, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
         type: 3}
@@ -23189,32 +23123,12 @@ PrefabInstance:
       propertyPath: m_ForwardFriction.m_Stiffness
       value: 1.6
       objectReference: {fileID: 0}
-    - target: {fileID: 3239134809752199392, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: wanderDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3239134809752199392, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: avoidLength
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 1513643450, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
       propertyPath: circuit
       value: 
       objectReference: {fileID: 2144707190}
-    - target: {fileID: 1268670592573160881, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: wanderDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1268670592573160881, guid: bd7a73ac64c10f4498fa79f8d7bae0ae,
-        type: 3}
-      propertyPath: avoidLength
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3239134809752199392, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
+    - {fileID: 4077695343718989656, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bd7a73ac64c10f4498fa79f8d7bae0ae, type: 3}
 --- !u!1 &1513643449 stripped
 GameObject:
@@ -23229,7 +23143,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513643449}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7594df0d07c1345a6484b586c7944e, type: 3}
   m_Name: 

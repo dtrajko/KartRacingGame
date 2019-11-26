@@ -19,8 +19,6 @@ public class AIController : MonoBehaviour
     protected int currentTrackerWP = 0;
     protected float trackerPrevHeight = 0.0f;
     protected float lastTimeMoving = 0.0f;
-    protected Vector3 localTarget;
-
     protected CheckpointManager checkpointManager;
 
     private float totalDistanceToTarget;
@@ -82,12 +80,8 @@ public class AIController : MonoBehaviour
 
         ProgressTracker();
 
+        Vector3 localTarget;
         float targetAngle;
-        float braking = 0.0f;
-        float acceleration = 1.0f;
-        float speedFactorWeight = 2.8f;
-        float targetAngleWeight = 3.6f;
-        float steeringSensitivityLocal = steeringSensitivity;
 
         if (drive.rigidBody.velocity.magnitude > 1.0f)
         {
@@ -102,9 +96,9 @@ public class AIController : MonoBehaviour
             }
 
             Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
-                Vector3.up * 2 + // place the car 2m above the road
-                Vector3.forward * 4 + // 6m forward
-                new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2)); // randomize the position around the waypoint
+                Vector3.up * 3 + // place the car 2m above the road
+                Vector3.forward * 6 + // 6m forward
+                new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)); // randomize the position around the waypoint
 
             drive.rigidBody.gameObject.transform.position = reSpawnPosition;
             drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
@@ -117,50 +111,29 @@ public class AIController : MonoBehaviour
             Invoke("ResetLayer", 3);
         }
 
-        // Slow down if someone is in front of you
-        bool obstacleAhead = false;
-        float checkDistance = 20.0f;
-        Vector3 avoidDirection = tracker.transform.right;
-        RaycastHit hit;
-        Vector3 raycastDirection = (drive.rigidBody.gameObject.transform.forward + tracker.transform.forward).normalized;
-        Vector3 raycastOrigin = drive.rigidBody.gameObject.transform.position + (-Vector3.up * 0.8f);
-        bool isHit = Physics.Raycast(raycastOrigin, raycastDirection, out hit, checkDistance);
-        // Debug.DrawRay(raycastOrigin, raycastDirection * checkDistance, Color.green);
-        if (isHit)
-        {
-            if (hit.collider.gameObject.tag == "car")
-            {
-                obstacleAhead = true;
-                steeringSensitivityLocal = steeringSensitivity * 5.0f;
-                targetAngleWeight *= 2.0f;
-                avoidDirection = (drive.rigidBody.gameObject.transform.forward + hit.collider.gameObject.transform.forward).normalized;
-                Debug.DrawRay(raycastOrigin, avoidDirection * checkDistance, Color.green);
-            }
-        }
-
         if (Time.time < drive.rigidBody.GetComponent<AvoidDetector>().avoidTime)
         {
-            // tracker.transform.right replaced with avoidDirection;
-            localTarget = avoidDirection; // * drive.rigidBody.GetComponent<AvoidDetector>().avoidPath;
+            localTarget = tracker.transform.right * drive.rigidBody.GetComponent<AvoidDetector>().avoidPath;            
         }
         else
         {
             localTarget = drive.rigidBody.gameObject.transform.InverseTransformPoint(tracker.transform.position);
         }
-
-        float speedFactor = (drive.currentSpeed / drive.maxSpeed) * speedFactorWeight;
-
         targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
-        float steering = Mathf.Clamp(targetAngle * steeringSensitivityLocal, -1, 1) * Mathf.Sign(drive.currentSpeed);
+        float steering = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drive.currentSpeed);
+
+        float speedFactorWeight = 2.8f;
+        float targetAngleWeight = 3.6f;
+        float speedFactor = (drive.currentSpeed / drive.maxSpeed) * speedFactorWeight;
         float targetAngleFactor = (Mathf.Abs(targetAngle) / 90.0f) * targetAngleWeight;
 
         // Debug.Log("BRAKING - SPEED: "+ (int)(Mathf.Lerp(0, 1, speedFactor) * 100) +
         //     "%, ANGLE: " + (int)(Mathf.Lerp(0, 1, targetAngleFactor) * 100) + 
         //     "% TOTAL: " + (int)(Mathf.Lerp(0, 1, speedFactor * targetAngleFactor) * 100) + "%");
 
-        braking = Mathf.Lerp(-1.0f, 1.0f, speedFactor * targetAngleFactor);
-        acceleration = Mathf.Lerp(accelSensitivity, 1.0f, 1.0f + accelSensitivity - braking);
+        float braking = Mathf.Lerp(-1.0f, 1.0f, speedFactor * targetAngleFactor);
+        float acceleration = Mathf.Lerp(accelSensitivity, 1.0f, 1.0f + accelSensitivity - braking);
 
         if (drive.currentSpeed < 4.0f || drive.IsClimbing)
         {
