@@ -6,6 +6,7 @@ public class CheckpointManager : MonoBehaviour
 {
     public int lap = 0;
     public int checkPoint = -1;
+    public float timeEntered = 0;
     public int checkPointCount;
     int nextCheckPoint;
     public GameObject lastCP;
@@ -34,6 +35,7 @@ public class CheckpointManager : MonoBehaviour
             {
                 lastCP = other.gameObject;
                 checkPoint = thisCPNumber;
+                timeEntered = Time.time;
                 if (checkPoint == 0)
                 {
                     lap++;

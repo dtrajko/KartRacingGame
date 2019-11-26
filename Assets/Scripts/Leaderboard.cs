@@ -52,6 +52,6 @@ public class Leaderboard
                 }
             }
         }
-        return "Unknown";
+        return "N/A";
     }
 }

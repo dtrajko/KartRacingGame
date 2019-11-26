@@ -85,7 +85,7 @@ public class NameUIController : MonoBehaviour
                 cpManager = target.GetComponentInParent<CheckpointManager>();
             }
 
-            Leaderboard.SetPosition(carRego, cpManager.lap, cpManager.checkPoint, Time.time);
+            Leaderboard.SetPosition(carRego, cpManager.lap, cpManager.checkPoint, cpManager.timeEntered);
             string position = Leaderboard.GetPosition(carRego);
 
             int progressPercentage = 0;
@@ -93,7 +93,7 @@ public class NameUIController : MonoBehaviour
             {
                 progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
             }
-            lapDisplay.text = position + " Lap: " + cpManager.lap + " [" + progressPercentage + "%]";
+            lapDisplay.text = position + " - Lap " + cpManager.lap + " (" + progressPercentage + "%)";
         }
     }
 }
