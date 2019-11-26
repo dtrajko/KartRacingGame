@@ -870,7 +870,6 @@ GameObject:
   - component: {fileID: 7611625631546372734}
   - component: {fileID: 6165878096309363567}
   - component: {fileID: 1268670592573160881}
-  - component: {fileID: 3239134809752199392}
   - component: {fileID: 6368833645097420724}
   m_Layer: 0
   m_Name: CarBody
@@ -1178,22 +1177,6 @@ MonoBehaviour:
   avoidTime: 0
   wanderDistance: 4
   avoidLength: 1
---- !u!114 &3239134809752199392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7746082792431226503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa180da59550f894caf58812ccfc21e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  avoidPath: 0
-  avoidTime: 0
-  wanderDistance: 4
-  avoidLength: 1
 --- !u!114 &6368833645097420724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,6 +1192,7 @@ MonoBehaviour:
   lap: 0
   checkPoint: -1
   checkPointCount: 0
+  lastCP: {fileID: 0}
 --- !u!1 &8003429965494622217
 GameObject:
   m_ObjectHideFlags: 0
