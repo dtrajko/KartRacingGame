@@ -65,7 +65,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b6d2560cdd8a461409e064460cd9895a, type: 3}
+    m_Font: {fileID: 12800000, guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b6d2560cdd8a461409e064460cd9895a, type: 3}
+    m_Font: {fileID: 12800000, guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ayrton Senna
+  m_Text: PLAYER NAME
 --- !u!114 &4851709777800056789
 MonoBehaviour:
   m_ObjectHideFlags: 0

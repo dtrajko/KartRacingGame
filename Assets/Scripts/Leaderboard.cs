@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-struct PlayerStats
+public struct PlayerStats
 {
     public string name;
     public int position;
@@ -35,6 +35,20 @@ public class Leaderboard
         lb[rego] = new PlayerStats(lb[rego].name, position, time);
     }
 
+    public static bool GetEntry(int rego, out PlayerStats playerStats)
+    {
+        foreach (KeyValuePair<int, PlayerStats> pos in lb.OrderByDescending(key => key.Value.position).ThenBy(key => key.Value.time))
+        {
+            if (pos.Key == rego)
+            {
+                playerStats = pos.Value;
+                return true;
+            }
+        }
+        playerStats = new PlayerStats();
+        return false;
+    }
+
     public static string GetPosition(int rego)
     {
         int index = 0;
@@ -53,5 +67,17 @@ public class Leaderboard
             }
         }
         return "N/A";
+    }
+
+    public static List<string> GetPlaces()
+    {
+        List<string> places = new List<string>();
+
+        foreach (KeyValuePair<int, PlayerStats> pos in lb.OrderByDescending(key => key.Value.position).ThenBy(key => key.Value.time))
+        {
+            places.Add(GetPosition(pos.Key) + " - " + pos.Value.name);
+        }
+
+        return places;
     }
 }

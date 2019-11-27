@@ -13,7 +13,7 @@ public class NameUIController : MonoBehaviour
     public Renderer carRend;
     CheckpointManager cpManager;
 
-    int carRego;
+    int carRego = -1;
 
     int minFontSize = 20;
     int maxFontSize = 28;
@@ -30,7 +30,6 @@ public class NameUIController : MonoBehaviour
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         playerName = this.GetComponent<Text>();
         canvasGroup = this.GetComponent<CanvasGroup>();
-        carRego = Leaderboard.RegisterCar(playerName.name);
     }
 
     // Update is called once per frame
@@ -54,6 +53,11 @@ public class NameUIController : MonoBehaviour
             return;
         }
 
+        if (carRego == -1 && playerName.text != "PLAYER NAME")
+        {
+            carRego = Leaderboard.RegisterCar(playerName.text);
+        }
+
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
         bool carInView = GeometryUtility.TestPlanesAABB(planes, carRend.bounds);
         canvasGroup.alpha = carInView ? 1.0f : 0.0f;
@@ -69,7 +73,7 @@ public class NameUIController : MonoBehaviour
                 float distanceFactor = Mathf.Clamp(maxDistanceToCamera / (distanceToCamera * 3.0f), 0, 1);
                 int fontSizeNew = (int)(distanceFactor * maxFontSize);
                 GetComponent<Text>().fontSize = Mathf.Clamp(fontSizeNew, minFontSize, maxFontSize);
-                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 2, minFontSize, maxFontSize - 2);
+                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 6, minFontSize, maxFontSize - 6);
 
                 // Debug.Log("playerName: " + playerName.text + " maxDistanceToCamera: " + maxDistanceToCamera + " distanceToCamera: " + distanceToCamera);
                 // Debug.Log("playerName: " + playerName.text + " distanceFactor: " + distanceFactor + " fontSize: " + GetComponent<Text>().fontSize);
