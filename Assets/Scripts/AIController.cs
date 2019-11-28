@@ -123,7 +123,7 @@ public class AIController : MonoBehaviour
             lastTimeMoving = Time.time;
         }
 
-        if (Time.time > lastTimeMoving + 4.0f)
+        if (Time.time > lastTimeMoving + 4.0f || withinSceneBoundaries())
         {
             if (checkpointManager == null)
             {
@@ -178,8 +178,21 @@ public class AIController : MonoBehaviour
 
         if (drive.currentSpeed < 4.0f || drive.IsClimbing)
         {
-            braking = 0.0f;
+            // a new approach bellow
+            // braking = 0.0f;
+            // acceleration = 1.0f;
+        }
+
+        float prevTorque = drive.torque;
+        if (speedFactor < 0.3f && drive.rigidBody.gameObject.transform.forward.y > 0.1f)
+        {
+            drive.torque *= 3.0f;
             acceleration = 1.0f;
+            braking = 0.0f;
+        }
+        else
+        {
+            drive.torque = prevTorque;
         }
 
         // Debug.Log("DRIVE.GO - ACCEL: " + (int)(acceleration * 100) +
@@ -188,5 +201,14 @@ public class AIController : MonoBehaviour
         drive.Go(acceleration, steering, braking);
         drive.CheckForSkid();
         drive.CalculateEngineSound();
+    }
+
+    private bool withinSceneBoundaries()
+    {
+        if (drive.rigidBody.gameObject.transform.position.y < -10.0f)
+        {
+            return false;
+        }
+        return false;
     }
 }

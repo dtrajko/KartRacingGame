@@ -5,14 +5,18 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Camera cameraObject;
+    public GameObject reviewMirror;
 
     float cameraSwitchSpeed = 10.0f;
+    Vector3 reviewMirrorPositionDefault;
+    Vector3 reviewMirrorPositionFPI;
 
     enum PerspectiveModes
-    { 
-        FirstPersonPlayer = -1,
+    {
         ThirdPersonPlayer = 1,
-        AerialMode = 2
+        FirstPersonIndoor = 2,
+        FirstPersonPlayer = 3,
+        AerialMode = 4
     }
 
     PerspectiveModes CameraPerspective = PerspectiveModes.ThirdPersonPlayer;
@@ -29,6 +33,12 @@ public class CameraFollow : MonoBehaviour
         {
             cameraObject = GetComponent<Camera>();
         }
+
+        reviewMirrorPositionDefault = reviewMirror.transform.position;
+        reviewMirrorPositionFPI = new Vector3(
+            reviewMirror.transform.position.x + 400.0f,
+            reviewMirror.transform.position.y,
+            reviewMirror.transform.position.z);
     }
 
     // Update is called once per frame
@@ -41,6 +51,18 @@ public class CameraFollow : MonoBehaviour
                 Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(0.0f, 3.0f, -10.0f),
                 cameraSwitchSpeed * Time.deltaTime);
             cameraObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            reviewMirror.transform.position = reviewMirrorPositionDefault;
+        }
+        else if (CameraPerspective == PerspectiveModes.FirstPersonIndoor)
+        {
+            // First person by Veljko
+            cameraObject.transform.localPosition =
+                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(-0.4f, 0.52f, -0.3f),
+                cameraSwitchSpeed * Time.deltaTime);
+            cameraObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            reviewMirror.transform.position = reviewMirrorPositionFPI;
         }
         else if (CameraPerspective == PerspectiveModes.FirstPersonPlayer)
         {
@@ -49,6 +71,8 @@ public class CameraFollow : MonoBehaviour
                 Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(-0.4f, 1.0f, 0.6f),
                 cameraSwitchSpeed * Time.deltaTime);
             cameraObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            reviewMirror.transform.position = reviewMirrorPositionDefault;
         }
         else if (CameraPerspective == PerspectiveModes.AerialMode)
         {
@@ -58,6 +82,7 @@ public class CameraFollow : MonoBehaviour
                 cameraSwitchSpeed * Time.deltaTime);
             cameraObject.transform.localRotation = Quaternion.Euler(20.0f, 0, 0);
 
+            reviewMirror.transform.position = reviewMirrorPositionDefault;
         }
     }
 
@@ -68,6 +93,9 @@ public class CameraFollow : MonoBehaviour
             switch (CameraPerspective)
             {
                 case PerspectiveModes.ThirdPersonPlayer:
+                    CameraPerspective = PerspectiveModes.FirstPersonIndoor;
+                    break;
+                case PerspectiveModes.FirstPersonIndoor:
                     CameraPerspective = PerspectiveModes.FirstPersonPlayer;
                     break;
                 case PerspectiveModes.FirstPersonPlayer:
