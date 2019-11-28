@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIController : MonoBehaviour
+public class AIController : BaseController
 {
     public Circuit circuit;
     public float brakingSensitivity = 1.0f;
@@ -10,7 +10,6 @@ public class AIController : MonoBehaviour
     public float accelSensitivity = 1.0f;
     public float lookAhead = 24.0f;
 
-    protected Drive drive;
     protected Vector3 target;
     protected Vector3 nextTarget;
     protected int currentWaypoint = 0;
@@ -22,7 +21,7 @@ public class AIController : MonoBehaviour
     protected CheckpointManager checkpointManager;
 
     private float totalDistanceToTarget;
-
+    float finishSteer;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -39,6 +38,7 @@ public class AIController : MonoBehaviour
         tracker.transform.rotation = drive.rigidBody.transform.rotation;
 
         this.GetComponent<Ghost>().enabled = false;
+        finishSteer = Random.Range(-0.2f, 0.2f);
     }
 
     protected void ProgressTracker()
@@ -69,42 +69,25 @@ public class AIController : MonoBehaviour
         this.GetComponent<Ghost>().enabled = false;
     }
 
-    private bool avoidObstacleMode(out Vector3 avoidDirection)
-    {
-        bool avoidObstacleMode = false;
-
-        float rayLength = 20.0f;
-
-        RaycastHit hit;
-        Vector3 raycastOrigin = drive.rigidBody.gameObject.transform.position +
-            drive.rigidBody.gameObject.transform.forward * 2 +
-            (-drive.rigidBody.gameObject.transform.up * 0.2f);
-        Vector3 raycastDirection = drive.rigidBody.gameObject.transform.forward;
-        avoidDirection = raycastDirection;
-        
-        bool isHit = Physics.Raycast(raycastOrigin, raycastDirection, out hit, rayLength);
-        if (isHit)
-        {
-            if (hit.collider.gameObject.tag == "car")
-            {
-                avoidObstacleMode = true;
-            }
-        }
-
-        Vector3 toTracker = drive.rigidBody.gameObject.transform.forward + tracker.transform.forward;
-        avoidDirection = Vector3.Reflect(-toTracker, drive.rigidBody.gameObject.transform.forward);
-
-        Debug.DrawRay(raycastOrigin, avoidDirection.normalized * rayLength, Color.green);
-
-        return avoidObstacleMode;
-    }
-
     // Update is called once per frame
     protected virtual void Update()
     {
         if (!RaceMonitor.racing)
         {
             lastTimeMoving = Time.time;
+            return;
+        }
+
+        if (checkpointManager == null)
+        {
+            checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+        }
+
+        // Game Over condition
+        if (checkpointManager.lap == RaceMonitor.totalLaps + 1)
+        {
+            drive.highAccel.Stop();
+            drive.Go(0.0f, finishSteer, 1.0f);
             return;
         }
 
@@ -125,11 +108,6 @@ public class AIController : MonoBehaviour
 
         if (Time.time > lastTimeMoving + 4.0f || withinSceneBoundaries())
         {
-            if (checkpointManager == null)
-            {
-                checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
-            }
-
             Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
                 Vector3.up * 3 + // place the car 2m above the road
                 Vector3.forward * 6 + // 6m forward
@@ -203,12 +181,33 @@ public class AIController : MonoBehaviour
         drive.CalculateEngineSound();
     }
 
-    private bool withinSceneBoundaries()
+    private bool avoidObstacleMode(out Vector3 avoidDirection)
     {
-        if (drive.rigidBody.gameObject.transform.position.y < -10.0f)
+        bool avoidObstacleMode = false;
+
+        float rayLength = 20.0f;
+
+        RaycastHit hit;
+        Vector3 raycastOrigin = drive.rigidBody.gameObject.transform.position +
+            drive.rigidBody.gameObject.transform.forward * 2 +
+            (-drive.rigidBody.gameObject.transform.up * 0.2f);
+        Vector3 raycastDirection = drive.rigidBody.gameObject.transform.forward;
+        avoidDirection = raycastDirection;
+
+        bool isHit = Physics.Raycast(raycastOrigin, raycastDirection, out hit, rayLength);
+        if (isHit)
         {
-            return false;
+            if (hit.collider.gameObject.tag == "car")
+            {
+                avoidObstacleMode = true;
+            }
         }
-        return false;
+
+        Vector3 toTracker = drive.rigidBody.gameObject.transform.forward + tracker.transform.forward;
+        avoidDirection = Vector3.Reflect(-toTracker, drive.rigidBody.gameObject.transform.forward);
+
+        Debug.DrawRay(raycastOrigin, avoidDirection.normalized * rayLength, Color.green);
+
+        return avoidObstacleMode;
     }
 }

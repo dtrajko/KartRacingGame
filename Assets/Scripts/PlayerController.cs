@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    Drive drive;
-
     float lastTimeMoving = 0.0f;
     Vector3 lastPosition;
     Quaternion lastRotation;
-
     CheckpointManager checkpointManager;
+    float finishSteer;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
         lastPosition = drive.rigidBody.gameObject.transform.position;
         lastRotation = drive.rigidBody.gameObject.transform.rotation;
+
+        finishSteer = Random.Range(-0.2f, 0.2f);
     }
 
     void ResetLayer()
@@ -33,6 +33,19 @@ public class PlayerController : MonoBehaviour
         float acceleration = Input.GetAxis("Vertical");
         float steering     = Input.GetAxis("Horizontal");
         float braking      = Input.GetAxis("Jump");
+
+        if (checkpointManager == null)
+        {
+            checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+        }
+
+        // Game Over condition
+        if (checkpointManager.lap == RaceMonitor.totalLaps + 1)
+        {
+            drive.highAccel.Stop();
+            drive.Go(0.0f, steering, 1.0f);
+            return;
+        }
 
         RaycastHit hit;
         if (Physics.Raycast(drive.rigidBody.gameObject.transform.position, -Vector3.up, out hit, 10.0f))
@@ -49,13 +62,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Time.time > lastTimeMoving + 4.0f)
+        if (Time.time > lastTimeMoving + 4.0f || withinSceneBoundaries())
         {
-            if (checkpointManager == null)
-            {
-                checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
-            }
-
             Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
                 Vector3.up * 3 + // place the car 2m above the road
                 Vector3.forward * 6 + // 6m forward

@@ -6,6 +6,7 @@ public class RaceMonitor : MonoBehaviour
 {
     public GameObject[] countdownItems;
     public static bool racing = false;
+    public static int totalLaps = 1;
 
     // Start is called before the first frame update
     void Start()
