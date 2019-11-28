@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class CameraFollow : MonoBehaviour
     float cameraSwitchSpeed = 10.0f;
     Vector3 reviewMirrorPositionDefault;
     Vector3 reviewMirrorPositionFPI;
+
+    Transform[] targets;
+    public RenderTexture frontCamView;
+    int switchTargetIndex = 0;
 
     enum PerspectiveModes
     {
@@ -44,6 +49,23 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (targets == null)
+        {
+            GameObject[] cars = GameObject.FindGameObjectsWithTag("car");
+            targets = new Transform[cars.Length - 1];
+            int targetIndex = 0;
+            for (int i = 0; i < cars.Length; i++)
+            {
+                Camera remoteCamera = cars[i].transform.Find("FrontCamera").gameObject.GetComponent<Camera>();
+                if (remoteCamera.tag != "MainCamera")
+                { 
+                    targets[targetIndex] = cars[i].transform;
+                    targetIndex++;
+                    targets[switchTargetIndex].Find("FrontCamera").gameObject.GetComponent<Camera>().targetTexture = frontCamView;
+                }
+            }
+        }
+
         if (CameraPerspective == PerspectiveModes.ThirdPersonPlayer)
         {
             // Third person
@@ -110,6 +132,17 @@ public class CameraFollow : MonoBehaviour
             }
 
             PlayerPrefs.SetInt("CameraPerspective", (int)CameraPerspective);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            targets[switchTargetIndex].Find("FrontCamera").gameObject.GetComponent<Camera>().targetTexture = null;
+            switchTargetIndex++;
+            if (switchTargetIndex > targets.Length - 1)
+            {
+                switchTargetIndex = 0;
+            }
+            targets[switchTargetIndex].Find("FrontCamera").gameObject.GetComponent<Camera>().targetTexture = frontCamView;
         }
     }
 }
