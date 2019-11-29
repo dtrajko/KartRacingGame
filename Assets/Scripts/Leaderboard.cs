@@ -22,6 +22,12 @@ public class Leaderboard
     static Dictionary<int, PlayerStats> lb = new Dictionary<int, PlayerStats>();
     static int carsRegistered = -1;
 
+    public static void Reset()
+    {
+        lb.Clear();
+        carsRegistered = -1;
+    }
+
     public static int RegisterCar(string name)
     {
         carsRegistered++;

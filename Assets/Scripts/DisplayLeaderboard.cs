@@ -10,6 +10,11 @@ public class DisplayLeaderboard : MonoBehaviour
     public Text place_3;
     public Text place_4;
 
+    private void Start()
+    {
+        Leaderboard.Reset();
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
