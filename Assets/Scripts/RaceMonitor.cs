@@ -5,17 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class RaceMonitor : MonoBehaviour
 {
+    public static int totalLaps = 1;
     public GameObject[] countdownItems;
     public static bool racing = false;
-    public static int totalLaps = 2;
     public GameObject gameOverPanel;
     public GameObject HUD;
 
     CheckpointManager[] carsCPManagers;
     List<CheckpointManager> playerCPManagers;
 
+    public GameObject[] carPrefabs;
+    public Transform[] spawnPos;
+    public GameObject[] arrowTags;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         foreach (GameObject countdownItem in countdownItems)
         {
@@ -24,6 +28,50 @@ public class RaceMonitor : MonoBehaviour
 
         StartCoroutine(PlayCountDown());
         gameOverPanel.SetActive(false);
+
+        int playerIndex = Random.Range(0, spawnPos.Length);
+
+        int spawnPosIndex = 0;
+        foreach (Transform t in spawnPos)
+        {
+            GameObject car = Instantiate(carPrefabs[Random.Range(0, carPrefabs.Length)]);
+            car.transform.position = t.position;
+            car.transform.rotation = t.rotation;
+
+            GameObject carBody = null;
+            foreach (Transform child in car.transform)
+            {
+                if (child.tag == "car")
+                {
+                    carBody = child.gameObject;
+                }
+            }
+            arrowTags[spawnPosIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
+
+            Camera[] cameras = car.GetComponentsInChildren<Camera>();
+            Camera frontCamera = cameras[0];
+            Camera rearCamera = cameras[1];
+
+            if (spawnPosIndex == playerIndex)
+            {
+                car.GetComponent<AIController>().enabled = false;
+                car.GetComponent<PlayerController>().enabled = true;
+                car.GetComponent<CameraFollow>().enabled = true;
+
+                frontCamera.tag = "MainCamera";
+                frontCamera.targetDisplay = 0; // set targetDisplay to Display1
+                frontCamera.targetTexture = null;
+                AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
+                audioListener.enabled = true;
+
+                rearCamera.enabled = true;
+            }
+            else
+            {
+                rearCamera.enabled = false; ;
+            }
+            spawnPosIndex++;
+        }
 
         GameObject[] cars = GameObject.FindGameObjectsWithTag("car");
         carsCPManagers = new CheckpointManager[cars.Length];

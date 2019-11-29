@@ -25,12 +25,9 @@ public class DisplayLeaderboard : MonoBehaviour
         place_3.text = "N/A";
         place_4.text = "N/A";
 
-        if (places.Count == 4)
-        { 
-            place_1.text = places[0];
-            place_2.text = places[1];
-            place_3.text = places[2];
-            place_4.text = places[3];        
-        }
+        place_1.text = places.Count > 0 ? places[0] : place_1.text;
+        place_2.text = places.Count > 1 ? places[1] : place_2.text;
+        place_3.text = places.Count > 2 ? places[2] : place_3.text;
+        place_4.text = places.Count > 3 ? places[3] : place_4.text;
     }
 }

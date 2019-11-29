@@ -30,14 +30,26 @@ public class WheelSkid : MonoBehaviour {
 	protected void Awake() {
 		wheelCollider = GetComponent<WheelCollider>();
 		lastFixedUpdateTime = Time.time;
-	}
 
-	protected void FixedUpdate() {
+        if (skidmarksController == null)
+        {
+            skidmarksController = GameObject.FindGameObjectWithTag("skidmarks").GetComponent<Skidmarks>();
+        }
+    }
+
+    protected void FixedUpdate() {
 		lastFixedUpdateTime = Time.time;
 	}
 
 	protected void LateUpdate() {
-		if (wheelCollider.GetGroundHit(out wheelHitInfo))
+
+        if (skidmarksController == null)
+        {
+            Debug.Log("The Skidmarks controller property is undefined.");
+            return;
+        }
+
+        if (wheelCollider.GetGroundHit(out wheelHitInfo))
 		{
 			// Check sideways speed
 

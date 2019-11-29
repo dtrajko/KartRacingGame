@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIController : BaseController
 {
     public Circuit circuit;
+
     public float brakingSensitivity = 1.0f;
     public float steeringSensitivity = 0.01f;
     public float accelSensitivity = 1.0f;
@@ -26,7 +27,18 @@ public class AIController : BaseController
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        if (circuit == null)
+        {
+            circuit = GameObject.FindGameObjectWithTag("circuit").GetComponent<Circuit>();
+        }
+
         drive = this.GetComponent<Drive>();
+
+        if (checkpointManager == null)
+        {
+            checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+        }
+
         target = circuit.waypoints[currentWaypoint].transform.position;
         nextTarget = circuit.waypoints[currentWaypoint + 1].transform.position;
         totalDistanceToTarget = Vector3.Distance(target, drive.rigidBody.gameObject.transform.position);
@@ -80,7 +92,14 @@ public class AIController : BaseController
 
         if (checkpointManager == null)
         {
-            checkpointManager = drive.rigidBody.GetComponent<CheckpointManager>();
+            Debug.Log("The CheckpointManager property is undefined.");
+            return;
+        }
+
+        if (circuit == null)
+        {
+            Debug.Log("The Circuit property is undefined.");
+            return;
         }
 
         // Game Over condition
