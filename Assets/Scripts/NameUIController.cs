@@ -27,7 +27,7 @@ public class NameUIController : MonoBehaviour
             Debug.Log("The 'Canvas' object is disabled?");
         }
 
-        this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+        this.transform.SetParent(GameObject.Find("PlayerNames").GetComponent<Transform>(), false);
         playerName = this.GetComponent<Text>();
         canvasGroup = this.GetComponent<CanvasGroup>();
     }
@@ -97,7 +97,7 @@ public class NameUIController : MonoBehaviour
             {
                 progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
             }
-            lapDisplay.text = position + " - Lap " + cpManager.lap + " (" + progressPercentage + "%)";
+            lapDisplay.text = position + " - Lap " + cpManager.lap + " / " + RaceMonitor.totalLaps + " (" + progressPercentage + "%)";
         }
     }
 }
