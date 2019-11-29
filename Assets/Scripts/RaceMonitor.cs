@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RaceMonitor : MonoBehaviour
 {
-    public static int totalLaps = 1;
+    public static int totalLaps = 2;
     public GameObject[] countdownItems;
     public static bool racing = false;
     public GameObject gameOverPanel;
@@ -15,11 +15,13 @@ public class RaceMonitor : MonoBehaviour
     List<CheckpointManager> playerCPManagers;
 
     public GameObject[] carPrefabs;
-    public Transform[] spawnPos;
+    public Transform[] spawnPositions;
     public GameObject[] arrowTags;
 
+    int playerPrefsCarIndex = 0;
+
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         foreach (GameObject countdownItem in countdownItems)
         {
@@ -29,48 +31,64 @@ public class RaceMonitor : MonoBehaviour
         StartCoroutine(PlayCountDown());
         gameOverPanel.SetActive(false);
 
-        int playerIndex = Random.Range(0, spawnPos.Length);
-
-        int spawnPosIndex = 0;
-        foreach (Transform t in spawnPos)
+        if (PlayerPrefs.HasKey("PlayerCar"))
         {
-            GameObject car = Instantiate(carPrefabs[Random.Range(0, carPrefabs.Length)]);
-            car.transform.position = t.position;
-            car.transform.rotation = t.rotation;
+            playerPrefsCarIndex = PlayerPrefs.GetInt("PlayerCar");
+        }
 
-            GameObject carBody = null;
-            foreach (Transform child in car.transform)
+        int randomPlayerStartPosition = Random.Range(0, spawnPositions.Length);
+
+        Debug.Log("[Player] Car prefab " + playerPrefsCarIndex + " to spawn position " + randomPlayerStartPosition);
+
+        GameObject playerCar = Instantiate(carPrefabs[playerPrefsCarIndex]);
+        playerCar.transform.position = spawnPositions[randomPlayerStartPosition].position;
+        playerCar.transform.rotation = spawnPositions[randomPlayerStartPosition].rotation;
+
+        playerCar.GetComponent<AIController>().enabled = false;
+        playerCar.GetComponent<PlayerController>().enabled = true;
+        playerCar.GetComponent<CameraFollow>().enabled = true;
+
+        Camera[] cameras = playerCar.GetComponentsInChildren<Camera>();
+        Camera frontCamera = cameras[0];
+        Camera rearCamera = cameras[1];
+
+        frontCamera.tag = "MainCamera";
+        frontCamera.targetDisplay = 0; // set targetDisplay to Display1
+        frontCamera.targetTexture = null;
+        AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
+        audioListener.enabled = true;
+        rearCamera.enabled = true;
+
+        assignArrowTag(playerCar, randomPlayerStartPosition);
+
+        int spawnPositionIndex = -1;
+        foreach (Transform spawnPosition in spawnPositions)
+        {
+            spawnPositionIndex++;
+
+            if (spawnPositionIndex == randomPlayerStartPosition)
             {
-                if (child.tag == "car")
-                {
-                    carBody = child.gameObject;
-                }
+                // PlayerController
+                Debug.Log("[Player in loop] Spawn position " + spawnPositionIndex + " ignored.");
+                continue;
             }
-            arrowTags[spawnPosIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
 
-            Camera[] cameras = car.GetComponentsInChildren<Camera>();
-            Camera frontCamera = cameras[0];
-            Camera rearCamera = cameras[1];
+            // NPC - AIController
+            int carPrefabRandomIndex = Random.Range(0, carPrefabs.Length);
 
-            if (spawnPosIndex == playerIndex)
-            {
-                car.GetComponent<AIController>().enabled = false;
-                car.GetComponent<PlayerController>().enabled = true;
-                car.GetComponent<CameraFollow>().enabled = true;
+            GameObject car = Instantiate(carPrefabs[carPrefabRandomIndex]);
 
-                frontCamera.tag = "MainCamera";
-                frontCamera.targetDisplay = 0; // set targetDisplay to Display1
-                frontCamera.targetTexture = null;
-                AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
-                audioListener.enabled = true;
+            Debug.Log("[AI] Car prefab " + carPrefabRandomIndex + " to spawn position " + spawnPositionIndex);
 
-                rearCamera.enabled = true;
-            }
-            else
-            {
-                rearCamera.enabled = false; ;
-            }
-            spawnPosIndex++;
+            car.transform.position = spawnPosition.position;
+            car.transform.rotation = spawnPosition.rotation;
+
+            cameras = car.GetComponentsInChildren<Camera>();
+            frontCamera = cameras[0];
+            rearCamera = cameras[1];
+            rearCamera.enabled = false;
+
+            assignArrowTag(car, spawnPositionIndex);
         }
 
         GameObject[] cars = GameObject.FindGameObjectsWithTag("car");
@@ -84,7 +102,20 @@ public class RaceMonitor : MonoBehaviour
                 playerCPManagers.Add(cars[i].GetComponent<CheckpointManager>());
             }
         }
-        // Debug.Log("playerCPManagers.Count: " + playerCPManagers.Count);
+    }
+
+    private void assignArrowTag(GameObject car, int spawnPositionIndex)
+    {
+        // Arrow tags
+        GameObject carBody = null;
+        foreach (Transform child in car.transform)
+        {
+            if (child.tag == "car")
+            {
+                carBody = child.gameObject;
+            }
+        }
+        arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
 
     IEnumerator PlayCountDown()

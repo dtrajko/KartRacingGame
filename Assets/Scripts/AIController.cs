@@ -87,7 +87,6 @@ public class AIController : BaseController
         if (!RaceMonitor.racing)
         {
             lastTimeMoving = Time.time;
-            return;
         }
 
         if (checkpointManager == null)
@@ -195,9 +194,12 @@ public class AIController : BaseController
         // Debug.Log("DRIVE.GO - ACCEL: " + (int)(acceleration * 100) +
         //     "%, BRAKE: " + (int)(Mathf.Clamp(braking, 0, 1) * 100) + "%");
 
-        drive.Go(acceleration, steering, braking);
-        drive.CheckForSkid();
-        drive.CalculateEngineSound();
+        if (RaceMonitor.racing)
+        { 
+            drive.Go(acceleration, steering, braking);
+            drive.CheckForSkid();
+            drive.CalculateEngineSound();
+        }
     }
 
     private bool avoidObstacleMode(out Vector3 avoidDirection)

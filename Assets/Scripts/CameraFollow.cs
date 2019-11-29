@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour
     float cameraSwitchSpeed = 10.0f;
 
     Transform[] targets;
+    public static Transform playerCar;
     public RenderTexture frontCamView;
     int switchTargetIndex = 0;
 

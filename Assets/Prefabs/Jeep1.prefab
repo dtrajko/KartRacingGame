@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 827195368664316767}
   - component: {fileID: 939402447944129494}
   m_Layer: 0
-  m_Name: Jeep
+  m_Name: Jeep1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
   - {fileID: 1775497252251496755}
   - {fileID: 4891523315212764288}
   - {fileID: 5988403251009184460}
-  torque: 500
+  torque: 800
   maxSteerAngle: 30
   maxBrakeTorque: 4000
   skidSound: {fileID: 89236022707976031}
@@ -1489,7 +1489,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6018613101095765626, guid: 444fa7c529b774c71bb5040cab02044b, type: 3}
+  - {fileID: 2100000, guid: fae0b9695aa57074a8ccb070512222b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

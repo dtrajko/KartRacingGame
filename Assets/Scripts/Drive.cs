@@ -54,7 +54,14 @@ public class Drive : MonoBehaviour
 
         GameObject playerNameGO = Instantiate(playerNamePrefab);
         playerNameGO.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
-        playerNameGO.GetComponent<Text>().text = playerName;
+        if (PlayerPrefs.HasKey("PlayerName") && GetComponentInParent<PlayerController>().enabled)
+        {
+            playerNameGO.GetComponent<Text>().text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
+        {
+            playerNameGO.GetComponent<Text>().text = playerName;   
+        }
         playerNameGO.GetComponent<NameUIController>().carRend = vehicleMesh;
 
         foreach (AudioSource audioSource in GetComponentsInChildren<AudioSource>())
