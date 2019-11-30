@@ -3,12 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public struct CarPrefabInfo
+{
+    public string type;
+    public string color;
+
+    public CarPrefabInfo(string inType, string inColor)
+    {
+        type = inType;
+        color = inColor;
+    }
+}
+
 public class RaceMonitor : MonoBehaviour
 {
+    public static float soundVolume = 0.2f;
     public static int totalLaps = 2;
     public GameObject[] countdownItems;
     public static bool racing = false;
+    public static bool pause = false;
     public GameObject gameOverPanel;
+    public GameObject pausePanel;
     public GameObject HUD;
 
     CheckpointManager[] carsCPManagers;
@@ -23,6 +38,8 @@ public class RaceMonitor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioListener.volume = soundVolume;
+
         foreach (GameObject countdownItem in countdownItems)
         {
             countdownItem.SetActive(false);
@@ -30,6 +47,7 @@ public class RaceMonitor : MonoBehaviour
 
         StartCoroutine(PlayCountDown());
         gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
 
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
@@ -38,7 +56,7 @@ public class RaceMonitor : MonoBehaviour
 
         int randomPlayerStartPosition = Random.Range(0, spawnPositions.Length);
 
-        Debug.Log("[Player] Car prefab " + playerPrefsCarIndex + " to spawn position " + randomPlayerStartPosition);
+        // Debug.Log("[Player] Car prefab " + playerPrefsCarIndex + " to spawn position " + randomPlayerStartPosition);
 
         GameObject playerCar = Instantiate(carPrefabs[playerPrefsCarIndex]);
         playerCar.transform.position = spawnPositions[randomPlayerStartPosition].position;
@@ -69,7 +87,7 @@ public class RaceMonitor : MonoBehaviour
             if (spawnPositionIndex == randomPlayerStartPosition)
             {
                 // PlayerController
-                Debug.Log("[Player in loop] Spawn position " + spawnPositionIndex + " ignored.");
+                // Debug.Log("[Player in loop] Spawn position " + spawnPositionIndex + " ignored.");
                 continue;
             }
 
@@ -78,7 +96,7 @@ public class RaceMonitor : MonoBehaviour
 
             GameObject car = Instantiate(carPrefabs[carPrefabRandomIndex]);
 
-            Debug.Log("[AI] Car prefab " + carPrefabRandomIndex + " to spawn position " + spawnPositionIndex);
+            // Debug.Log("[AI] Car prefab " + carPrefabRandomIndex + " to spawn position " + spawnPositionIndex);
 
             car.transform.position = spawnPosition.position;
             car.transform.rotation = spawnPosition.rotation;
@@ -102,6 +120,40 @@ public class RaceMonitor : MonoBehaviour
                 playerCPManagers.Add(cars[i].GetComponent<CheckpointManager>());
             }
         }
+    }
+
+    private void LateUpdate()
+    {
+        int finishedCount = 0;
+        foreach (CheckpointManager playerCPManager in playerCPManagers)
+        {
+            if (playerCPManager.lap == totalLaps + 1)
+            {
+                finishedCount++;
+            }
+        }
+
+        if (finishedCount == playerCPManagers.Count && !gameOverPanel.activeSelf)
+        {
+            HUD.SetActive(false);
+            gameOverPanel.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
+        // Debug.Log("finishedCount: " + finishedCount + "playerCPManagers.Count: " + playerCPManagers.Count);
+    }
+
+    public void TogglePause()
+    {
+        pause = !pause;
+        HUD.SetActive(pause == false);
+        pausePanel.SetActive(pause == true);
+        Time.timeScale = pause ? 0.0f : 1.0f;
+        AudioListener.volume = pause ? 0.0f : soundVolume;
     }
 
     private void assignArrowTag(GameObject car, int spawnPositionIndex)
@@ -142,24 +194,39 @@ public class RaceMonitor : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    private void LateUpdate()
+    public static CarPrefabInfo GetCarPrefabInfo(int playerPrefsIndex)
     {
-        int finishedCount = 0;
-        foreach (CheckpointManager playerCPManager in playerCPManagers)
+        CarPrefabInfo carPrefabInfo;
+        switch (playerPrefsIndex)
         {
-            if (playerCPManager.lap == totalLaps + 1)
-            {
-                finishedCount++;
-            }
+            case 0:
+                carPrefabInfo = new CarPrefabInfo("Car", "Red");
+                break;
+            case 1:
+                carPrefabInfo = new CarPrefabInfo("Car", "Magenta");
+                break;
+            case 2:
+                carPrefabInfo = new CarPrefabInfo("Car", "Green");
+                break;
+            case 3:
+                carPrefabInfo = new CarPrefabInfo("Car", "Yellow");
+                break;
+            case 4:
+                carPrefabInfo = new CarPrefabInfo("Jeep", "Red");
+                break;
+            case 5:
+                carPrefabInfo = new CarPrefabInfo("Jeep", "Magenta");
+                break;
+            case 6:
+                carPrefabInfo = new CarPrefabInfo("Jeep", "Green");
+                break;
+            case 7:
+                carPrefabInfo = new CarPrefabInfo("Jeep", "Yellow");
+                break;
+            default:
+                carPrefabInfo = new CarPrefabInfo("N/A", "N/A");
+                break;
         }
-
-        if (finishedCount == playerCPManagers.Count && !gameOverPanel.activeSelf)
-        {
-            HUD.SetActive(false);
-            gameOverPanel.SetActive(true);
-        }
-
-        // Debug.Log("finishedCount: " + finishedCount + "playerCPManagers.Count: " + playerCPManagers.Count);
-
+        return carPrefabInfo;
     }
 }

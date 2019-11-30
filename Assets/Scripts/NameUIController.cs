@@ -55,7 +55,7 @@ public class NameUIController : MonoBehaviour
 
         if (carRego == -1 && playerName.text != "PLAYER NAME")
         {
-            carRego = Leaderboard.RegisterCar(playerName.text);
+            carRego = Leaderboard.RegisterCar(playerName.text); // before: 
         }
 
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);

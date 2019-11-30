@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 1921317762643602782}
   - component: {fileID: 1213428972505642001}
   m_Layer: 0
-  m_Name: Car
+  m_Name: Car1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -858,7 +858,7 @@ MonoBehaviour:
   rpm: 0
   currentGear: 1
   currentGearPerc: 0
-  playerName: Car AI
+  playerName: Car Red AI
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
   vehicleMesh: {fileID: 202031130733682096}

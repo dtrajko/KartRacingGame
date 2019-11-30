@@ -39,8 +39,6 @@ public class Drive : MonoBehaviour
     public GameObject playerNamePrefab;
     public Renderer vehicleMesh;
 
-    float carSoundVolume = 0.2f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -63,11 +61,6 @@ public class Drive : MonoBehaviour
             playerNameGO.GetComponent<Text>().text = playerName;   
         }
         playerNameGO.GetComponent<NameUIController>().carRend = vehicleMesh;
-
-        foreach (AudioSource audioSource in GetComponentsInChildren<AudioSource>())
-        {
-            audioSource.volume = carSoundVolume;
-        }
     }
 
     public void CalculateEngineSound()

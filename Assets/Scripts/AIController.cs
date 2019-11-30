@@ -145,7 +145,6 @@ public class AIController : BaseController
         if (Time.time < drive.rigidBody.GetComponent<AvoidDetector>().avoidTime)
         {
             localTarget = tracker.transform.right * drive.rigidBody.GetComponent<AvoidDetector>().avoidPath;
-            // Debug.DrawRay(raycastOrigin, localTarget * rayLength, Color.blue);
         }
         else
         {
@@ -191,15 +190,17 @@ public class AIController : BaseController
             drive.torque = prevTorque;
         }
 
+        if (!RaceMonitor.racing)
+        {
+            acceleration = 0.0f;
+        }
+
         // Debug.Log("DRIVE.GO - ACCEL: " + (int)(acceleration * 100) +
         //     "%, BRAKE: " + (int)(Mathf.Clamp(braking, 0, 1) * 100) + "%");
 
-        if (RaceMonitor.racing)
-        { 
-            drive.Go(acceleration, steering, braking);
-            drive.CheckForSkid();
-            drive.CalculateEngineSound();
-        }
+        drive.Go(acceleration, steering, braking);
+        drive.CheckForSkid();
+        drive.CalculateEngineSound();
     }
 
     private bool avoidObstacleMode(out Vector3 avoidDirection)

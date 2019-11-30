@@ -20,6 +20,14 @@ public class LaunchManager : MonoBehaviour
     {
         SceneManager.LoadScene("Track1");
     }
+    public void Exit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit ();
+        #endif
+    }
 
     public void SetName(string name)
     {
