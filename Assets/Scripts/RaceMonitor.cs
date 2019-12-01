@@ -29,7 +29,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public GameObject gameOverPanel;
     public GameObject pausePanel;
     public GameObject HUD;
-    public GameObject startRace;
+    public GameObject startGameButton;
 
     CheckpointManager[] carsCPManagers;
     List<CheckpointManager> playerCPManagers;
@@ -52,97 +52,125 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+        startGameButton.SetActive(false);
 
-        startRace.SetActive(false);
-        if (PhotonNetwork.IsConnected)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                startRace.SetActive(true);
-            }
-        }
-        else
-        {
-            StartGame(1.0f);
-        }
+        playerCPManagers = new List<CheckpointManager>();
 
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
             playerPrefsCarIndex = PlayerPrefs.GetInt("PlayerCar");
         }
 
-        int randomPlayerStartPosition = Random.Range(0, spawnPositions.Length);
+        int playerSpawnPositionIndex = Random.Range(0, spawnPositions.Length);
+        Vector3 playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
+        Quaternion playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
 
-        // Debug.Log("[Player] Car prefab " + playerPrefsCarIndex + " to spawn position " + randomPlayerStartPosition);
+        GameObject playerCar;
 
-        GameObject playerCar = Instantiate(carPrefabs[playerPrefsCarIndex]);
-        playerCar.transform.position = spawnPositions[randomPlayerStartPosition].position;
-        playerCar.transform.rotation = spawnPositions[randomPlayerStartPosition].rotation;
+        if (PhotonNetwork.IsConnected)
+        {
+            // Multiplayer (NetworkPlayer)
+            playerSpawnPositionIndex = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
+            playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
 
-        playerCar.GetComponent<AIController>().enabled = false;
-        playerCar.GetComponent<PlayerController>().enabled = true;
-        playerCar.GetComponent<CameraFollow>().enabled = true;
+            if (NetworkedPlayer.LocalPlayerInstance == null)
+            {
+                playerCar = PhotonNetwork.Instantiate(carPrefabs[playerPrefsCarIndex].name, playerStartPosition, playerStartRotation, 0);
+                playerCar.GetComponent<AIController>().enabled = false;
+                playerCar.GetComponent<Drive>().enabled = true;
+                playerCar.GetComponent<PlayerController>().enabled = true;
+                playerCar.GetComponent<CameraFollow>().enabled = true;
 
-        Camera[] cameras = playerCar.GetComponentsInChildren<Camera>();
+                SetupCameras(playerCar, true);
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                startGameButton.SetActive(true);
+            }
+        }
+        else
+        {
+            // Single Player (PlayerController)
+            for (int spawnPosIndex = 0; spawnPosIndex < spawnPositions.Length; spawnPosIndex++)
+            {
+                if (spawnPosIndex == playerSpawnPositionIndex)
+                {
+                    // PlayerController
+                    playerCar = InstantiateCar(playerStartPosition, playerStartRotation, playerPrefsCarIndex, playerSpawnPositionIndex, true);
+                }
+                else
+                {
+                    // AIController (NPC)
+                    int carPrefabIndex = Random.Range(0, carPrefabs.Length);
+                    InstantiateCar(spawnPositions[spawnPosIndex].position, spawnPositions[spawnPosIndex].rotation, carPrefabIndex, spawnPosIndex, false);
+                }
+            }
+
+            StartGame(1.0f);
+        }
+    }
+
+    private GameObject InstantiateCar(Vector3 position, Quaternion rotation, int carPrefabIndex, int spawnPositionIndex, bool isPlayer)
+    {
+        GameObject car = Instantiate(carPrefabs[carPrefabIndex]);
+        car.transform.position = position;
+        car.transform.rotation = rotation;
+
+        if (isPlayer)
+        {
+            car.GetComponent<AIController>().enabled = false;
+            car.GetComponent<Drive>().enabled = true;
+            car.GetComponent<PlayerController>().enabled = true;
+            car.GetComponent<CameraFollow>().enabled = true;
+        }
+
+        SetupCameras(car, isPlayer);
+
+        assignArrowTag(car, spawnPositionIndex);
+
+        return car;
+    }
+
+    private void SetupCameras(GameObject car, bool isPlayer)
+    {
+        Camera[] cameras = car.GetComponentsInChildren<Camera>();
         Camera frontCamera = cameras[0];
         Camera rearCamera = cameras[1];
 
-        frontCamera.tag = "MainCamera";
-        frontCamera.targetDisplay = 0; // set targetDisplay to Display1
-        frontCamera.targetTexture = null;
-        AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
-        audioListener.enabled = true;
-        rearCamera.enabled = true;
-
-        assignArrowTag(playerCar, randomPlayerStartPosition);
-
-        int spawnPositionIndex = -1;
-        foreach (Transform spawnPosition in spawnPositions)
+        if (isPlayer)
         {
-            spawnPositionIndex++;
-
-            if (spawnPositionIndex == randomPlayerStartPosition)
-            {
-                // PlayerController
-                // Debug.Log("[Player in loop] Spawn position " + spawnPositionIndex + " ignored.");
-                continue;
-            }
-
-            // NPC - AIController
-            int carPrefabRandomIndex = Random.Range(0, carPrefabs.Length);
-
-            GameObject car = Instantiate(carPrefabs[carPrefabRandomIndex]);
-
-            // Debug.Log("[AI] Car prefab " + carPrefabRandomIndex + " to spawn position " + spawnPositionIndex);
-
-            car.transform.position = spawnPosition.position;
-            car.transform.rotation = spawnPosition.rotation;
-
-            cameras = car.GetComponentsInChildren<Camera>();
-            frontCamera = cameras[0];
-            rearCamera = cameras[1];
-            rearCamera.enabled = false;
-
-            assignArrowTag(car, spawnPositionIndex);
+            frontCamera.tag = "MainCamera";
+            frontCamera.targetDisplay = 0; // set targetDisplay to Display1
+            frontCamera.targetTexture = null;
+            AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
+            audioListener.enabled = true;
         }
 
-        GameObject[] cars = GameObject.FindGameObjectsWithTag("car");
-        carsCPManagers = new CheckpointManager[cars.Length];
-        playerCPManagers = new List<CheckpointManager>();
-
-        for (int i = 0; i < cars.Length; i++)
-        {
-            carsCPManagers[i] = cars[i].GetComponent<CheckpointManager>();
-            if (cars[i].GetComponentInParent<PlayerController>().enabled) {
-                playerCPManagers.Add(cars[i].GetComponent<CheckpointManager>());
-            }
-        }
+        rearCamera.enabled = isPlayer ? true : false;
     }
 
     public void StartGame(float initDelay)
     {
         StartCoroutine(PlayCountDown(initDelay));
-        startRace.SetActive(false);
+        startGameButton.SetActive(false);
+        SetupCheckpointManagers();
+    }
+
+    private void SetupCheckpointManagers()
+    {
+        GameObject[] cars = GameObject.FindGameObjectsWithTag("car");
+        carsCPManagers = new CheckpointManager[cars.Length];
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            carsCPManagers[i] = cars[i].GetComponent<CheckpointManager>();
+            if (cars[i].GetComponentInParent<PlayerController>().enabled)
+            {
+                playerCPManagers.Add(cars[i].GetComponent<CheckpointManager>());
+            }
+        }
     }
 
     IEnumerator PlayCountDown(float initDelay)
@@ -159,6 +187,11 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     private void LateUpdate()
     {
+        if (!racing)
+        {
+            // return;
+        }
+
         int finishedCount = 0;
         foreach (CheckpointManager playerCPManager in playerCPManagers)
         {
@@ -168,7 +201,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             }
         }
 
-        if (finishedCount == playerCPManagers.Count && !gameOverPanel.activeSelf)
+        if (playerCPManagers.Count > 0 && finishedCount == playerCPManagers.Count && !gameOverPanel.activeSelf)
         {
             HUD.SetActive(false);
             gameOverPanel.SetActive(true);
