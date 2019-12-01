@@ -88,6 +88,6 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
-        // PhotonNetwork.LoadLevel("Track1");
+        PhotonNetwork.LoadLevel("Track1");
     }
 }

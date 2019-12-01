@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using Photon.Realtime;
+using Photon.Pun;
+
+
 public struct CarPrefabInfo
 {
     public string type;
@@ -15,7 +19,7 @@ public struct CarPrefabInfo
     }
 }
 
-public class RaceMonitor : MonoBehaviour
+public class RaceMonitor : MonoBehaviourPunCallbacks
 {
     public static float soundVolume = 0.2f;
     public static int totalLaps = 2;
@@ -25,6 +29,7 @@ public class RaceMonitor : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject pausePanel;
     public GameObject HUD;
+    public GameObject startRace;
 
     CheckpointManager[] carsCPManagers;
     List<CheckpointManager> playerCPManagers;
@@ -45,9 +50,21 @@ public class RaceMonitor : MonoBehaviour
             countdownItem.SetActive(false);
         }
 
-        StartCoroutine(PlayCountDown());
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+
+        startRace.SetActive(false);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                startRace.SetActive(true);
+            }
+        }
+        else
+        {
+            StartGame(1.0f);
+        }
 
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
@@ -122,6 +139,24 @@ public class RaceMonitor : MonoBehaviour
         }
     }
 
+    public void StartGame(float initDelay)
+    {
+        StartCoroutine(PlayCountDown(initDelay));
+        startRace.SetActive(false);
+    }
+
+    IEnumerator PlayCountDown(float initDelay)
+    {
+        yield return new WaitForSeconds(initDelay);
+        foreach (GameObject countdownItem in countdownItems)
+        {
+            countdownItem.SetActive(true);
+            yield return new WaitForSeconds(1);
+            countdownItem.SetActive(false);
+        }
+        racing = true;
+    }
+
     private void LateUpdate()
     {
         int finishedCount = 0;
@@ -168,18 +203,6 @@ public class RaceMonitor : MonoBehaviour
             }
         }
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
-    }
-
-    IEnumerator PlayCountDown()
-    {
-        yield return new WaitForSeconds(2);
-        foreach (GameObject countdownItem in countdownItems)
-        {
-            countdownItem.SetActive(true);
-            yield return new WaitForSeconds(1);
-            countdownItem.SetActive(false);
-        }
-        racing = true;
     }
 
     public void RestartLevel()
