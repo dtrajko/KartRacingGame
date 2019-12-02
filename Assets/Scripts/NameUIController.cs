@@ -13,11 +13,12 @@ public class NameUIController : MonoBehaviour
     public Renderer carRenderer;
     CheckpointManager cpManager;
 
-    int carRego = -1;
-
     int minFontSize = 20;
     int maxFontSize = 28;
     float maxDistanceToCamera = 150.0f;
+
+    int carRego;
+    bool regoSet = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -53,9 +54,11 @@ public class NameUIController : MonoBehaviour
             return;
         }
 
-        if (carRego == -1 && playerName.text != "PLAYER NAME")
+        if (!regoSet && playerName.text != "PLAYER NAME")
         {
-            carRego = Leaderboard.RegisterCar(playerName.text); // before: 
+            carRego = Leaderboard.RegisterCar(playerName.text);
+            regoSet = true;
+            return;
         }
 
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);

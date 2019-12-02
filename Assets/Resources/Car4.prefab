@@ -2315,6 +2315,7 @@ MonoBehaviour:
   currentGear: 1
   currentGearPerc: 0
   playerName: Car Yellow AI
+  networkName: 
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
   vehicleMesh: {fileID: 4733444333427919099}
@@ -2389,7 +2390,7 @@ MonoBehaviour:
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
   rigidBody: {fileID: 2697848952387310197}
-  vehicleMesh: {fileID: 4733444333427919099}
+  carMesh: {fileID: 0}
 --- !u!114 &2697848953455570524
 MonoBehaviour:
   m_ObjectHideFlags: 0

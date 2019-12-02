@@ -1643,6 +1643,7 @@ MonoBehaviour:
   currentGear: 1
   currentGearPerc: 0
   playerName: Jeep Yellow AI
+  networkName: 
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
   vehicleMesh: {fileID: 1999734408062432760}
