@@ -10,7 +10,7 @@ public class NameUIController : MonoBehaviour
     public Text lapDisplay;
     public Transform target;
     CanvasGroup canvasGroup;
-    public Renderer carRend;
+    public Renderer carRenderer;
     CheckpointManager cpManager;
 
     int carRego = -1;
@@ -47,9 +47,9 @@ public class NameUIController : MonoBehaviour
             return;
         }
 
-        if (carRend == null)
+        if (carRenderer == null)
         {
-            Debug.Log("The 'carRend' variable is undefined.");
+            Debug.Log("The 'carRenderer' variable is undefined.");
             return;
         }
 
@@ -59,7 +59,7 @@ public class NameUIController : MonoBehaviour
         }
 
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        bool carInView = GeometryUtility.TestPlanesAABB(planes, carRend.bounds);
+        bool carInView = GeometryUtility.TestPlanesAABB(planes, carRenderer.bounds);
         canvasGroup.alpha = carInView ? 1.0f : 0.0f;
         Vector3 worldPosition = target.position + Vector3.up * 1.4f;
         this.transform.position = Camera.main.WorldToScreenPoint(worldPosition);

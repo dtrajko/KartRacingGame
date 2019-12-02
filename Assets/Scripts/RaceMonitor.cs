@@ -77,12 +77,11 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             if (NetworkedPlayer.LocalPlayerInstance == null)
             {
                 playerCar = PhotonNetwork.Instantiate(carPrefabs[playerPrefsCarIndex].name, playerStartPosition, playerStartRotation, 0);
-                playerCar.GetComponent<AIController>().enabled = false;
-                playerCar.GetComponent<Drive>().enabled = true;
-                playerCar.GetComponent<PlayerController>().enabled = true;
-                playerCar.GetComponent<CameraFollow>().enabled = true;
+                SetupScripts(playerCar);
 
                 SetupCameras(playerCar, true);
+
+                assignArrowTag(playerCar, playerSpawnPositionIndex);
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -120,10 +119,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         if (isPlayer)
         {
-            car.GetComponent<AIController>().enabled = false;
-            car.GetComponent<Drive>().enabled = true;
-            car.GetComponent<PlayerController>().enabled = true;
-            car.GetComponent<CameraFollow>().enabled = true;
+            SetupScripts(car);
         }
 
         SetupCameras(car, isPlayer);
@@ -131,6 +127,14 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         assignArrowTag(car, spawnPositionIndex);
 
         return car;
+    }
+
+    private void SetupScripts(GameObject car)
+    {
+        car.GetComponent<AIController>().enabled = false;
+        car.GetComponent<Drive>().enabled = true;
+        car.GetComponent<PlayerController>().enabled = true;
+        car.GetComponent<CameraFollow>().enabled = true;
     }
 
     private void SetupCameras(GameObject car, bool isPlayer)

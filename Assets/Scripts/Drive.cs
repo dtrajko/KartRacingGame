@@ -60,7 +60,7 @@ public class Drive : MonoBehaviour
         {
             playerNameGO.GetComponent<Text>().text = playerName;   
         }
-        playerNameGO.GetComponent<NameUIController>().carRend = vehicleMesh;
+        playerNameGO.GetComponent<NameUIController>().carRenderer = vehicleMesh;
     }
 
     public void CalculateEngineSound()
