@@ -7892,6 +7892,8 @@ GameObject:
   m_Component:
   - component: {fileID: 219046078}
   - component: {fileID: 219046079}
+  - component: {fileID: 219046081}
+  - component: {fileID: 219046080}
   m_Layer: 0
   m_Name: RaceMonitor
   m_TagString: Untagged
@@ -7934,6 +7936,7 @@ MonoBehaviour:
   pausePanel: {fileID: 1315950570}
   HUD: {fileID: 1961339704}
   startGameButton: {fileID: 772529462}
+  startGameWaitingText: {fileID: 811956854}
   carPrefabs:
   - {fileID: 7353815107301669643, guid: 093b2da0e9e4a3746bc529efa6e58c78, type: 3}
   - {fileID: 7353815107301669643, guid: 7d388c0fb87cb3648936b0751ac10f6d, type: 3}
@@ -7953,6 +7956,43 @@ MonoBehaviour:
   - {fileID: 768703893}
   - {fileID: 1198965470}
   - {fileID: 276275301}
+--- !u!114 &219046080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219046077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &219046081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219046077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 219046080}
+  viewIdField: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!64 &220242005
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8731,6 +8771,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4459683815661740433, guid: 46e885f74af1dc84e95fda321c8a7b74,
+        type: 3}
+      propertyPath: m_Name
+      value: CarBodyRed
+      objectReference: {fileID: 0}
     - target: {fileID: 7746082791354626742, guid: 46e885f74af1dc84e95fda321c8a7b74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8874,11 +8919,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
       value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4459683815661740433, guid: 46e885f74af1dc84e95fda321c8a7b74,
-        type: 3}
-      propertyPath: m_Name
-      value: CarBodyRed
       objectReference: {fileID: 0}
     - target: {fileID: 6787511695426806646, guid: 46e885f74af1dc84e95fda321c8a7b74,
         type: 3}
@@ -28040,7 +28080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &772529463
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28105,8 +28145,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 219046079}
-        m_MethodName: StartGame
-        m_Mode: 4
+        m_MethodName: BeginGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -29023,6 +29063,101 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809299548}
   m_Mesh: {fileID: 7211637597200131762, guid: a7c09116e1ca0dc46b643521830aac2f, type: 3}
+--- !u!1 &811956854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 811956855}
+  - component: {fileID: 811956857}
+  - component: {fileID: 811956856}
+  - component: {fileID: 811956858}
+  m_Layer: 5
+  m_Name: StartGameWaitingText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &811956855
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811956854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2131408122}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 450, y: 200}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &811956856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811956854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: b6d2560cdd8a461409e064460cd9895a, type: 3}
+    m_FontSize: 48
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 48
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Waiting for
+
+    Race to Start'
+--- !u!222 &811956857
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811956854}
+  m_CullTransparentMesh: 0
+--- !u!114 &811956858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811956854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &815794259
 GameObject:
   m_ObjectHideFlags: 0
@@ -74714,6 +74849,7 @@ RectTransform:
   - {fileID: 259319205}
   - {fileID: 1315950571}
   - {fileID: 772529463}
+  - {fileID: 811956855}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

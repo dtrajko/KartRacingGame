@@ -9,11 +9,13 @@ using Photon.Pun;
 
 public struct CarPrefabInfo
 {
+    public int id;
     public string type;
     public string color;
 
-    public CarPrefabInfo(string inType, string inColor)
+    public CarPrefabInfo(int inId, string inType, string inColor)
     {
+        id = inId;
         type = inType;
         color = inColor;
     }
@@ -30,6 +32,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public GameObject pausePanel;
     public GameObject HUD;
     public GameObject startGameButton;
+    public GameObject startGameWaitingText;
 
     CheckpointManager[] carsCPManagers;
     List<CheckpointManager> playerCPManagers;
@@ -53,6 +56,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
         startGameButton.SetActive(false);
+        startGameWaitingText.SetActive(false);
 
         playerCPManagers = new List<CheckpointManager>();
 
@@ -88,6 +92,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             {
                 startGameButton.SetActive(true);
             }
+            else
+            { 
+                startGameWaitingText.SetActive(true);
+            }
         }
         else
         {
@@ -107,8 +115,26 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
                 }
             }
 
-            StartGame(1.0f);
+            StartGame();
         }
+    }
+
+    public void BeginGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("StartGame", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void StartGame()
+    {
+        float initDelay = 1.0f;
+        StartCoroutine(PlayCountDown(initDelay));
+        startGameButton.SetActive(false);
+        startGameWaitingText.SetActive(false);
+        SetupCheckpointManagers();
     }
 
     private GameObject InstantiateCar(Vector3 position, Quaternion rotation, int carPrefabIndex, int spawnPositionIndex, bool isPlayer)
@@ -153,13 +179,6 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
 
         rearCamera.enabled = isPlayer ? true : false;
-    }
-
-    public void StartGame(float initDelay)
-    {
-        StartCoroutine(PlayCountDown(initDelay));
-        startGameButton.SetActive(false);
-        SetupCheckpointManagers();
     }
 
     private void SetupCheckpointManagers()
@@ -260,31 +279,31 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         switch (playerPrefsIndex)
         {
             case 0:
-                carPrefabInfo = new CarPrefabInfo("Car", "Red");
+                carPrefabInfo = new CarPrefabInfo(0, "Car", "Red");
                 break;
             case 1:
-                carPrefabInfo = new CarPrefabInfo("Car", "Magenta");
+                carPrefabInfo = new CarPrefabInfo(1, "Car", "Magenta");
                 break;
             case 2:
-                carPrefabInfo = new CarPrefabInfo("Car", "Green");
+                carPrefabInfo = new CarPrefabInfo(2, "Car", "Green");
                 break;
             case 3:
-                carPrefabInfo = new CarPrefabInfo("Car", "Yellow");
+                carPrefabInfo = new CarPrefabInfo(3, "Car", "Yellow");
                 break;
             case 4:
-                carPrefabInfo = new CarPrefabInfo("Jeep", "Red");
+                carPrefabInfo = new CarPrefabInfo(4, "Jeep", "Red");
                 break;
             case 5:
-                carPrefabInfo = new CarPrefabInfo("Jeep", "Magenta");
+                carPrefabInfo = new CarPrefabInfo(5, "Jeep", "Magenta");
                 break;
             case 6:
-                carPrefabInfo = new CarPrefabInfo("Jeep", "Green");
+                carPrefabInfo = new CarPrefabInfo(6, "Jeep", "Green");
                 break;
             case 7:
-                carPrefabInfo = new CarPrefabInfo("Jeep", "Yellow");
+                carPrefabInfo = new CarPrefabInfo(7, "Jeep", "Yellow");
                 break;
             default:
-                carPrefabInfo = new CarPrefabInfo("N/A", "N/A");
+                carPrefabInfo = new CarPrefabInfo(-1, "N/A", "N/A");
                 break;
         }
         return carPrefabInfo;
