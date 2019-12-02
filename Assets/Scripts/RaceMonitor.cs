@@ -81,7 +81,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             if (NetworkedPlayer.LocalPlayerInstance == null)
             {
                 playerCar = PhotonNetwork.Instantiate(carPrefabs[playerPrefsCarIndex].name, playerStartPosition, playerStartRotation, 0);
-                SetupScripts(playerCar);
+                SetupScripts(playerCar, true);
 
                 SetupCameras(playerCar, true);
 
@@ -121,10 +121,21 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void BeginGame()
     {
-        if (PhotonNetwork.IsMasterClient)
+        // if (PhotonNetwork.IsMasterClient { ... }
+        byte playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        byte maxPlayers = PhotonNetwork.CurrentRoom.MaxPlayers;
+        for (int i = playerCount; i < maxPlayers; i++)
         {
-            photonView.RPC("StartGame", RpcTarget.All);
+            Vector3 startPosition = spawnPositions[i].position;
+            Quaternion startRotation = spawnPositions[i].rotation;
+            int carPrefabIndex = Random.Range(0, carPrefabs.Length);
+            object[] instanceData = new object[1];
+            instanceData[0] = "Random AI name";
+            GameObject AICar = PhotonNetwork.Instantiate(carPrefabs[carPrefabIndex].name, startPosition, startRotation, 0, instanceData);
+            SetupScripts(AICar, false);
+            AICar.GetComponent<Drive>().networkName = (string)instanceData[0];
         }
+        photonView.RPC("StartGame", RpcTarget.All);        
     }
 
     [PunRPC]
@@ -145,7 +156,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         if (isPlayer)
         {
-            SetupScripts(car);
+            SetupScripts(car, isPlayer);
         }
 
         SetupCameras(car, isPlayer);
@@ -155,12 +166,24 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         return car;
     }
 
-    private void SetupScripts(GameObject car)
+    private void SetupScripts(GameObject car, bool isPlayer)
     {
-        car.GetComponent<AIController>().enabled = false;
-        car.GetComponent<Drive>().enabled = true;
-        car.GetComponent<PlayerController>().enabled = true;
-        car.GetComponent<CameraFollow>().enabled = true;
+        if (isPlayer)
+        {
+            // PlayerController
+            car.GetComponent<Drive>().enabled = true;
+            car.GetComponent<AIController>().enabled = false;
+            car.GetComponent<PlayerController>().enabled = true;
+            car.GetComponent<CameraFollow>().enabled = true;
+        }
+        else
+        {
+            // AIController
+            car.GetComponent<Drive>().enabled = true;
+            car.GetComponent<AIController>().enabled = true;
+            car.GetComponent<PlayerController>().enabled = false;
+            car.GetComponent<CameraFollow>().enabled = false;
+        }
     }
 
     private void SetupCameras(GameObject car, bool isPlayer)

@@ -36,6 +36,7 @@ public class Drive : MonoBehaviour
     public float currentGearPerc;
 
     public string playerName;
+    public string networkName;
     public GameObject playerNamePrefab;
     public Renderer vehicleMesh;
 
@@ -52,9 +53,20 @@ public class Drive : MonoBehaviour
 
         GameObject playerNameGO = Instantiate(playerNamePrefab);
         playerNameGO.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
-        if (PlayerPrefs.HasKey("PlayerName") && GetComponentInParent<PlayerController>().enabled)
+
+        if (this.GetComponent<AIController>().enabled)
         {
-            playerNameGO.GetComponent<Text>().text = PlayerPrefs.GetString("PlayerName");
+            if (networkName != "")
+            {
+                playerNameGO.GetComponent<Text>().text = networkName;
+            }
+        }
+        else if (GetComponentInParent<PlayerController>().enabled)
+        {
+            if (PlayerPrefs.HasKey("PlayerName"))
+            { 
+                playerNameGO.GetComponent<Text>().text = PlayerPrefs.GetString("PlayerName");
+            }
         }
         else
         {
