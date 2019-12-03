@@ -35,5 +35,8 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - StartGame
+  - RestartGame
+  - RPC_RestartGame
+  - RPC_StartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 0

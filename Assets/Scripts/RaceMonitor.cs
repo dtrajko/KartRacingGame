@@ -24,7 +24,7 @@ public struct CarPrefabInfo
 public class RaceMonitor : MonoBehaviourPunCallbacks
 {
     public static float soundVolume = 0.2f;
-    public static int totalLaps = 2;
+    public static int totalLaps = 1;
     public GameObject[] countdownItems;
     public static bool racing = false;
     public static bool pause = false;
@@ -46,6 +46,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        racing = false;
+
         AudioListener.volume = soundVolume;
 
         foreach (GameObject countdownItem in countdownItems)
@@ -69,12 +71,12 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         Vector3 playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
         Quaternion playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
 
-        GameObject playerCar;
+        GameObject playerCar = null;
 
         if (PhotonNetwork.IsConnected)
         {
             // Multiplayer (NetworkPlayer)
-            playerSpawnPositionIndex = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            playerSpawnPositionIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
             playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
             playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
 
@@ -82,9 +84,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             {
                 playerCar = PhotonNetwork.Instantiate(carPrefabs[playerPrefsCarIndex].name, playerStartPosition, playerStartRotation, 0);
                 SetupScripts(playerCar, true);
-
                 SetupCameras(playerCar, true);
-
                 assignArrowTag(playerCar, playerSpawnPositionIndex);
             }
 
@@ -115,31 +115,41 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
                 }
             }
 
-            StartGame();
+            RPC_StartGame(); // this RPC also used in single player
         }
     }
 
     public void BeginGame()
     {
-        // if (PhotonNetwork.IsMasterClient { ... }
+        NetworkSpawnNPCs();
+        photonView.RPC("RPC_StartGame", RpcTarget.All);
+    }
+
+    public void NetworkSpawnNPCs()
+    {
         byte playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         byte maxPlayers = PhotonNetwork.CurrentRoom.MaxPlayers;
-        for (int i = playerCount; i < maxPlayers; i++)
+
+        for (int spawnPositionIndex = playerCount; spawnPositionIndex < maxPlayers; spawnPositionIndex++)
         {
-            Vector3 startPosition = spawnPositions[i].position;
-            Quaternion startRotation = spawnPositions[i].rotation;
+            Vector3 startPosition = spawnPositions[spawnPositionIndex].position;
+            Quaternion startRotation = spawnPositions[spawnPositionIndex].rotation;
             int carPrefabIndex = Random.Range(0, carPrefabs.Length);
+
             object[] instanceData = new object[1];
-            instanceData[0] = "Random AI name";
+            instanceData[0] = carPrefabs[carPrefabIndex].GetComponent<Drive>().playerName;
             GameObject AICar = PhotonNetwork.Instantiate(carPrefabs[carPrefabIndex].name, startPosition, startRotation, 0, instanceData);
-            SetupScripts(AICar, false);
             AICar.GetComponent<Drive>().networkName = (string)instanceData[0];
+
+            SetupScripts(AICar, false);
+            SetupCameras(AICar, false);
+            assignArrowTag(AICar, spawnPositionIndex);
+
         }
-        photonView.RPC("StartGame", RpcTarget.All);        
     }
 
     [PunRPC]
-    public void StartGame()
+    public void RPC_StartGame()
     {
         float initDelay = 1.0f;
         StartCoroutine(PlayCountDown(initDelay));
@@ -154,13 +164,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         car.transform.position = position;
         car.transform.rotation = rotation;
 
-        if (isPlayer)
-        {
-            SetupScripts(car, isPlayer);
-        }
-
+        SetupScripts(car, isPlayer);
         SetupCameras(car, isPlayer);
-
         assignArrowTag(car, spawnPositionIndex);
 
         return car;
@@ -284,10 +289,23 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
 
+    [PunRPC]
+    public void RPC_RestartGame()
+    {
+        PhotonNetwork.LoadLevel("Track1");
+    }
+
     public void RestartLevel()
     {
         racing = false;
-        SceneManager.LoadScene("Track1");
+        if (PhotonNetwork.IsConnected)
+        {
+            photonView.RPC("RPC_RestartGame", RpcTarget.All);
+        }
+        else
+        { 
+            SceneManager.LoadScene("Track1");
+        }
     }
 
     public void MainMenu()
