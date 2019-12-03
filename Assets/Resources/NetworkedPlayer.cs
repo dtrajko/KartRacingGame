@@ -11,7 +11,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks
     public static GameObject LocalPlayerInstance;
     public GameObject playerNamePrefab;
     public Rigidbody rigidBody;
-    public Renderer carMesh;
+    public MeshRenderer carMesh;
 
     private void Awake()
     {
@@ -23,6 +23,8 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks
         {
             GameObject playerName = Instantiate(playerNamePrefab);
             playerName.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
+            playerName.GetComponent<NameUIController>().carRenderer = carMesh;
+
             string sentName = null;
             if (photonView.InstantiationData != null)
             {
@@ -36,7 +38,7 @@ public class NetworkedPlayer : MonoBehaviourPunCallbacks
             {
                 playerName.GetComponent<Text>().text = photonView.Owner.NickName;
             }
-            playerName.GetComponent<NameUIController>().carRenderer = carMesh;
+
         }
     }
 }

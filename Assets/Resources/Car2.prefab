@@ -844,7 +844,7 @@ MonoBehaviour:
   playerNamePrefab: {fileID: 6991298484440848490, guid: 7999ff580703c5049b7e1d785cfd4ad8,
     type: 3}
   rigidBody: {fileID: 3460591196121868252}
-  carMesh: {fileID: 0}
+  carMesh: {fileID: 6108640886009773394}
 --- !u!114 &3460591197190642668
 MonoBehaviour:
   m_ObjectHideFlags: 0

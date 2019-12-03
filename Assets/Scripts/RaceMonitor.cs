@@ -139,7 +139,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             object[] instanceData = new object[1];
             instanceData[0] = carPrefabs[carPrefabIndex].GetComponent<Drive>().playerName;
             GameObject AICar = PhotonNetwork.Instantiate(carPrefabs[carPrefabIndex].name, startPosition, startRotation, 0, instanceData);
-            AICar.GetComponent<Drive>().networkName = (string)instanceData[0];
+            // AICar.GetComponent<Drive>().networkName = (string)instanceData[0];
+            AICar.GetComponent<Drive>().networkName = carPrefabs[carPrefabIndex].GetComponent<Drive>().playerName;
 
             SetupScripts(AICar, false);
             SetupCameras(AICar, false);

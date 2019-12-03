@@ -10,7 +10,7 @@ public class NameUIController : MonoBehaviour
     public Text lapDisplay;
     public Transform target;
     CanvasGroup canvasGroup;
-    public Renderer carRenderer;
+    public MeshRenderer carRenderer;
     CheckpointManager cpManager;
 
     int minFontSize = 20;
@@ -50,7 +50,7 @@ public class NameUIController : MonoBehaviour
 
         if (carRenderer == null)
         {
-            Debug.Log("The 'carRenderer' variable is undefined.");
+            Debug.Log("The 'carRenderer' variable is undefined." + "playerName: " + playerName.text);
             return;
         }
 

@@ -1200,7 +1200,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5, type: 3}
+    m_Font: {fileID: 12800000, guid: b6d2560cdd8a461409e064460cd9895a, type: 3}
     m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
@@ -1445,7 +1445,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 160, y: 0}
-  m_SizeDelta: {x: 200, y: 44}
+  m_SizeDelta: {x: 260, y: 44}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &665699416
 MonoBehaviour:

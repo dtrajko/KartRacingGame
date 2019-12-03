@@ -38,7 +38,7 @@ public class Drive : MonoBehaviour
     public string playerName;
     public string networkName;
     public GameObject playerNamePrefab;
-    public Renderer vehicleMesh;
+    public MeshRenderer vehicleMesh;
 
     // Start is called before the first frame update
     void Start()
