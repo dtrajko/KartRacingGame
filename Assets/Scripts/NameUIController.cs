@@ -13,12 +13,11 @@ public class NameUIController : MonoBehaviour
     public MeshRenderer carRenderer;
     CheckpointManager cpManager;
 
-    int minFontSize = 20;
-    int maxFontSize = 28;
+    int minFontSize = 28;
+    int maxFontSize = 42;
     float maxDistanceToCamera = 150.0f;
 
-    int carRego;
-    bool regoSet = false;
+    int carRego = -1;
 
     // Start is called before the first frame update
     void Awake()
@@ -50,14 +49,13 @@ public class NameUIController : MonoBehaviour
 
         if (carRenderer == null)
         {
-            Debug.Log("The 'carRenderer' variable is undefined." + "playerName: " + playerName.text);
+            Debug.Log("The 'carRenderer' variable is undefined [playerName: " + playerName.text + "]");
             return;
         }
 
-        if (!regoSet && playerName.text != "PLAYER NAME")
+        if (carRego == -1 && playerName.text != "PLAYER NAME")
         {
             carRego = Leaderboard.RegisterCar(playerName.text);
-            regoSet = true;
             return;
         }
 
@@ -92,15 +90,19 @@ public class NameUIController : MonoBehaviour
                 cpManager = target.GetComponentInParent<CheckpointManager>();
             }
 
-            Leaderboard.SetPosition(carRego, cpManager.lap, cpManager.checkPoint, cpManager.timeEntered);
-            string position = Leaderboard.GetPosition(carRego);
+            if (carRego > -1)
+            { 
+                Leaderboard.SetPosition(carRego, cpManager.lap, cpManager.checkPoint, cpManager.timeEntered);
+                string position = Leaderboard.GetPosition(carRego);
 
-            int progressPercentage = 0;
-            if (cpManager.checkPointCount > 0)
-            {
-                progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
+                int progressPercentage = 0;
+                if (cpManager.checkPointCount > 0)
+                {
+                    progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
+                }
+                lapDisplay.text = position + " - Lap " + cpManager.lap + " / " + RaceMonitor.totalLaps + " (" + progressPercentage + "%)";
+
             }
-            lapDisplay.text = position + " - Lap " + cpManager.lap + " / " + RaceMonitor.totalLaps + " (" + progressPercentage + "%)";
         }
     }
 }

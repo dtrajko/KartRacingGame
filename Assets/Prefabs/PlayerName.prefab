@@ -65,7 +65,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5, type: 3}
+    m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1st - Lap 0 (0%)
+  m_Text: 1st - Lap 0 / 4 (0%)
 --- !u!114 &5437218287293476197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,12 +161,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5, type: 3}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
+    m_FontSize: 42
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -201,10 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd85bb6b2b4c6d41802a80bb367773a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 0}
+  playerName: {fileID: 6991298484440848492}
   lapDisplay: {fileID: 1105648097697857747}
   target: {fileID: 0}
-  carRend: {fileID: 0}
+  carRenderer: {fileID: 0}
 --- !u!225 &3519118742652464491
 CanvasGroup:
   m_ObjectHideFlags: 0

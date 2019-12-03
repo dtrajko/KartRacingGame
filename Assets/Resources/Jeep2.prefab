@@ -36,7 +36,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3939712234374023876}
-  - {fileID: 6376089960998402975}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -173,7 +172,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 34640831648348597}
@@ -2192,7 +2191,7 @@ Transform:
   - {fileID: 3259583171439448969}
   - {fileID: 3075024403898103381}
   m_Father: {fileID: 3939712234374023876}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3217905365481893405
 GameObject:
@@ -2242,7 +2241,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3217905365481893404}
@@ -2388,7 +2387,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5680425206862628300}
@@ -2450,12 +2449,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 34681579217410091}
-  - {fileID: 9140788802960845747}
   - {fileID: 461087376031005959}
+  - {fileID: 9140788802960845747}
   - {fileID: 7481396580625565282}
   - {fileID: 7075803390009052050}
   - {fileID: 5003909139543406467}
   - {fileID: 4928372754329903096}
+  - {fileID: 6376089960998402975}
   m_Father: {fileID: 34640831648348593}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2839,7 +2839,7 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 3939712234374023876}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!33 &7095786754343102796
 MeshFilter:
@@ -2910,7 +2910,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067816947924869344}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2918,8 +2918,8 @@ Transform:
   - {fileID: 2407470824405500995}
   - {fileID: 3820758529870311378}
   - {fileID: 4954375813286446620}
-  m_Father: {fileID: 34640831648348593}
-  m_RootOrder: 1
+  m_Father: {fileID: 3939712234374023876}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7306641875651951501
 GameObject:
@@ -3123,7 +3123,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7426589434202340833}
@@ -3436,7 +3436,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8640631082836990893}

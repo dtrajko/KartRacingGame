@@ -124,7 +124,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 785329937398792603}
@@ -186,12 +186,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4920701001957809276}
-  - {fileID: 4244778127454318564}
   - {fileID: 4779723613322672464}
+  - {fileID: 4244778127454318564}
   - {fileID: 2585527184917004853}
   - {fileID: 2738378214566318021}
   - {fileID: 91080323442078676}
   - {fileID: 24762253380574127}
+  - {fileID: 2039723547607449544}
   m_Father: {fileID: 4920728417932279270}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -575,7 +576,7 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 8259120872410156691}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!33 &2759490231816203547
 MeshFilter:
@@ -825,7 +826,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2531702995378698678}
@@ -961,7 +962,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2749183530211108023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -969,8 +970,8 @@ Transform:
   - {fileID: 7303690973720395796}
   - {fileID: 8157406956247378821}
   - {fileID: 68569146046251595}
-  m_Father: {fileID: 4920728417932279270}
-  m_RootOrder: 1
+  m_Father: {fileID: 8259120872410156691}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3109530199098630126
 GameObject:
@@ -1172,7 +1173,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3736670456420818938}
@@ -2868,7 +2869,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8259120872410156691}
-  - {fileID: 2039723547607449544}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3005,7 +3005,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 4920728417932279266}
@@ -3480,7 +3480,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7537524026345089611}
@@ -3534,5 +3534,5 @@ Transform:
   - {fileID: 7570195093482051550}
   - {fileID: 7970895994338062850}
   m_Father: {fileID: 8259120872410156691}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

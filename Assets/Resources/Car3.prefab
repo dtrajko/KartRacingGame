@@ -46,6 +46,7 @@ Transform:
   - {fileID: 3861745732750294981}
   - {fileID: 8152895660495861955}
   - {fileID: 8325209777873389391}
+  - {fileID: 125461328151523782}
   m_Father: {fileID: 125461328711610490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -464,8 +465,8 @@ Transform:
   - {fileID: 4955946026492499954}
   - {fileID: 4955946027391359505}
   - {fileID: 4955946025803251739}
-  m_Father: {fileID: 125461328711610490}
-  m_RootOrder: 1
+  m_Father: {fileID: 125461327626046543}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &125461328711610491
 GameObject:
@@ -503,7 +504,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 125461327626046543}
-  - {fileID: 125461328151523782}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -640,7 +640,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 125461328711610488}
@@ -3000,7 +3000,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8258572021933023971}
@@ -3146,7 +3146,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8258572022200494081}
@@ -3292,7 +3292,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8258572022558156256}
@@ -3438,7 +3438,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8258572023783354895}

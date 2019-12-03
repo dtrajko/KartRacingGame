@@ -145,7 +145,6 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             SetupScripts(AICar, false);
             SetupCameras(AICar, false);
             assignArrowTag(AICar, spawnPositionIndex);
-
         }
     }
 
@@ -195,6 +194,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             car.GetComponent<AIController>().enabled = true;
             car.GetComponent<PlayerController>().enabled = false;
         }
+
+        car.GetComponent<Drive>().networkName = car.GetComponent<Drive>().playerName;
     }
 
     private void SetupCameras(GameObject car, bool isPlayer)
@@ -319,6 +320,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public void MainMenu()
     {
         racing = false;
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }
 

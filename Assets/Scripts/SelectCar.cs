@@ -20,6 +20,9 @@ public class SelectCar : MonoBehaviour
             currentCar = PlayerPrefs.GetInt("PlayerCar");
         }
 
+        GetComponentInParent<Camera>().transform.position = new Vector3(0.0f, 3.0f, 0.0f);
+        GetComponentInParent<Camera>().transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
         this.transform.LookAt(cars[currentCar].transform.position);
         heightLevel1 = levels[0].transform.position.y;
         heightLevel2 = levels[1].transform.position.y;

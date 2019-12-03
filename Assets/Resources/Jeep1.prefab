@@ -1596,7 +1596,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4291956179763311310}
-  - {fileID: 6143138629149787029}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1733,7 +1732,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 956924381434855861}
@@ -2054,7 +2053,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2419831449824089616}
@@ -2108,7 +2107,7 @@ Transform:
   - {fileID: 2306091083575536515}
   - {fileID: 2850798800925789791}
   m_Father: {fileID: 4291956179763311310}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2902552640182616204
 GameObject:
@@ -2312,7 +2311,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 4893249650467978688}
@@ -2440,7 +2439,7 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4291956179763311310}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!33 &8018079099987726662
 MeshFilter:
@@ -2528,12 +2527,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 956885963899576353}
-  - {fileID: 8351405426907222969}
   - {fileID: 818142779773601037}
+  - {fileID: 8351405426907222969}
   - {fileID: 7705657372307897960}
   - {fileID: 8002599330944185240}
   - {fileID: 5210041179203882889}
   - {fileID: 5285436954165798898}
+  - {fileID: 6143138629149787029}
   m_Father: {fileID: 956924381434855867}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3165,7 +3165,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7650551158712747497}
@@ -3377,7 +3377,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8010023648440506602}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3385,8 +3385,8 @@ Transform:
   - {fileID: 3194655176892152905}
   - {fileID: 4051748328646170584}
   - {fileID: 5331635842969746966}
-  m_Father: {fileID: 956924381434855867}
-  m_RootOrder: 1
+  m_Father: {fileID: 4291956179763311310}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8280390596073850281
 GameObject:
@@ -3514,7 +3514,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8850994043484169125}
