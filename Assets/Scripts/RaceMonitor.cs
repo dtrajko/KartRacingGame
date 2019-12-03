@@ -174,13 +174,19 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     private void SetupScripts(GameObject car, bool isPlayer)
     {
+        car.GetComponent<CameraFollow>().enabled = false;
+
         if (isPlayer)
         {
             // PlayerController
             car.GetComponent<Drive>().enabled = true;
             car.GetComponent<AIController>().enabled = false;
             car.GetComponent<PlayerController>().enabled = true;
-            car.GetComponent<CameraFollow>().enabled = true;
+
+            if (photonView.IsMine)
+            {
+                car.GetComponent<CameraFollow>().enabled = true;
+            }
         }
         else
         {
@@ -188,7 +194,6 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             car.GetComponent<Drive>().enabled = true;
             car.GetComponent<AIController>().enabled = true;
             car.GetComponent<PlayerController>().enabled = false;
-            car.GetComponent<CameraFollow>().enabled = false;
         }
     }
 
@@ -198,6 +203,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         Camera frontCamera = cameras[0];
         Camera rearCamera = cameras[1];
 
+        rearCamera.enabled = false;
+
         if (isPlayer)
         {
             frontCamera.tag = "MainCamera";
@@ -205,9 +212,9 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             frontCamera.targetTexture = null;
             AudioListener audioListener = frontCamera.GetComponent<AudioListener>();
             audioListener.enabled = true;
-        }
 
-        rearCamera.enabled = isPlayer ? true : false;
+            rearCamera.enabled = true;
+        }
     }
 
     private void SetupCheckpointManagers()

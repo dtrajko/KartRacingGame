@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CameraFollow : MonoBehaviour
 {
     public Camera cameraObject;
-    public GameObject reviewMirror;
 
     float cameraSwitchSpeed = 10.0f;
 
