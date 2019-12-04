@@ -13,8 +13,8 @@ public class NameUIController : MonoBehaviour
     public MeshRenderer carRenderer;
     CheckpointManager cpManager;
 
-    int minFontSize = 28;
-    int maxFontSize = 42;
+    int minFontSize = 24;
+    int maxFontSize = 36;
     float maxDistanceToCamera = 150.0f;
 
     int carRego = -1;
@@ -74,7 +74,7 @@ public class NameUIController : MonoBehaviour
                 float distanceFactor = Mathf.Clamp(maxDistanceToCamera / (distanceToCamera * 3.0f), 0, 1);
                 int fontSizeNew = (int)(distanceFactor * maxFontSize);
                 GetComponent<Text>().fontSize = Mathf.Clamp(fontSizeNew, minFontSize, maxFontSize);
-                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 6, minFontSize, maxFontSize - 6);
+                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 8, minFontSize, maxFontSize - 8);
 
                 // Debug.Log("playerName: " + playerName.text + " maxDistanceToCamera: " + maxDistanceToCamera + " distanceToCamera: " + distanceToCamera);
                 // Debug.Log("playerName: " + playerName.text + " distanceFactor: " + distanceFactor + " fontSize: " + GetComponent<Text>().fontSize);

@@ -18,6 +18,8 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        Time.timeScale = 1.0f;
+
         isConnecting = false;
 
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -29,16 +31,20 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
         feedbackText.text = "";
 
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
-            feedbackText.text += "LM.Awake: InRoom? YES. LeaveRoom." + "\n";
-            PhotonNetwork.LeaveRoom();
-        }
+            if (PhotonNetwork.InRoom)
+            {
+                // feedbackText.text += "LM.Awake: InRoom? YES. LeaveRoom." + "\n";
+                PhotonNetwork.LeaveRoom();
+            }
 
-        if (!PhotonNetwork.InLobby)
-        {
-            feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
-            PhotonNetwork.JoinLobby();
+            if (!PhotonNetwork.InLobby)
+            {
+                // feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
+                PhotonNetwork.JoinLobby();
+            }
+
         }
     }
 
@@ -63,6 +69,8 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public void ConnectSingle()
     {
+        isConnecting = false;
+        PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Track1");
     }
 

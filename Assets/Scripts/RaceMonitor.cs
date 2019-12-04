@@ -46,6 +46,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1.0f;
+
         racing = false;
 
         AudioListener.volume = soundVolume;
@@ -73,10 +75,11 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         GameObject playerCar = null;
 
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.LocalPlayer.ActorNumber > 0)
         {
             // Multiplayer (NetworkPlayer)
             playerSpawnPositionIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+
             playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
             playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
 
@@ -305,8 +308,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void RestartLevel()
     {
+        Time.timeScale = 1.0f;
+
         racing = false;
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
             photonView.RPC("RPC_RestartGame", RpcTarget.All);
         }
@@ -324,15 +329,17 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void MainMenu()
     {
+        Time.timeScale = 1.0f;
+
         racing = false;
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LoadLevel("MainMenu");
         }
         else
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }
     }
 
