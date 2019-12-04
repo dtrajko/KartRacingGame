@@ -153,9 +153,14 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     {
         float initDelay = 1.0f;
         StartCoroutine(PlayCountDown(initDelay));
-        startGameButton.SetActive(false);
+        Invoke("HideStartGameButton", 1.0f);
         startGameWaitingText.SetActive(false);
         SetupCheckpointManagers();
+    }
+
+    private void HideStartGameButton()
+    {
+        startGameButton.SetActive(false);
     }
 
     private GameObject InstantiateCar(Vector3 position, Quaternion rotation, int carPrefabIndex, int spawnPositionIndex, bool isPlayer)
@@ -298,12 +303,6 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
 
-    [PunRPC]
-    public void RPC_RestartGame()
-    {
-        PhotonNetwork.LoadLevel("Track1");
-    }
-
     public void RestartLevel()
     {
         racing = false;
@@ -317,11 +316,24 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void RPC_RestartGame()
+    {
+        PhotonNetwork.LoadLevel("Track1");
+    }
+
     public void MainMenu()
     {
         racing = false;
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene("MainMenu");
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     public static CarPrefabInfo GetCarPrefabInfo(int playerPrefsIndex)

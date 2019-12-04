@@ -19,6 +19,12 @@ public class TagFollowVehicle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (targetVehicleBody == null)
+        {
+            Debug.Log("TagFollowVehicle targetVehicleBody not available.");
+            return;
+        }
+
         float positionY = this.transform.position.y;
 
         this.gameObject.transform.position = new Vector3(

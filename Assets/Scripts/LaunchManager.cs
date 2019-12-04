@@ -18,11 +18,27 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        isConnecting = false;
+
         PhotonNetwork.AutomaticallySyncScene = true;
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {
             playerName.text = PlayerPrefs.GetString("PlayerName");
+        }
+
+        feedbackText.text = "";
+
+        if (PhotonNetwork.InRoom)
+        {
+            feedbackText.text += "LM.Awake: InRoom: YES LeaveRoom" + "\n";
+            PhotonNetwork.LeaveRoom();
+        }
+
+        if (!PhotonNetwork.InLobby)
+        {
+            feedbackText.text += "LM.Awake: InLobby: NO JoinLobby" + "\n";
+            PhotonNetwork.JoinLobby();
         }
     }
 
@@ -32,7 +48,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
         isConnecting = true;
 
         PhotonNetwork.NickName = playerName.text;
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
             feedbackText.text += "Joining Room..." + "\n";
             PhotonNetwork.JoinRandomRoom();
@@ -49,6 +65,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("Track1");
     }
+
     public void Exit()
     {
         #if UNITY_EDITOR
@@ -71,6 +88,12 @@ public class LaunchManager : MonoBehaviourPunCallbacks
             feedbackText.text += "On Connected To Master..." + "\n";
             PhotonNetwork.JoinRandomRoom();
         }
+    }
+
+    public override void OnJoinedLobby()
+    {
+        feedbackText.text += "On Joined Lobby..." + "\n";
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
