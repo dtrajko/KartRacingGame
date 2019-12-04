@@ -31,13 +31,13 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.InRoom)
         {
-            feedbackText.text += "LM.Awake: InRoom: YES LeaveRoom" + "\n";
+            feedbackText.text += "LM.Awake: InRoom? YES. LeaveRoom." + "\n";
             PhotonNetwork.LeaveRoom();
         }
 
         if (!PhotonNetwork.InLobby)
         {
-            feedbackText.text += "LM.Awake: InLobby: NO JoinLobby" + "\n";
+            feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
             PhotonNetwork.JoinLobby();
         }
     }
