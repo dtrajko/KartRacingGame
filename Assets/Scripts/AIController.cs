@@ -82,7 +82,7 @@ public class AIController : BaseController
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (!RaceMonitor.racing)
         {

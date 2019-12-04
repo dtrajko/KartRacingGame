@@ -28,7 +28,7 @@ public class PlayerController : BaseController
         this.GetComponent<Ghost>().enabled = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float acceleration = Input.GetAxis("Vertical");
         float steering     = Input.GetAxis("Horizontal");
