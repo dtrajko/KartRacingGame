@@ -75,9 +75,6 @@ public class NameUIController : MonoBehaviour
                 int fontSizeNew = (int)(distanceFactor * maxFontSize);
                 GetComponent<Text>().fontSize = Mathf.Clamp(fontSizeNew, minFontSize, maxFontSize);
                 lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 8, minFontSize, maxFontSize - 8);
-
-                // Debug.Log("playerName: " + playerName.text + " maxDistanceToCamera: " + maxDistanceToCamera + " distanceToCamera: " + distanceToCamera);
-                // Debug.Log("playerName: " + playerName.text + " distanceFactor: " + distanceFactor + " fontSize: " + GetComponent<Text>().fontSize);
             }
             else
             {

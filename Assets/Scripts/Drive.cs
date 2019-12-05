@@ -42,8 +42,17 @@ public class Drive : MonoBehaviour
 
     Vector3[] wheelRelativePositions;
 
+    private void Awake()
+    {
+        wheelRelativePositions = new Vector3[4];
+        for (int i = 0; i < 4; i++)
+        {
+            wheelRelativePositions[i] = Wheels[i].transform.localPosition;
+        }
+    }
+
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -75,12 +84,6 @@ public class Drive : MonoBehaviour
             playerNameGO.GetComponent<Text>().text = playerName;   
         }
         playerNameGO.GetComponent<NameUIController>().carRenderer = vehicleMesh;
-
-        wheelRelativePositions = new Vector3[4];
-        for (int i = 0; i < 4; i++)
-        {
-            wheelRelativePositions[i] = Wheels[i].transform.localPosition;
-        }
     }
 
     public void CalculateEngineSound()
@@ -190,10 +193,7 @@ public class Drive : MonoBehaviour
             WheelColliders[i].GetWorldPose(out position, out quat);
             // Wheels[i].transform.position = position;
             Wheels[i].transform.rotation = quat;
-        }
 
-        for (int i = 0; i < 4; i++)
-        {
             Wheels[i].transform.localPosition = wheelRelativePositions[i];
         }
     }
