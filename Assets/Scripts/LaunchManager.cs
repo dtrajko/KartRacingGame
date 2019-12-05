@@ -22,7 +22,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
         isConnecting = false;
 
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {
@@ -38,13 +38,13 @@ public class LaunchManager : MonoBehaviourPunCallbacks
                 // feedbackText.text += "LM.Awake: InRoom? YES. LeaveRoom." + "\n";
                 PhotonNetwork.LeaveRoom();
             }
-
+        
             if (!PhotonNetwork.InLobby)
             {
                 // feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
                 PhotonNetwork.JoinLobby();
             }
-
+        
         }
     }
 
@@ -72,6 +72,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
         isConnecting = false;
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Track1");
+        // Debug.Log("LaunchManager.ConnectSingle LoadScene: Track1");
     }
 
     public void Exit()
@@ -120,5 +121,6 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     {
         feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
         PhotonNetwork.LoadLevel("Track1");
+        // Debug.Log("LaunchManager.OnJoinedRoom LoadLevel: Track1");
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 using Photon.Realtime;
 using Photon.Pun;
@@ -33,6 +34,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public GameObject HUD;
     public GameObject startGameButton;
     public GameObject startGameWaitingText;
+    public GameObject playersOnlineText;
 
     CheckpointManager[] carsCPManagers;
     List<CheckpointManager> playerCPManagers;
@@ -47,22 +49,20 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     void Start()
     {
         Time.timeScale = 1.0f;
-
         racing = false;
-
         AudioListener.volume = soundVolume;
-
-        foreach (GameObject countdownItem in countdownItems)
-        {
-            countdownItem.SetActive(false);
-        }
+        PhotonNetwork.AutomaticallySyncScene = false;
+        playerCPManagers = new List<CheckpointManager>();
 
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
         startGameButton.SetActive(false);
         startGameWaitingText.SetActive(false);
-
-        playerCPManagers = new List<CheckpointManager>();
+        playersOnlineText.SetActive(false);
+        foreach (GameObject countdownItem in countdownItems)
+        {
+            countdownItem.SetActive(false);
+        }
 
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
@@ -79,6 +79,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         {
             // Multiplayer (NetworkPlayer)
             playerSpawnPositionIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+
+            // Debug.Log("RaceMonitor.Start playerSpawnPositionIndex: " + playerSpawnPositionIndex);
 
             playerStartPosition = spawnPositions[playerSpawnPositionIndex].position;
             playerStartRotation = spawnPositions[playerSpawnPositionIndex].rotation;
@@ -99,6 +101,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             { 
                 startGameWaitingText.SetActive(true);
             }
+
+            playersOnlineText.SetActive(true);
         }
         else
         {
@@ -164,6 +168,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     private void HideStartGameButton()
     {
         startGameButton.SetActive(false);
+        playersOnlineText.SetActive(false);
     }
 
     private GameObject InstantiateCar(Vector3 position, Quaternion rotation, int carPrefabIndex, int spawnPositionIndex, bool isPlayer)
@@ -280,7 +285,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             TogglePause();
         }
 
-        // Debug.Log("finishedCount: " + finishedCount + "playerCPManagers.Count: " + playerCPManagers.Count);
+        if (PhotonNetwork.IsConnectedAndReady && playersOnlineText.activeSelf == true)
+        { 
+            playersOnlineText.GetComponent<Text>().text = "Players Online: " + PhotonNetwork.CurrentRoom.PlayerCount;
+        }
     }
 
     public void TogglePause()
@@ -318,6 +326,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         else
         { 
             SceneManager.LoadScene("Track1");
+            // Debug.Log("RaceMonitor.RestartLevel LoadScene: Track1");
         }
     }
 
@@ -325,6 +334,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public void RPC_RestartGame()
     {
         PhotonNetwork.LoadLevel("Track1");
+        // Debug.Log("RaceMonitor.RPC_RestartGame LoadLevel: Track1");
     }
 
     public void MainMenu()
@@ -336,10 +346,12 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LoadLevel("MainMenu");
+            // Debug.Log("RaceMonitor.MainMenu LoadLevel: MainMenu");
         }
         else
         {
             SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            // Debug.Log("RaceMonitor.MainMenu LoadScene: MainMenu");
         }
     }
 
