@@ -14,10 +14,10 @@ public class NameUIController : MonoBehaviour
     CheckpointManager cpManager;
 
     int minFontSize = 24;
-    int maxFontSize = 36;
+    int maxFontSize = 34;
     float maxDistanceToCamera = 150.0f;
-
     int carRego = -1;
+    int fontSizeDiff;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +30,8 @@ public class NameUIController : MonoBehaviour
         this.transform.SetParent(GameObject.Find("PlayerNames").GetComponent<Transform>(), false);
         playerName = this.GetComponent<Text>();
         canvasGroup = this.GetComponent<CanvasGroup>();
+
+        fontSizeDiff = GetComponent<Text>().fontSize - lapDisplay.fontSize;
     }
 
     // Update is called once per frame
@@ -74,7 +76,7 @@ public class NameUIController : MonoBehaviour
                 float distanceFactor = Mathf.Clamp(maxDistanceToCamera / (distanceToCamera * 3.0f), 0, 1);
                 int fontSizeNew = (int)(distanceFactor * maxFontSize);
                 GetComponent<Text>().fontSize = Mathf.Clamp(fontSizeNew, minFontSize, maxFontSize);
-                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - 8, minFontSize, maxFontSize - 8);
+                lapDisplay.fontSize = Mathf.Clamp(fontSizeNew - fontSizeDiff, minFontSize, maxFontSize - fontSizeDiff);
             }
             else
             {
@@ -97,7 +99,7 @@ public class NameUIController : MonoBehaviour
                 {
                     progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
                 }
-                lapDisplay.text = position + " - Lap " + cpManager.lap + " / " + RaceMonitor.totalLaps + " (" + progressPercentage + "%)";
+                lapDisplay.text = position + " - Lap " + cpManager.lap + "/" + RaceMonitor.totalLaps + " [" + progressPercentage + "%]";
 
             }
         }

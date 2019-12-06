@@ -25,7 +25,7 @@ public struct CarPrefabInfo
 public class RaceMonitor : MonoBehaviourPunCallbacks
 {
     public static float soundVolume = 0.2f;
-    public static int totalLaps = 1;
+    public static int totalLaps = 2;
     public GameObject[] countdownItems;
     public static bool racing = false;
     public static bool pause = false;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dbaf3bd7d79ec7e4a9b670cf4b5c5cf5
+guid: e3d17fe95017ea94f8347c64906960af
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Impact
+  fontName: FORQUE
   fontNames:
-  - Impact
+  - FORQUE
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
