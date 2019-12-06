@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : BaseController
 {
@@ -30,9 +31,9 @@ public class PlayerController : BaseController
 
     void FixedUpdate()
     {
-        float acceleration = Input.GetAxis("Vertical");
-        float steering     = Input.GetAxis("Horizontal");
-        float braking      = Input.GetAxis("Jump");
+        float acceleration = CrossPlatformInputManager.GetAxis("Vertical");
+        float steering     = CrossPlatformInputManager.GetAxis("Horizontal");
+        float braking      = CrossPlatformInputManager.GetAxis("Jump");
 
         if (checkpointManager == null)
         {

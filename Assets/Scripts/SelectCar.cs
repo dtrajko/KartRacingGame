@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class SelectCar : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class SelectCar : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || CrossPlatformInputManager.GetButtonDown("ButtonRight"))
         {
             currentCar++;
             if (currentCar > cars.Length - 1)
@@ -47,7 +48,7 @@ public class SelectCar : MonoBehaviour
             // Debug.Log("CurrentCar: " + currentCar + " Total Cars: " + cars.Length);
             // Debug.Log("lookDir: " + lookDir + " cameraSpeed: " + cameraSpeed);
         }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || CrossPlatformInputManager.GetButtonDown("ButtonLeft"))
         {
             currentCar--;
             if (currentCar < 0)
