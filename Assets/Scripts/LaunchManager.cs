@@ -15,12 +15,19 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public InputField playerName;
     public Text feedbackText;
     string gameVersion = "1";
+    public GameObject mobileUIPanel;
 
     private void Awake()
     {
         Time.timeScale = 1.0f;
 
         isConnecting = false;
+
+        mobileUIPanel.SetActive(false);
+        if (Application.platform == RuntimePlatform.Android) //  || Application.platform == RuntimePlatform.WindowsEditor
+        {
+            mobileUIPanel.SetActive(true);
+        }
 
         PhotonNetwork.AutomaticallySyncScene = false;
 

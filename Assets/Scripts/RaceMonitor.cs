@@ -73,7 +73,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
 
         mobileUIPanel.SetActive(false);
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform == RuntimePlatform.Android) //  || Application.platform == RuntimePlatform.WindowsEditor
         {
             mobileUIPanel.SetActive(true);
         }
