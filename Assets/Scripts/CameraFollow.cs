@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class CameraFollow : MonoBehaviour
     public static Transform playerCar;
     public RenderTexture frontCamView;
     int switchTargetIndex = 0;
+
+    float inputAxisTimer;
+    float inputAxisCooldown = 0.5f;
+    bool inputAxisUnlocked;
 
     enum PerspectiveModes
     {
@@ -36,6 +41,9 @@ public class CameraFollow : MonoBehaviour
         {
             cameraObject = GetComponent<Camera>();
         }
+
+        inputAxisTimer = 0.0f;
+        inputAxisUnlocked = true;
     }
 
     // Update is called once per frame
@@ -94,7 +102,15 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        inputAxisTimer += Time.deltaTime;
+        if (inputAxisTimer > inputAxisCooldown)
+        {
+            inputAxisUnlocked = true;
+            inputAxisTimer = 0.0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) ||
+            (CrossPlatformInputManager.GetAxisRaw("Fire1") == 1.0f && inputAxisUnlocked))
         {
             switch (CameraPerspective)
             {
@@ -116,6 +132,8 @@ public class CameraFollow : MonoBehaviour
             }
 
             PlayerPrefs.SetInt("CameraPerspective", (int)CameraPerspective);
+
+            inputAxisUnlocked = false;
         }
 
         if (Input.GetKeyDown(KeyCode.T))

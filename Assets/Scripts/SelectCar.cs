@@ -14,6 +14,10 @@ public class SelectCar : MonoBehaviour
     int currentCar = 0;
     float cameraSpeed = 4.0f;
 
+    float inputAxisTimer;
+    float inputAxisCooldown = 0.5f;
+    bool inputAxisUnlocked;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,30 +37,42 @@ public class SelectCar : MonoBehaviour
         // this.transform.LookAt(cars[currentCar].transform.position);
 
         AdjustCamera();
+
+        inputAxisTimer = 0.0f;
+        inputAxisUnlocked = true;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || CrossPlatformInputManager.GetButtonDown("ButtonRight"))
+        inputAxisTimer += Time.deltaTime;
+        if (inputAxisTimer > inputAxisCooldown)
+        {
+            inputAxisUnlocked = true;
+            inputAxisTimer = 0.0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || 
+            (CrossPlatformInputManager.GetAxisRaw("Horizontal") == 1.0f && inputAxisUnlocked))
         {
             currentCar++;
             if (currentCar > cars.Length - 1)
             {
                 currentCar = 0;
             }
-            // Debug.Log("CurrentCar: " + currentCar + " Total Cars: " + cars.Length);
-            // Debug.Log("lookDir: " + lookDir + " cameraSpeed: " + cameraSpeed);
+
+            inputAxisUnlocked = false;
         }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || CrossPlatformInputManager.GetButtonDown("ButtonLeft"))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+            (CrossPlatformInputManager.GetAxisRaw("Horizontal") == -1.0f && inputAxisUnlocked))
         {
             currentCar--;
             if (currentCar < 0)
             {
                 currentCar = cars.Length - 1;
             }
-            // Debug.Log("CurrentCar: " + currentCar + " Total Cars: " + cars.Length);
-            // Debug.Log("lookDir: " + lookDir + " cameraSpeed: " + cameraSpeed);
+
+            inputAxisUnlocked = false;
         }
 
         PlayerPrefs.SetInt("PlayerCar", currentCar);

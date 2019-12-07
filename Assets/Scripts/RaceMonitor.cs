@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 using Photon.Realtime;
 using Photon.Pun;
+using UnityStandardAssets.CrossPlatformInput;
 
 
 public struct CarPrefabInfo
@@ -31,6 +31,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public static bool pause = false;
     public GameObject gameOverPanel;
     public GameObject pausePanel;
+    public GameObject mobileUIPanel;
     public GameObject HUD;
     public GameObject startGameButton;
     public GameObject startGameWaitingText;
@@ -45,6 +46,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     int playerPrefsCarIndex = 0;
 
+    float inputAxisTimer;
+    float inputAxisCooldown = 0.5f;
+    bool inputAxisUnlocked;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +59,9 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         playerCPManagers = new List<CheckpointManager>();
 
+        inputAxisTimer = 0.0f;
+        inputAxisUnlocked = true;
+
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
         startGameButton.SetActive(false);
@@ -62,6 +70,12 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         foreach (GameObject countdownItem in countdownItems)
         {
             countdownItem.SetActive(false);
+        }
+
+        mobileUIPanel.SetActive(false);
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            mobileUIPanel.SetActive(true);
         }
 
         if (PlayerPrefs.HasKey("PlayerCar"))
@@ -98,7 +112,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
                 startGameButton.SetActive(true);
             }
             else
-            { 
+            {
                 startGameWaitingText.SetActive(true);
             }
 
@@ -186,19 +200,13 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     private void SetupScripts(GameObject car, bool isPlayer)
     {
-        car.GetComponent<CameraFollow>().enabled = false;
-
         if (isPlayer)
         {
             // PlayerController
             car.GetComponent<Drive>().enabled = true;
             car.GetComponent<AIController>().enabled = false;
             car.GetComponent<PlayerController>().enabled = true;
-
-            if (photonView.IsMine)
-            {
-                car.GetComponent<CameraFollow>().enabled = true;
-            }
+            car.GetComponent<CameraFollow>().enabled = true;
         }
         else
         {
@@ -206,6 +214,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             car.GetComponent<Drive>().enabled = true;
             car.GetComponent<AIController>().enabled = true;
             car.GetComponent<PlayerController>().enabled = false;
+            car.GetComponent<CameraFollow>().enabled = false;
         }
 
         car.GetComponent<Drive>().networkName = car.GetComponent<Drive>().playerName;
@@ -260,6 +269,13 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     private void LateUpdate()
     {
+        inputAxisTimer += Time.deltaTime;
+        if (inputAxisTimer > inputAxisCooldown)
+        {
+            inputAxisUnlocked = true;
+            inputAxisTimer = 0.0f;
+        }
+
         if (!racing)
         {
             // return;
@@ -280,7 +296,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             gameOverPanel.SetActive(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || CrossPlatformInputManager.GetAxisRaw("Fire2") == 1.0f)
         {
             TogglePause();
         }
