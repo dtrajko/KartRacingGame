@@ -16,6 +16,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public Text feedbackText;
     string gameVersion = "1";
     public GameObject mobileUIPanel;
+    public AudioSource buttonSound;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
         isConnecting = false;
 
         mobileUIPanel.SetActive(false);
-        if (Application.platform == RuntimePlatform.Android) //  || Application.platform == RuntimePlatform.WindowsEditor
+        if (CrossPlatform.IsMobilePlatform())
         {
             mobileUIPanel.SetActive(true);
         }
@@ -51,12 +52,13 @@ public class LaunchManager : MonoBehaviourPunCallbacks
                 // feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
                 PhotonNetwork.JoinLobby();
             }
-        
         }
     }
 
     public void ConnectNetwork()
     {
+        buttonSound.Play();
+
         feedbackText.text = "";
         isConnecting = true;
 
@@ -76,19 +78,25 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public void ConnectSingle()
     {
+        buttonSound.Play();
+
         isConnecting = false;
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Track1");
         // Debug.Log("LaunchManager.ConnectSingle LoadScene: Track1");
+
     }
 
     public void Exit()
     {
-        #if UNITY_EDITOR
+        buttonSound.Play();
+
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
             Application.Quit ();
-        #endif
+#endif
+
     }
 
     public void SetName(string name)
@@ -120,13 +128,21 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        feedbackText.text += "On Disconnected [cause: " + cause + "]" + "\n";
+        if (feedbackText)
+        { 
+            feedbackText.text += "On Disconnected [cause: " + cause + "]" + "\n";
+        }
+
         isConnecting = false;
     }
 
     public override void OnJoinedRoom()
     {
-        feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
+        if (feedbackText)
+        {
+            feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
+        }
+
         PhotonNetwork.LoadLevel("Track1");
         // Debug.Log("LaunchManager.OnJoinedRoom LoadLevel: Track1");
     }

@@ -15,8 +15,10 @@ public class SelectCar : MonoBehaviour
     float cameraSpeed = 4.0f;
 
     float inputAxisTimer;
-    float inputAxisCooldown = 0.5f;
+    float inputAxisCooldown = 0.6f;
     bool inputAxisUnlocked;
+
+    public AudioSource buttonSound;
 
     // Start is called before the first frame update
     void Awake()
@@ -62,6 +64,8 @@ public class SelectCar : MonoBehaviour
             }
 
             inputAxisUnlocked = false;
+
+            buttonSound.Play();
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) ||
             (CrossPlatformInputManager.GetAxisRaw("Horizontal") == -1.0f && inputAxisUnlocked))
@@ -73,6 +77,8 @@ public class SelectCar : MonoBehaviour
             }
 
             inputAxisUnlocked = false;
+
+            buttonSound.Play();
         }
 
         PlayerPrefs.SetInt("PlayerCar", currentCar);
