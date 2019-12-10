@@ -7,7 +7,7 @@ public class TagFollowVehicle : MonoBehaviour
     public GameObject targetVehicleBody;
     float height;
 
-    private void Awake()
+    private void Start()
     {
         height = this.transform.position.y;
         if (targetVehicleBody.GetComponentInParent<PlayerController>() != null)

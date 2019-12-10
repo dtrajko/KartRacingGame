@@ -10,13 +10,15 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public struct CarPrefabInfo
 {
-    public int id;
+    public int carPrefabId;
+    public int arrowTagId;
     public string type;
     public string color;
 
-    public CarPrefabInfo(int inId, string inType, string inColor)
+    public CarPrefabInfo(int inCarPrefabId, int inArrowTagId, string inType, string inColor)
     {
-        id = inId;
+        carPrefabId = inCarPrefabId;
+        arrowTagId = inArrowTagId;
         type = inType;
         color = inColor;
     }
@@ -43,6 +45,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public GameObject[] carPrefabs;
     public Transform[] spawnPositions;
     public GameObject[] arrowTags;
+    public GameObject[] arrowTagPrefabs;
 
     int playerPrefsCarIndex = 0;
 
@@ -60,6 +63,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         AudioListener.volume = soundVolume;
         PhotonNetwork.AutomaticallySyncScene = false;
         playerCPManagers = new List<CheckpointManager>();
+        arrowTags = new GameObject[4];
 
         inputAxisTimer = 0.0f;
         inputAxisUnlocked = true;
@@ -106,7 +110,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
                 playerCar = PhotonNetwork.Instantiate(carPrefabs[playerPrefsCarIndex].name, playerStartPosition, playerStartRotation, 0);
                 SetupScripts(playerCar, true);
                 SetupCameras(playerCar, true);
-                assignArrowTag(playerCar, playerSpawnPositionIndex);
+                assignArrowTag(playerCar, playerPrefsCarIndex, playerSpawnPositionIndex, true);
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -169,7 +173,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
             SetupScripts(AICar, false);
             SetupCameras(AICar, false);
-            assignArrowTag(AICar, spawnPositionIndex);
+            assignArrowTag(AICar, carPrefabIndex, spawnPositionIndex, false);
         }
     }
 
@@ -197,7 +201,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         SetupScripts(car, isPlayer);
         SetupCameras(car, isPlayer);
-        assignArrowTag(car, spawnPositionIndex);
+        assignArrowTag(car, carPrefabIndex, spawnPositionIndex, isPlayer);
 
         return car;
     }
@@ -320,7 +324,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         AudioListener.volume = pause ? 0.0f : soundVolume;
     }
 
-    private void assignArrowTag(GameObject car, int spawnPositionIndex)
+    private void assignArrowTag(GameObject car, int carPrefabIndex, int spawnPositionIndex, bool isPlayer)
     {
         // Arrow tags
         GameObject carBody = null;
@@ -329,8 +333,16 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             if (child.tag == "car")
             {
                 carBody = child.gameObject;
+                break;
             }
         }
+        CarPrefabInfo carPrefabInfo = GetCarPrefabInfo(carPrefabIndex);
+        arrowTags[spawnPositionIndex] = Instantiate(arrowTagPrefabs[carPrefabInfo.arrowTagId]);
+        arrowTags[spawnPositionIndex].transform.position = new Vector3(
+            car.transform.position.x,
+            isPlayer ? 45.0f : 40.0f,
+            car.transform.position.z);
+        arrowTags[spawnPositionIndex].transform.SetParent(GameObject.Find("ArrowTags").GetComponent<Transform>(), false);
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
 
@@ -379,37 +391,37 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
     }
 
-    public static CarPrefabInfo GetCarPrefabInfo(int playerPrefsIndex)
+    public static CarPrefabInfo GetCarPrefabInfo(int carPrefabIndex)
     {
         CarPrefabInfo carPrefabInfo;
-        switch (playerPrefsIndex)
+        switch (carPrefabIndex)
         {
             case 0:
-                carPrefabInfo = new CarPrefabInfo(0, "Car", "Red");
+                carPrefabInfo = new CarPrefabInfo(0, 0, "Car", "Red");
                 break;
             case 1:
-                carPrefabInfo = new CarPrefabInfo(1, "Car", "Magenta");
+                carPrefabInfo = new CarPrefabInfo(1, 1, "Car", "Magenta");
                 break;
             case 2:
-                carPrefabInfo = new CarPrefabInfo(2, "Car", "Green");
+                carPrefabInfo = new CarPrefabInfo(2, 2, "Car", "Green");
                 break;
             case 3:
-                carPrefabInfo = new CarPrefabInfo(3, "Car", "Yellow");
+                carPrefabInfo = new CarPrefabInfo(3, 3, "Car", "Yellow");
                 break;
             case 4:
-                carPrefabInfo = new CarPrefabInfo(4, "Jeep", "Red");
+                carPrefabInfo = new CarPrefabInfo(4, 0, "Jeep", "Red");
                 break;
             case 5:
-                carPrefabInfo = new CarPrefabInfo(5, "Jeep", "Magenta");
+                carPrefabInfo = new CarPrefabInfo(5, 1, "Jeep", "Magenta");
                 break;
             case 6:
-                carPrefabInfo = new CarPrefabInfo(6, "Jeep", "Green");
+                carPrefabInfo = new CarPrefabInfo(6, 2, "Jeep", "Green");
                 break;
             case 7:
-                carPrefabInfo = new CarPrefabInfo(7, "Jeep", "Yellow");
+                carPrefabInfo = new CarPrefabInfo(7, 3, "Jeep", "Yellow");
                 break;
             default:
-                carPrefabInfo = new CarPrefabInfo(-1, "N/A", "N/A");
+                carPrefabInfo = new CarPrefabInfo(-1, -1, "N/A", "N/A");
                 break;
         }
         return carPrefabInfo;
