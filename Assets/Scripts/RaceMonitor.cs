@@ -50,6 +50,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     float inputAxisCooldown = 0.5f;
     bool inputAxisUnlocked;
 
+    public AudioSource buttonSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -142,6 +144,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void BeginGame()
     {
+        buttonSound.Play();
+
         NetworkSpawnNPCs();
         photonView.RPC("RPC_StartGame", RpcTarget.All);
     }
@@ -332,6 +336,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void RestartLevel()
     {
+        buttonSound.Play();
+
         Time.timeScale = 1.0f;
 
         racing = false;
@@ -355,6 +361,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void MainMenu()
     {
+        buttonSound.Play();
+
         Time.timeScale = 1.0f;
 
         racing = false;
