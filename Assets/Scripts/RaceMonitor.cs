@@ -342,6 +342,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             car.transform.position.x,
             isPlayer ? 45.0f : 40.0f,
             car.transform.position.z);
+        if (isPlayer)
+        { 
+            arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        }
         arrowTags[spawnPositionIndex].transform.SetParent(GameObject.Find("ArrowTags").GetComponent<Transform>(), false);
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
