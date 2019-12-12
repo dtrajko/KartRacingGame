@@ -110,7 +110,7 @@ public class CameraFollow : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.C) ||
-            (CrossPlatformInputManager.GetAxisRaw("Fire1") == 1.0f && inputAxisUnlocked))
+            (CrossPlatformInputManager.GetAxisRaw("Camera") == 1.0f && inputAxisUnlocked))
         {
             switch (CameraPerspective)
             {

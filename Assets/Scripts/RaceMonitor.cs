@@ -27,7 +27,7 @@ public struct CarPrefabInfo
 public class RaceMonitor : MonoBehaviourPunCallbacks
 {
     public static float soundVolume = 0.2f;
-    public static int totalLaps = 2;
+    public static int totalLaps = 1;
     public GameObject[] countdownItems;
     public static bool racing = false;
     public static bool pause = false;
@@ -54,6 +54,8 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     bool inputAxisUnlocked;
 
     public AudioSource buttonSound;
+
+    string nextLevel;
 
     // Start is called before the first frame update
     void Start()
@@ -364,7 +366,6 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         else
         { 
             SceneManager.LoadScene("Track1");
-            // Debug.Log("RaceMonitor.RestartLevel LoadScene: Track1");
         }
     }
 
@@ -372,7 +373,44 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     public void RPC_RestartGame()
     {
         PhotonNetwork.LoadLevel("Track1");
-        // Debug.Log("RaceMonitor.RPC_RestartGame LoadLevel: Track1");
+    }
+
+    public void NextLevel()
+    {
+        buttonSound.Play();
+
+        Time.timeScale = 1.0f;
+
+        string currentLevel = SceneManager.GetActiveScene().name;
+
+        switch (currentLevel)
+        {
+            case "Track1":
+                nextLevel = "Track2";
+                break;
+            case "Track2":
+                nextLevel = "Track1";
+                break;
+            default:
+                nextLevel = "Track1";
+                break;
+        }
+
+        racing = false;
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            photonView.RPC("RPC_NextLevel", RpcTarget.All);
+        }
+        else
+        {
+            SceneManager.LoadScene(nextLevel);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_NextLevel()
+    {
+        PhotonNetwork.LoadLevel(nextLevel);
     }
 
     public void MainMenu()
