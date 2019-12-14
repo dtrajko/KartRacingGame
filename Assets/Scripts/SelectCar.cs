@@ -36,8 +36,6 @@ public class SelectCar : MonoBehaviour
         this.transform.position = new Vector3(0.0f, cameraHeight, 0.0f);
         this.transform.rotation = Quaternion.Euler(18.0f, 0.0f, 0.0f);
 
-        // this.transform.LookAt(cars[currentCar].transform.position);
-
         AdjustCamera();
 
         inputAxisTimer = 0.0f;
@@ -57,33 +55,41 @@ public class SelectCar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || 
             (CrossPlatformInputManager.GetAxisRaw("Horizontal") == 1.0f && inputAxisUnlocked))
         {
-            currentCar++;
-            if (currentCar > cars.Length - 1)
-            {
-                currentCar = 0;
-            }
-
-            inputAxisUnlocked = false;
-
-            buttonSound.Play();
+            SelectCarNext();
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) ||
             (CrossPlatformInputManager.GetAxisRaw("Horizontal") == -1.0f && inputAxisUnlocked))
         {
-            currentCar--;
-            if (currentCar < 0)
-            {
-                currentCar = cars.Length - 1;
-            }
-
-            inputAxisUnlocked = false;
-
-            buttonSound.Play();
+            SelectCarPrevious();
         }
 
-        PlayerPrefs.SetInt("PlayerCar", currentCar);
-
         AdjustCamera();
+    }
+
+    public void SelectCarNext()
+    {
+        currentCar++;
+        if (currentCar > cars.Length - 1)
+        {
+            currentCar = 0;
+        }
+
+        inputAxisUnlocked = false;
+        buttonSound.Play();
+        PlayerPrefs.SetInt("PlayerCar", currentCar);
+    }
+
+    public void SelectCarPrevious()
+    {
+        currentCar--;
+        if (currentCar < 0)
+        {
+            currentCar = cars.Length - 1;
+        }
+
+        inputAxisUnlocked = false;
+        buttonSound.Play();
+        PlayerPrefs.SetInt("PlayerCar", currentCar);
     }
 
     private void AdjustCamera()

@@ -55,7 +55,9 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public AudioSource buttonSound;
 
-    string nextLevel;
+    int totalLevels = 2;
+    int currentLevel = 0;
+    int nextLevel;
 
     // Start is called before the first frame update
     void Start()
@@ -89,6 +91,11 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
             playerPrefsCarIndex = PlayerPrefs.GetInt("PlayerCar");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerTrack"))
+        {
+            currentLevel = PlayerPrefs.GetInt("PlayerTrack");
         }
 
         int playerSpawnPositionIndex = Random.Range(0, spawnPositions.Length);
@@ -365,14 +372,14 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
         else
         { 
-            SceneManager.LoadScene("Track1");
+            SceneManager.LoadScene(GetLevelNameById(currentLevel));
         }
     }
 
     [PunRPC]
     public void RPC_RestartGame()
     {
-        PhotonNetwork.LoadLevel("Track1");
+        PhotonNetwork.LoadLevel(GetLevelNameById(currentLevel));
     }
 
     public void NextLevel()
@@ -381,19 +388,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         Time.timeScale = 1.0f;
 
-        string currentLevel = SceneManager.GetActiveScene().name;
-
-        switch (currentLevel)
+        nextLevel = currentLevel + 1;
+        if (nextLevel > totalLevels - 1)
         {
-            case "Track1":
-                nextLevel = "Track2";
-                break;
-            case "Track2":
-                nextLevel = "Track1";
-                break;
-            default:
-                nextLevel = "Track1";
-                break;
+            nextLevel = 0;
         }
 
         racing = false;
@@ -403,14 +401,32 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         }
         else
         {
-            SceneManager.LoadScene(nextLevel);
+            SceneManager.LoadScene(GetLevelNameById(nextLevel));
         }
+    }
+
+    public static string GetLevelNameById(int id)
+    {
+        string name = "Track1";
+        switch (id)
+        {
+            case 0:
+                name = "Track1";
+                break;
+            case 1:
+                name = "Track2";
+                break;
+            default:
+                name = "Track1";
+                break;
+        }
+        return name;
     }
 
     [PunRPC]
     public void RPC_NextLevel()
     {
-        PhotonNetwork.LoadLevel(nextLevel);
+        PhotonNetwork.LoadLevel(GetLevelNameById(nextLevel));
     }
 
     public void MainMenu()

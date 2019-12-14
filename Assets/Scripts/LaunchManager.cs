@@ -15,8 +15,9 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public InputField playerName;
     public Text feedbackText;
     string gameVersion = "1";
-    public GameObject mobileUIPanel;
     public AudioSource buttonSound;
+
+    int currentLevel = 0;
 
     private void Awake()
     {
@@ -24,18 +25,14 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
         isConnecting = false;
 
-        mobileUIPanel.SetActive(false);
-        if (CrossPlatform.IsMobilePlatform())
-        {
-            mobileUIPanel.SetActive(true);
-        }
-
         PhotonNetwork.AutomaticallySyncScene = false;
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {
             playerName.text = PlayerPrefs.GetString("PlayerName");
         }
+
+        UpdateLevel();
 
         feedbackText.text = "";
 
@@ -52,6 +49,14 @@ public class LaunchManager : MonoBehaviourPunCallbacks
                 // feedbackText.text += "LM.Awake: InLobby? NO. JoinLobby." + "\n";
                 PhotonNetwork.JoinLobby();
             }
+        }
+    }
+
+    private void UpdateLevel()
+    {
+        if (PlayerPrefs.HasKey("PlayerTrack"))
+        {
+            currentLevel = PlayerPrefs.GetInt("PlayerTrack");
         }
     }
 
@@ -82,7 +87,9 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
         isConnecting = false;
         PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("Track1");
+
+        UpdateLevel();
+        SceneManager.LoadScene(RaceMonitor.GetLevelNameById(currentLevel));
         // Debug.Log("LaunchManager.ConnectSingle LoadScene: Track1");
 
     }
@@ -143,7 +150,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
             feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
         }
 
-        PhotonNetwork.LoadLevel("Track1");
+        PhotonNetwork.LoadLevel(RaceMonitor.GetLevelNameById(currentLevel));
         // Debug.Log("LaunchManager.OnJoinedRoom LoadLevel: Track1");
     }
 }
