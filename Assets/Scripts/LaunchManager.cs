@@ -64,8 +64,11 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     {
         buttonSound.Play();
 
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         feedbackText.text = "";
         isConnecting = true;
+
 
         PhotonNetwork.NickName = playerName.text;
         if (PhotonNetwork.IsConnectedAndReady)
@@ -130,7 +133,10 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         feedbackText.text += "Failed to join random room [code: " + returnCode + ", message: " + message + "]" + "\n";
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = this.maxPlayersPerRoom };
+        // roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+        // roomOptions.CustomRoomProperties.Add("level", currentLevel);
+        PhotonNetwork.CreateRoom(null, roomOptions);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -150,7 +156,11 @@ public class LaunchManager : MonoBehaviourPunCallbacks
             feedbackText.text += "Joined Room with " + PhotonNetwork.CurrentRoom.PlayerCount + " players." + "\n";
         }
 
-        PhotonNetwork.LoadLevel(RaceMonitor.GetLevelNameById(currentLevel));
-        // Debug.Log("LaunchManager.OnJoinedRoom LoadLevel: Track1");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UpdateLevel();
+            // Debug.Log("LaunchManager.OnJoinedRoom LoadLevel: " + RaceMonitor.GetLevelNameById(currentLevel));
+            PhotonNetwork.LoadLevel(RaceMonitor.GetLevelNameById(currentLevel));
+        }
     }
 }
