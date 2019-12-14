@@ -62,10 +62,11 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         Time.timeScale = 1.0f;
         racing = false;
         AudioListener.volume = soundVolume;
-        PhotonNetwork.AutomaticallySyncScene = false;
         playerCPManagers = new List<CheckpointManager>();
         arrowTags = new GameObject[4];
 
@@ -345,16 +346,37 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
                 break;
             }
         }
+
         CarPrefabInfo carPrefabInfo = GetCarPrefabInfo(carPrefabIndex);
-        arrowTags[spawnPositionIndex] = Instantiate(arrowTagPrefabs[carPrefabInfo.arrowTagId]);
-        arrowTags[spawnPositionIndex].transform.position = new Vector3(
+
+        Vector3 arrowTagStartPosition = new Vector3(
             car.transform.position.x,
             isPlayer ? 45.0f : 40.0f,
             car.transform.position.z);
-        if (isPlayer)
-        { 
-            arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+
+        Quaternion arrowTagStartRotation = car.transform.transform.rotation;
+
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            // Multiplayer
+            arrowTags[spawnPositionIndex] = PhotonNetwork.Instantiate(
+                arrowTagPrefabs[carPrefabInfo.arrowTagId].name, arrowTagStartPosition, arrowTagStartRotation, 0);
         }
+        else
+        {
+            // Single player
+            arrowTags[spawnPositionIndex] = Instantiate(arrowTagPrefabs[carPrefabInfo.arrowTagId]);
+        }
+
+        arrowTags[spawnPositionIndex].transform.position = arrowTagStartPosition;
+        arrowTags[spawnPositionIndex].transform.rotation = arrowTagStartRotation;
+
+        if (isPlayer)
+        {
+            arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        }
+
+        arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().enabled = true;
         arrowTags[spawnPositionIndex].transform.SetParent(GameObject.Find("ArrowTags").GetComponent<Transform>(), false);
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().targetVehicleBody = carBody;
     }
@@ -384,9 +406,12 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
     public void NextLevel()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         buttonSound.Play();
 
         Time.timeScale = 1.0f;
+
 
         nextLevel = currentLevel + 1;
         if (nextLevel > totalLevels - 1)

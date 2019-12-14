@@ -6,14 +6,12 @@ public class TagFollowVehicle : MonoBehaviour
 {
     public GameObject targetVehicleBody;
     float height;
+    // bool heightAdjusted;
 
     private void Start()
     {
+        // heightAdjusted = false;
         height = this.transform.position.y;
-        if (targetVehicleBody.GetComponentInParent<PlayerController>() != null)
-        {
-            height += 2.0f;
-        }
     }
 
     // Update is called once per frame
@@ -24,6 +22,17 @@ public class TagFollowVehicle : MonoBehaviour
             Debug.Log("TagFollowVehicle targetVehicleBody not available.");
             return;
         }
+
+        // if (!heightAdjusted)
+        // {
+        //     height = this.transform.position.y;
+        //     if (targetVehicleBody.GetComponentInParent<PlayerController>() != null)
+        //     {
+        //         height += 2.0f;
+        //     }
+        // 
+        //     heightAdjusted = true;
+        // }
 
         float positionY = this.transform.position.y;
 

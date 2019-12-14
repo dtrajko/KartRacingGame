@@ -21,11 +21,10 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        Time.timeScale = 1.0f;
-
-        isConnecting = false;
-
         PhotonNetwork.AutomaticallySyncScene = false;
+
+        Time.timeScale = 1.0f;
+        isConnecting = false;
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {
@@ -62,13 +61,12 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public void ConnectNetwork()
     {
-        buttonSound.Play();
-
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        buttonSound.Play();
 
         feedbackText.text = "";
         isConnecting = true;
-
 
         PhotonNetwork.NickName = playerName.text;
         if (PhotonNetwork.IsConnectedAndReady)
