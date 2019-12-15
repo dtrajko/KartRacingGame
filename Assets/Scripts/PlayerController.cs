@@ -65,16 +65,19 @@ public class PlayerController : BaseController
 
         if (Time.time > lastTimeMoving + 4.0f || withinSceneBoundaries())
         {
-            Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
-                Vector3.up * 3 + // place the car 2m above the road
-                Vector3.forward * 6 + // 6m forward
-                new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)); // randomize the position around the waypoint
+            if (checkpointManager.lastCP != null)
+            { 
+                Vector3 reSpawnPosition = checkpointManager.lastCP.transform.position +
+                    Vector3.up * 3 + // place the car 2m above the road
+                    Vector3.forward * 6 + // 6m forward
+                    new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)); // randomize the position around the waypoint
 
-            drive.rigidBody.gameObject.transform.position = reSpawnPosition;
-            drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
-            drive.rigidBody.gameObject.layer = LayerMask.NameToLayer("ReSpawn");
-            this.GetComponent<Ghost>().enabled = true;
-            Invoke("ResetLayer", 3);
+                drive.rigidBody.gameObject.transform.position = reSpawnPosition;
+                drive.rigidBody.gameObject.transform.rotation = checkpointManager.lastCP.transform.rotation;
+                drive.rigidBody.gameObject.layer = LayerMask.NameToLayer("ReSpawn");
+                this.GetComponent<Ghost>().enabled = true;
+                Invoke("ResetLayer", 3);            
+            }
         }
 
         if (!RaceMonitor.racing)

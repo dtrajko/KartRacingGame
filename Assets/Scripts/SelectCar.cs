@@ -9,6 +9,7 @@ public class SelectCar : MonoBehaviour
     public GameObject[] levels;
     float heightLevel1;
     float heightLevel2;
+    float heightLevel3;
     float cameraHeight = 3.0f;
     Quaternion lookDir;
     int currentCar = 0;
@@ -27,10 +28,16 @@ public class SelectCar : MonoBehaviour
 
         heightLevel1 = levels[0].transform.position.y;
         heightLevel2 = levels[1].transform.position.y;
+        heightLevel3 = levels[2].transform.position.y;
 
         if (PlayerPrefs.HasKey("PlayerCar"))
         {
             currentCar = PlayerPrefs.GetInt("PlayerCar");
+        }
+
+        if (currentCar > cars.Length - 1)
+        {
+            currentCar = 0;
         }
 
         this.transform.position = new Vector3(0.0f, cameraHeight, 0.0f);
@@ -95,25 +102,32 @@ public class SelectCar : MonoBehaviour
     private void AdjustCamera()
     {
         Vector3 newPosition = this.transform.position;
-        if (currentCar < cars.Length / 2)
+        if (currentCar >= 0 && currentCar <= 3)
         {
             newPosition = new Vector3(
                 this.transform.position.x,
                 heightLevel1 + cameraHeight,
                 this.transform.position.z);
         }
-        else
+        else if(currentCar >= 4 && currentCar <= 7)
         {
             newPosition = new Vector3(
                 this.transform.position.x,
                 heightLevel2 + cameraHeight,
                 this.transform.position.z);
         }
+        else if (currentCar >= 8 && currentCar <= 8)
+        {
+            newPosition = new Vector3(
+                this.transform.position.x,
+                heightLevel3 + cameraHeight,
+                this.transform.position.z);
+        }
 
         // this.transform.position = Vector3.Lerp(this.transform.position, newPosition, Time.deltaTime * cameraSpeed * 2.0f);
         this.transform.position = newPosition;
 
-        lookDir = Quaternion.LookRotation(cars[currentCar].transform.position - new Vector3(0, -0.5f, 0) - this.transform.position);
+        lookDir = Quaternion.LookRotation(cars[currentCar].transform.position - new Vector3(0, -0.6f, 0) - this.transform.position);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookDir, Time.deltaTime * cameraSpeed);
         // Debug.Log("Rotation: " + this.transform.rotation + " lookDir: " + lookDir + " time offset: " + Time.deltaTime * cameraSpeed);
 
