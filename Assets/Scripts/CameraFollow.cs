@@ -70,7 +70,7 @@ public class CameraFollow : MonoBehaviour
         {
             // Third person
             cameraObject.transform.localPosition =
-                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(0.0f, 3.0f, -10.0f),
+                Vector3.Lerp(cameraObject.transform.localPosition, new Vector3(0.0f, 3.0f, -11.0f),
                 cameraSwitchSpeed * Time.deltaTime);
             cameraObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }

@@ -41,7 +41,7 @@ public class SelectCar : MonoBehaviour
         }
 
         this.transform.position = new Vector3(0.0f, cameraHeight, 0.0f);
-        this.transform.rotation = Quaternion.Euler(18.0f, 0.0f, 0.0f);
+        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         AdjustCamera();
 
@@ -116,7 +116,7 @@ public class SelectCar : MonoBehaviour
                 heightLevel2 + cameraHeight,
                 this.transform.position.z);
         }
-        else if (currentCar >= 8 && currentCar <= 8)
+        else if (currentCar >= 8 && currentCar <= 11)
         {
             newPosition = new Vector3(
                 this.transform.position.x,
@@ -127,7 +127,7 @@ public class SelectCar : MonoBehaviour
         // this.transform.position = Vector3.Lerp(this.transform.position, newPosition, Time.deltaTime * cameraSpeed * 2.0f);
         this.transform.position = newPosition;
 
-        lookDir = Quaternion.LookRotation(cars[currentCar].transform.position - new Vector3(0, -0.6f, 0) - this.transform.position);
+        lookDir = Quaternion.LookRotation(cars[currentCar].transform.position - new Vector3(0, -1.0f, 0) - this.transform.position);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookDir, Time.deltaTime * cameraSpeed);
         // Debug.Log("Rotation: " + this.transform.rotation + " lookDir: " + lookDir + " time offset: " + Time.deltaTime * cameraSpeed);
 

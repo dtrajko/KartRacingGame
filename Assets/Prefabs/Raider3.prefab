@@ -214,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4df60dc9c1482884bb5471ca0f7b1580, type: 2}
+  - {fileID: 2100000, guid: d234718d6a14cc34bb18403be32bfcc1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 827195368664316767}
   - component: {fileID: 939402447944129494}
   m_Layer: 0
-  m_Name: Raider1
+  m_Name: Raider3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1246,7 +1246,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4df60dc9c1482884bb5471ca0f7b1580, type: 2}
+  - {fileID: 2100000, guid: d234718d6a14cc34bb18403be32bfcc1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1355,7 +1355,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4df60dc9c1482884bb5471ca0f7b1580, type: 2}
+  - {fileID: 2100000, guid: d234718d6a14cc34bb18403be32bfcc1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1605,7 +1605,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4df60dc9c1482884bb5471ca0f7b1580, type: 2}
+  - {fileID: 2100000, guid: d234718d6a14cc34bb18403be32bfcc1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2244,7 +2244,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a9f102d1b855dd4489c27f9615fb6223, type: 2}
+  - {fileID: 2100000, guid: a7d504236cd332b4db2bd825ecd2e29f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

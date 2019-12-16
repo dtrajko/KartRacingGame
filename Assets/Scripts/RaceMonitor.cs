@@ -506,6 +506,15 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             case 8:
                 carPrefabInfo = new CarPrefabInfo(8, 0, "Raider", "Orange");
                 break;
+            case 9:
+                carPrefabInfo = new CarPrefabInfo(9, 1, "Raider", "Blue");
+                break;
+            case 10:
+                carPrefabInfo = new CarPrefabInfo(10, 2, "Raider", "Green");
+                break;
+            case 11:
+                carPrefabInfo = new CarPrefabInfo(11, 3, "Raider", "???");
+                break;
             default:
                 carPrefabInfo = new CarPrefabInfo(-1, -1, "N/A", "N/A");
                 break;
