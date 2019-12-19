@@ -10,6 +10,7 @@ public class PlayerController : BaseController
     Quaternion lastRotation;
     CheckpointManager checkpointManager;
     float finishSteer;
+    public bool racing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +81,7 @@ public class PlayerController : BaseController
             }
         }
 
-        if (!RaceMonitor.racing)
+        if (!RaceMonitor.racing && !racing)
         {
             acceleration = 0.0f;
         }

@@ -62,6 +62,16 @@ public class Drive : MonoBehaviour
 
         brakeLight.SetActive(false);
 
+        SetupPlayerName();
+    }
+
+    private void SetupPlayerName()
+    {
+        if (playerNamePrefab == null)
+        {
+            return;
+        }
+
         GameObject playerNameGO = Instantiate(playerNamePrefab);
         playerNameGO.GetComponent<NameUIController>().target = rigidBody.gameObject.transform;
 
