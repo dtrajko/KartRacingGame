@@ -11,12 +11,18 @@ public class CrossPlatform : MonoBehaviour
         {
             // Desktop platforms
             case RuntimePlatform.WindowsPlayer:
-            case RuntimePlatform.WindowsEditor:
                 isMobilePlatform = false;
                 break;
             // Mobile platforms
             case RuntimePlatform.Android:
                 isMobilePlatform = true;
+                break;
+            case RuntimePlatform.WindowsEditor:
+#if MOBILE_INPUT
+                isMobilePlatform = true;
+#else
+                isMobilePlatform = false;
+#endif
                 break;
             default:
                 isMobilePlatform = false;
