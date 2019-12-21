@@ -102,7 +102,7 @@ public class AIController : BaseController
         }
 
         // Game Over condition
-        if (checkpointManager.lap == RaceMonitor.totalLaps + 1)
+        if (checkpointManager.lap == FindObjectOfType<RaceMonitor>().totalLaps + 1)
         {
             drive.highAccel.Stop();
             drive.Go(0.0f, finishSteer, 1.0f);

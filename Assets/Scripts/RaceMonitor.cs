@@ -27,7 +27,7 @@ public struct CarPrefabInfo
 public class RaceMonitor : MonoBehaviourPunCallbacks
 {
     public static float soundVolume = 0.2f;
-    public static int totalLaps = 2;
+    public int totalLaps = 2;
     public GameObject[] countdownItems;
     public static bool racing = false;
     public static bool pause = false;
@@ -351,7 +351,7 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
 
         Vector3 arrowTagStartPosition = new Vector3(
             car.transform.position.x,
-            isPlayer ? 45.0f : 40.0f,
+            isPlayer ? 105.0f : 100.0f,
             car.transform.position.z);
 
         Quaternion arrowTagStartRotation = car.transform.transform.rotation;

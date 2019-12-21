@@ -99,7 +99,7 @@ public class NameUIController : MonoBehaviour
                 {
                     progressPercentage = Mathf.Clamp((int)(((float)cpManager.checkPoint / (float)cpManager.checkPointCount) * 100.0f), 0, 100);
                 }
-                lapDisplay.text = position + " - Lap " + cpManager.lap + "/" + RaceMonitor.totalLaps + " [" + progressPercentage + "%]";
+                lapDisplay.text = position + " - Lap " + cpManager.lap + "/" + FindObjectOfType<RaceMonitor>().totalLaps + " [" + progressPercentage + "%]";
 
             }
         }
