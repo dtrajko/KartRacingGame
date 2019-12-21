@@ -441,6 +441,9 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
             case 1:
                 name = "Track2";
                 break;
+            case 2:
+                name = "Track3";
+                break;
             default:
                 name = "Track1";
                 break;
