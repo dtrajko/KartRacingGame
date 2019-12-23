@@ -371,9 +371,10 @@ public class RaceMonitor : MonoBehaviourPunCallbacks
         arrowTags[spawnPositionIndex].transform.position = arrowTagStartPosition;
         arrowTags[spawnPositionIndex].transform.rotation = arrowTagStartRotation;
 
+        arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
         if (isPlayer)
         {
-            arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+            arrowTags[spawnPositionIndex].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
 
         arrowTags[spawnPositionIndex].GetComponent<TagFollowVehicle>().enabled = true;
